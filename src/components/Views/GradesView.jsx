@@ -3,6 +3,7 @@ import { getSubjectName } from 'src/format/subjectName'
 import { getAllGrades } from 'src/queries'
 
 import Divider from 'cozy-ui/transpiled/react/Divider'
+import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
 import List from 'cozy-ui/transpiled/react/List'
@@ -10,21 +11,19 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
+import Menu from 'cozy-ui/transpiled/react/Menu'
+import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
+import Paper from 'cozy-ui/transpiled/react/Paper'
 import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
 // import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const makeStyle = () => ({
   cozyGradeChip: {
     display: 'flex',
-    alignItems: 'flex-end',
-    paddingLeft: '8px',
-    paddingRight: '8px',
-    paddingTop: '4px',
-    paddingBottom: '4px',
-    borderRadius: '1rem',
-    border: '1px solid var(--secondaryColorLightest)'
+    alignItems: 'flex-end'
   }
 })
 
@@ -36,19 +35,88 @@ export const GradesView = () => {
   const [subjects, setSubjects] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  const [periods, setPeriods] = useState([])
+  const [selectedPeriod, setSelectedPeriod] = useState('')
+
+  const loadGrades = async () => {
     return getAllGrades()
       .then(data => {
+        // get a list of each data.title names unique
+        const periods = data.reduce((acc, current) => {
+          if (!acc.includes(current.title)) {
+            acc.push(current.title)
+          }
+          return acc
+        }, [])
+        setPeriods(periods)
+        setSelectedPeriod(periods[0])
+
         return setSubjects(data)
       })
       .finally(() => {
         setLoading(false)
       })
+  }
+
+  useEffect(() => {
+    loadGrades()
   }, [])
+
+  const [periodMenuOpen, setPeriodMenuOpen] = useState(false)
+  const periodDropdownRef = React.useRef(null)
 
   return (
     <>
       <div>
+        <Paper
+          square
+          style={{
+            padding: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%'
+          }}
+        >
+          <DropdownButton
+            ref={periodDropdownRef}
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={() => setPeriodMenuOpen(!periodMenuOpen)}
+          >
+            {selectedPeriod || 'Sélectionner une période'}
+          </DropdownButton>
+
+          <Menu
+            open={periodMenuOpen}
+            anchorEl={periodDropdownRef.current}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left'
+            }}
+            keepMounted
+            onClose={() => setPeriodMenuOpen(false)}
+          >
+            {periods.map((period, i) => (
+              <MenuItem
+                key={i}
+                onClick={() => {
+                  setSelectedPeriod(period)
+                  setPeriodMenuOpen(false)
+                }}
+              >
+                <ListItemText primary={period} />
+              </MenuItem>
+            ))}
+          </Menu>
+        </Paper>
+
+        <Divider />
+
         {loading && (
           <>
             {[...Array(4)].map((elementInArray, index) => (
@@ -62,63 +130,68 @@ export const GradesView = () => {
           </>
         )}
 
-        {subjects.map((subject, i) => (
-          <List
-            key={i}
-            subheader={
-              <ListSubheader>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" color="textSecondary">
-                    {getSubjectName(subject.subject)}
-                  </Typography>
+        {subjects
+          .filter(subject => subject.title === selectedPeriod)
+          .map((subject, i) => (
+            <List
+              key={i}
+              subheader={
+                <ListSubheader>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" color="textSecondary">
+                      {getSubjectName(subject.subject)}
+                    </Typography>
 
-                  <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <Typography variant="body1" color="textPrimary">
-                      {parseFloat(subject.aggregation.avgGrades).toFixed(2)}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      /20
-                    </Typography>
+                    <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+                      <Typography variant="body1" color="textPrimary">
+                        {parseFloat(subject.aggregation.avgGrades).toFixed(2)}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        /20
+                      </Typography>
+                    </div>
                   </div>
+                </ListSubheader>
+              }
+            >
+              {subject.series.map((grade, j) => (
+                <div key={grade.id}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <Icon icon={PieChartIcon} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={grade.label || 'Note sans titre'}
+                      secondary={new Date(grade.date).toLocaleDateString(
+                        'fr-FR',
+                        { year: 'numeric', month: 'long', day: 'numeric' }
+                      )}
+                    />
+                    <div
+                      className="cozy-grade-chip"
+                      style={style.cozyGradeChip}
+                    >
+                      <Typography variant="body1" color="textPrimary">
+                        {parseFloat(grade.value.student).toFixed(2)}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        /{parseFloat(grade.value.outOf).toFixed(0)}
+                      </Typography>
+                    </div>
+                  </ListItem>
+                  {j !== subject.series.length - 1 && (
+                    <Divider component="li" variant="inset" />
+                  )}
                 </div>
-              </ListSubheader>
-            }
-          >
-            {subject.series.map((grade, j) => (
-              <div key={grade.id}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <Icon icon={PieChartIcon} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={grade.label || 'Note sans titre'}
-                    secondary={new Date(grade.date).toLocaleDateString(
-                      'fr-FR',
-                      { year: 'numeric', month: 'long', day: 'numeric' }
-                    )}
-                  />
-                  <div className="cozy-grade-chip" style={style.cozyGradeChip}>
-                    <Typography variant="body1" color="textPrimary">
-                      {parseFloat(grade.value.student).toFixed(2)}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      /{parseFloat(grade.value.outOf).toFixed(0)}
-                    </Typography>
-                  </div>
-                </ListItem>
-                {j !== subject.series.length - 1 && (
-                  <Divider component="li" variant="inset" />
-                )}
-              </div>
-            ))}
-          </List>
-        ))}
+              ))}
+            </List>
+          ))}
       </div>
     </>
   )
