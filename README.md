@@ -1,13 +1,8 @@
-[![Travis build status shield](https://img.shields.io/travis/cozy/ogma/master.svg)](https://travis-ci.org/cozy/ogma)
-[![Github Release version shield](https://img.shields.io/github/tag/cozy/ogma.svg)](https://github.com/cozy/ogma/releases)
-[![jest](https://facebook.github.io/jest/img/jest-badge.svg)](https://github.com/facebook/jest)
+<img height="32" src="https://github.com/user-attachments/assets/8275813a-9311-4ac4-9328-8513d0f22c03" />
 
+#
 
-# Ogma
-
-## What's Ogma?
-
-<TODO>...
+Cozy Papillon is a minified [Papillon](https://getpapillon.xyz/) client that displays school related data (timetables, grades, homeworks, and attendance) extracted from service such as Pronote or EcoleDirecte using their konnectors.
 
 
 ## Hack
