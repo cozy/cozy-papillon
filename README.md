@@ -1,7 +1,5 @@
 <img height="32" src="https://github.com/user-attachments/assets/8275813a-9311-4ac4-9328-8513d0f22c03" />
 
-#
-
 Cozy Papillon is a minified [Papillon](https://getpapillon.xyz/) client that displays school related data (timetables, grades, homeworks, and attendance) extracted from service such as Pronote or EcoleDirecte using their konnectors.
 
 
