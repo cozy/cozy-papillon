@@ -141,10 +141,19 @@ export const GradesView = () => {
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      gap: '10px'
                     }}
                   >
-                    <Typography variant="subtitle1" color="textSecondary">
+                    <Typography
+                      variant="subtitle1"
+                      color="textSecondary"
+                      style={{
+                        textWrap: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}
+                    >
                       {getSubjectName(subject.subject)}
                     </Typography>
 
