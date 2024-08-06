@@ -1,0 +1,17 @@
+{
+  "Sidebar": {
+    "timetable": "Emploi du temps",
+    "homeworks": "Travail à faire",
+    "grades": "Notes",
+    "presence": "Vie scolaire"
+  },
+  "QuestionsEdit": {
+    "btn": {
+      "sendToStudents": "Transmettre aux élèves",
+      "saveDraft": "Enregistrer brouillon"
+    }
+  },
+  "Titlebar": {
+    "subtitle": "Sélectionner les questions"
+  }
+}
