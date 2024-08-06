@@ -13,9 +13,9 @@ import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+// import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-const makeStyle = isMobile => ({
+const makeStyle = () => ({
   cozyGradeChip: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -29,7 +29,7 @@ const makeStyle = isMobile => ({
 })
 
 export const GradesView = () => {
-  const { t } = useI18n()
+  // const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
 
@@ -37,11 +37,13 @@ export const GradesView = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getAllGrades().then(data => {
-      console.log(data)
-      setSubjects(data)
-      setLoading(false)
-    })
+    return getAllGrades()
+      .then(data => {
+        return setSubjects(data)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
   return (
@@ -50,7 +52,12 @@ export const GradesView = () => {
         {loading && (
           <>
             {[...Array(4)].map((elementInArray, index) => (
-              <ListSkeleton count={2 + index} hasSecondary withSubheader />
+              <ListSkeleton
+                key={index}
+                count={2 + index}
+                hasSecondary
+                withSubheader
+              />
             ))}
           </>
         )}

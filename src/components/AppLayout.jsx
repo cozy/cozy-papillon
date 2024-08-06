@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { useState } from 'react'
+import React from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { BarComponent, BarCenter } from 'cozy-bar'
