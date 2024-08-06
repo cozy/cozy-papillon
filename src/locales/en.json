@@ -5,13 +5,27 @@
     "grades": "Grades",
     "presence": "Attendance"
   },
-  "QuestionsEdit": {
-    "btn": {
-      "sendToStudents": "Send to students",
-      "saveDraft": "Save draft"
+  "Grades": {
+    "dialogContext": "Informations",
+    "date": "Date",
+    "valuesList": "Results and averages",
+    "values": {
+      "student": {
+        "title": "Student's grade",
+        "description": "The grade you got for this subject"
+      },
+      "class": {
+        "title": "Class average",
+        "description": "The class average for this subject"
+      },
+      "max": {
+        "title": "Class best grade",
+        "description": "The best grade of the class for this subject"
+      },
+      "min": {
+        "title": "Class worst grade",
+        "description": "The worst grade of the class for this subject"
+      }
     }
-  },
-  "Titlebar": {
-    "subtitle": "Select questions"
   }
 }

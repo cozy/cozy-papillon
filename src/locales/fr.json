@@ -5,13 +5,27 @@
     "grades": "Notes",
     "presence": "Vie scolaire"
   },
-  "QuestionsEdit": {
-    "btn": {
-      "sendToStudents": "Transmettre aux élèves",
-      "saveDraft": "Enregistrer brouillon"
+  "Grades": {
+    "dialogContext": "Informations",
+    "date": "Date",
+    "valuesList": "Résultats et moyennes",
+    "values": {
+      "student": {
+        "title": "Note de l'élève",
+        "description": "Votre note obtenue pour ce sujet"
+      },
+      "class": {
+        "title": "Moyenne de la classe",
+        "description": "La moyenne de la classe pour ce sujet"
+      },
+      "max": {
+        "title": "Meilleure note de la classe",
+        "description": "La meilleure note de la classe pour ce sujet"
+      },
+      "min": {
+        "title": "Moins bonne note de la classe",
+        "description": "La moins bonne note de la classe pour ce sujet"
+      }
     }
-  },
-  "Titlebar": {
-    "subtitle": "Sélectionner les questions"
   }
 }
