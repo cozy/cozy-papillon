@@ -29,6 +29,7 @@ import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { GradeModal } from '../Dialogs/GradesModal'
 
 const makeStyle = () => ({
   cozyGradeChip: {
@@ -36,119 +37,6 @@ const makeStyle = () => ({
     alignItems: 'flex-end'
   }
 })
-
-const GradeModal = ({ grade, closeModalAction }) => {
-  const { isMobile } = useBreakpoints()
-  const {
-    dialogProps,
-    dialogTitleProps,
-    listItemProps,
-    dividerProps,
-    dialogActionsProps
-  } = useCozyDialog({
-    size: 'medium',
-    classes: {
-      paper: 'my-class'
-    },
-    open,
-    onClose: closeModalAction,
-    disableEnforceFocus: true
-  })
-
-  const { t } = useI18n()
-
-  console.log(grade)
-
-  const valuesList = [
-    {
-      primary: t('Grades.values.student.title'),
-      secondary: t('Grades.values.student.description'),
-      value: `${parseFloat(grade.value.student).toFixed(2)}`,
-      important: true
-    },
-    {
-      primary: t('Grades.values.class.title'),
-      secondary: t('Grades.values.class.description'),
-      value: `${parseFloat(grade.value.classAverage).toFixed(2)}`
-    },
-    {
-      primary: t('Grades.values.max.title'),
-      secondary: t('Grades.values.max.description'),
-      value: `${parseFloat(grade.value.classMax).toFixed(2)}`
-    },
-    {
-      primary: t('Grades.values.min.title'),
-      secondary: t('Grades.values.min.description'),
-      value: `${parseFloat(grade.value.classMin).toFixed(2)}`
-    }
-  ]
-
-  return (
-    <Dialog {...dialogProps}>
-      <DialogCloseButton onClick={closeModalAction} />
-      <DialogTitle {...dialogTitleProps}>
-        {isMobile ? <DialogBackButton onClick={closeModalAction} /> : null}
-        {grade.label || 'Note sans titre'}
-      </DialogTitle>
-
-      <Divider />
-
-      <List
-        subheader={<ListSubheader>{t('Grades.dialogContext')}</ListSubheader>}
-      >
-        <ListItem>
-          <ListItemText
-            primary={t('Grades.date')}
-            secondary={new Date(grade.date).toLocaleDateString('fr-FR', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          />
-        </ListItem>
-      </List>
-
-      <List subheader={<ListSubheader>{t('Grades.valuesList')}</ListSubheader>}>
-        {valuesList.map((value, i) => (
-          <div key={i}>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Typography
-                    variant="body1"
-                    style={{ fontWeight: value.important ? 'bold' : 'normal' }}
-                  >
-                    {value.primary}
-                  </Typography>
-                }
-                secondary={value.secondary}
-              />
-
-              <div
-                className="cozy-grade-chip"
-                style={{ display: 'flex', alignItems: 'flex-end' }}
-              >
-                <Typography
-                  variant="body1"
-                  color="textPrimary"
-                  style={{ fontWeight: value.important ? 'bold' : 'normal' }}
-                >
-                  {parseFloat(value.value).toFixed(2)}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  /{parseFloat(grade.value.outOf).toFixed(0)}
-                </Typography>
-              </div>
-            </ListItem>
-            {i !== valuesList.length - 1 && (
-              <Divider component="li" variant="inset" />
-            )}
-          </div>
-        ))}
-      </List>
-    </Dialog>
-  )
-}
 
 export const GradesView = () => {
   // const { t } = useI18n()
@@ -161,10 +49,32 @@ export const GradesView = () => {
   const [periods, setPeriods] = useState([])
   const [selectedPeriod, setSelectedPeriod] = useState('')
 
+  const [periodMenuOpen, setPeriodMenuOpen] = useState(false)
+  const periodDropdownRef = React.useRef(null)
+
+  const [openedGrade, setOpenedGrade] = useState(null)
+
+  const findClosestPeriod = (periods, date) => {
+    // Finds the period that is the closest to the current date
+
+    const sortedPeriods = periods.sort((a, b) => {
+      return new Date(a.startDate) - new Date(b.startDate)
+    })
+
+    for (let i = 0; i < sortedPeriods.length; i++) {
+      if (new Date(sortedPeriods[i].startDate) > new Date(date)) {
+        return sortedPeriods[i - 1].title
+      }
+    }
+
+    return sortedPeriods[0].title
+  }
+
   const loadGrades = async () => {
+    // Fetches all grades and sets the state
     return getAllGrades()
       .then(data => {
-        // get a list of each data.title names unique
+        // Retreive all periods
         const periods = data.reduce((acc, current) => {
           if (!acc.includes(current.title)) {
             acc.push(current.title)
@@ -172,8 +82,9 @@ export const GradesView = () => {
           return acc
         }, [])
         setPeriods(periods)
-        setSelectedPeriod(periods[0])
+        setSelectedPeriod(findClosestPeriod(data, new Date()))
 
+        // Set the state
         return setSubjects(data)
       })
       .finally(() => {
@@ -182,13 +93,9 @@ export const GradesView = () => {
   }
 
   useEffect(() => {
+    // Fetch grades on mount
     loadGrades()
   }, [])
-
-  const [periodMenuOpen, setPeriodMenuOpen] = useState(false)
-  const periodDropdownRef = React.useRef(null)
-
-  const [openedGrade, setOpenedGrade] = useState(null)
 
   return (
     <>
