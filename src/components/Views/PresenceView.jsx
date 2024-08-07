@@ -115,7 +115,11 @@ export const PresenceView = () => {
 
         {presenceEvents.map(group => (
           <List key={group.month}>
-            <ListSubheader>{group.prettyMonth}</ListSubheader>
+            <ListSubheader>
+              <Typography variant="subtitle2" color="textSecondary">
+                {group.prettyMonth}
+              </Typography>
+            </ListSubheader>
             {group.events.map((event, j) => (
               <div key={event._id}>
                 <ListItem key={event._id}>
