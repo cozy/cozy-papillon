@@ -337,7 +337,11 @@ export const GradesView = () => {
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-                      <Typography variant="body1" color="textPrimary">
+                      <Typography
+                        variant="body1"
+                        color="textPrimary"
+                        style={{ fontWeight: 'bold' }}
+                      >
                         {parseFloat(subject.aggregation.avgGrades).toFixed(2)}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
@@ -350,10 +354,13 @@ export const GradesView = () => {
             >
               {subject.series.map((grade, j) => (
                 <div key={grade.id}>
-                  <ListItem button onClick={() => {
-                    setOpenedGrade(grade)
-                    setOpenedGradeSubject(subject)
-                  }}>
+                  <ListItem
+                    button
+                    onClick={() => {
+                      setOpenedGrade(grade)
+                      setOpenedGradeSubject(subject)
+                    }}
+                  >
                     <ListItemIcon>
                       <Typography variant="h3" color="textPrimary">
                         {getSubjectName(subject.subject).emoji || '📚'}
