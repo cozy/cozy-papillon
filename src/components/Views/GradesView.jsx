@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 import { getAllGrades } from 'src/queries'
 
@@ -288,19 +289,36 @@ export const GradesView = () => {
                       gap: '10px'
                     }}
                   >
-                    <Typography
-                      variant="subtitle1"
-                      color="textSecondary"
+                    <div
                       style={{
-                        textWrap: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis'
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px'
                       }}
                     >
-                      {getSubjectName(subject.subject).pretty +
-                        ' ' +
-                        getSubjectName(subject.subject).speciality || ''}
-                    </Typography>
+                      <div
+                        style={{
+                          width: '8px',
+                          height: '8px',
+                          backgroundColor: subjectColor(subject.subject),
+                          borderRadius: '50px'
+                        }}
+                      />
+
+                      <Typography
+                        variant="subtitle1"
+                        color="textSecondary"
+                        style={{
+                          textWrap: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
+                        }}
+                      >
+                        {(getSubjectName(subject.subject).pretty || '') +
+                          ' ' +
+                          (getSubjectName(subject.subject).speciality || '')}
+                      </Typography>
+                    </div>
 
                     <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                       <Typography variant="body1" color="textPrimary">

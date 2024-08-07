@@ -14,6 +14,13 @@ const lessonFormats = [
     }
   },
   {
+    label: 'artsplastiques',
+    pretty: 'Arts plastiques',
+    formats: {
+      default: ['arts plastiques', 'artsplastiques']
+    }
+  },
+  {
     label: 'bloc1smdsi',
     pretty: 'Bloc 1 : Support et mise a disposition des services informatiques',
     formats: {
