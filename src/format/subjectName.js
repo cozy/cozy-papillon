@@ -269,6 +269,7 @@ export const getSubjectName = subjectId => {
   const newSubjectId = subjectId
     .toLowerCase()
     .split(new RegExp(Object.keys(specMap).join('|')))[0]
+    .replace('ensscientifique', '')
   const subject = lessonFormats.find(lesson => lesson.label === newSubjectId)
   const speciality =
     Object.entries(specMap).find(([key]) => subjectId.includes(key))?.[1] || ''
