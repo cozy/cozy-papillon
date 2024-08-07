@@ -20,19 +20,23 @@
     "values": {
       "student": {
         "title": "Student's grade",
-        "description": "The grade you got for this subject"
+        "description": "Grade you got for this subject"
       },
       "class": {
         "title": "Class average",
-        "description": "The class average for this subject"
+        "description": "Class average for this subject"
       },
       "max": {
         "title": "Class best grade",
-        "description": "The best grade of the class for this subject"
+        "description": "Best grade of the class for this subject"
       },
       "min": {
         "title": "Class worst grade",
-        "description": "The worst grade of the class for this subject"
+        "description": "Worst grade of the class for this subject"
+      },
+      "coefficient": {
+        "title": "Coefficient",
+        "description": "Weight of this grade in your overall average"
       }
     }
   }

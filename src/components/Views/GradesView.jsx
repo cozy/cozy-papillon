@@ -53,6 +53,7 @@ export const GradesView = () => {
   const yearDropdownRef = React.useRef(null)
 
   const [openedGrade, setOpenedGrade] = useState(null)
+  const [openedGradeSubject, setOpenedGradeSubject] = useState(null)
 
   useEffect(() => {
     if (selectedPeriod) {
@@ -127,7 +128,11 @@ export const GradesView = () => {
       {openedGrade && (
         <GradeModal
           grade={openedGrade}
-          closeModalAction={() => setOpenedGrade(null)}
+          subject={openedGradeSubject}
+          closeModalAction={() => {
+            setOpenedGrade(null)
+            setOpenedGradeSubject(null)
+          }}
         />
       )}
 
@@ -345,7 +350,10 @@ export const GradesView = () => {
             >
               {subject.series.map((grade, j) => (
                 <div key={grade.id}>
-                  <ListItem button onClick={() => setOpenedGrade(grade)}>
+                  <ListItem button onClick={() => {
+                    setOpenedGrade(grade)
+                    setOpenedGradeSubject(subject)
+                  }}>
                     <ListItemIcon>
                       <Typography variant="h3" color="textPrimary">
                         {getSubjectName(subject.subject).emoji || '📚'}

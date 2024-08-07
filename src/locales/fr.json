@@ -27,12 +27,16 @@
         "description": "La moyenne de la classe pour ce sujet"
       },
       "max": {
-        "title": "Meilleure note de la classe",
+        "title": "Note haute de la classe",
         "description": "La meilleure note de la classe pour ce sujet"
       },
       "min": {
-        "title": "Moins bonne note de la classe",
+        "title": "Note basse de la classe",
         "description": "La moins bonne note de la classe pour ce sujet"
+      },
+      "coefficient": {
+        "title": "Coefficient",
+        "description": "Poids de cette note dans le calcul de la moyenne générale"
       }
     }
   }
