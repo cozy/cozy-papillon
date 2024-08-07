@@ -9,23 +9,21 @@ import {
 } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Dialog, { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
+import CreditIcon from 'cozy-ui/transpiled/react/Icons/Credit'
+import DebitIcon from 'cozy-ui/transpiled/react/Icons/Debit'
+import PercentIcon from 'cozy-ui/transpiled/react/Icons/Percent'
+import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
+import TeamIcon from 'cozy-ui/transpiled/react/Icons/Team'
 import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-
-import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
-import PercentIcon from 'cozy-ui/transpiled/react/Icons/Percent'
-
-import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
-import TeamIcon from 'cozy-ui/transpiled/react/Icons/Team'
-import CreditIcon from 'cozy-ui/transpiled/react/Icons/Credit'
-import DebitIcon from 'cozy-ui/transpiled/react/Icons/Debit'
 
 export const GradeModal = ({ grade, subject, closeModalAction }) => {
   const { isMobile } = useBreakpoints()
@@ -53,19 +51,19 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
       primary: t('Grades.values.class.title'),
       secondary: t('Grades.values.class.description'),
       value: `${parseFloat(grade.value.classAverage).toFixed(2)}`,
-      icon: TeamIcon,
+      icon: TeamIcon
     },
     grade.value.classMax >= 0 && {
       primary: t('Grades.values.max.title'),
       secondary: t('Grades.values.max.description'),
       value: `${parseFloat(grade.value.classMax).toFixed(2)}`,
-      icon: CreditIcon,
+      icon: CreditIcon
     },
     grade.value.classMin >= 0 && {
       primary: t('Grades.values.min.title'),
       secondary: t('Grades.values.min.description'),
       value: `${parseFloat(grade.value.classMin).toFixed(2)}`,
-      icon: DebitIcon,
+      icon: DebitIcon
     }
   ]
 
@@ -76,13 +74,27 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
       <DialogTitle {...dialogTitleProps}>
         {isMobile ? <DialogBackButton onClick={closeModalAction} /> : null}
 
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
           <MuiBreadcrumbs>
-            <Typography variant="subtitle1" color="textSecondary">
-              {(getSubjectName(subject.subject).emoji || '📚') +
-                ' ' +
-                (getSubjectName(subject.subject).pretty || 'Aucune matière')}
-            </Typography>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Typography
+                variant="h5"
+                style={{ 
+                  width: '30px',
+                  height: '30px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '50%',
+                  border: '1px solid var(--secondaryColorLightest)',
+                }}
+              >
+                {getSubjectName(subject.subject).emoji || '📚'}
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                {getSubjectName(subject.subject).pretty || 'Aucune matière'}
+              </Typography>
+            </div>
             <Typography variant="subtitle1" color="textPrimary">
               {grade.label || 'Note sans titre'}
             </Typography>
@@ -121,6 +133,7 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
             })}
           />
         </ListItem>
+        <Divider component="li" variant="inset" /> 
         <ListItem>
           <ListItemIcon>
             <Icon icon={PercentIcon} />
