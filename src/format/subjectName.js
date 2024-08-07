@@ -223,6 +223,29 @@ const lessonFormats = [
 ]
 
 export const getSubjectName = subjectId => {
-  const subject = lessonFormats.find(lesson => lesson.label === subjectId)
-  return subject ? subject.pretty : subjectId
+  let newSubjectId = subjectId.toLowerCase()
+  newSubjectId = newSubjectId.split('ecrit')[0]
+  newSubjectId = newSubjectId.split('oral')[0]
+
+  let subject = lessonFormats.find(lesson => lesson.label === newSubjectId)
+
+  let spec = ''
+  if (subjectId.includes('ecrit')) {
+    spec = 'écrit'
+  } else if (subjectId.includes('oral')) {
+    spec = 'oral'
+  }
+
+  return subject
+    ? {
+        ...subject,
+        speciality: spec
+      }
+    : {
+        label: subjectId,
+        pretty: subjectId,
+        formats: {
+          default: [subjectId]
+        }
+      }
 }

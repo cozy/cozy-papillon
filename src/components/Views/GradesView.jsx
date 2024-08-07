@@ -195,7 +195,7 @@ export const GradesView = () => {
                         textOverflow: 'ellipsis'
                       }}
                     >
-                      {getSubjectName(subject.subject)}
+                      {getSubjectName(subject.subject).pretty} {getSubjectName(subject.subject).speciality || ''}
                     </Typography>
 
                     <div style={{ display: 'flex', alignItems: 'flex-end' }}>
