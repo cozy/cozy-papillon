@@ -6,9 +6,7 @@ import { getAllGrades } from 'src/queries'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Empty from 'cozy-ui/transpiled/react/Empty'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
-import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
 import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
@@ -369,7 +367,7 @@ export const GradesView = () => {
                     <ListItemText
                       primary={grade.label || 'Note sans titre'}
                       secondary={new Date(grade.date).toLocaleDateString(
-                        'fr-FR',
+                        'default',
                         { year: 'numeric', month: 'long', day: 'numeric' }
                       )}
                     />

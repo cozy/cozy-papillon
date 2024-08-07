@@ -39,5 +39,18 @@
         "description": "Weight of this grade in your overall average"
       }
     }
+  },
+  "Presence": {
+    "title": "Attendance",
+    "delay": "Delay",
+    "absence": "Absence",
+    "presence": "Event",
+    "justified": "Justified",
+    "notJustified": "Not justified",
+    "justifiedUnreceivable": "Justified (unreceivable)",
+    "emptyList": {
+      "title": "No attendance events",
+      "description": "You don't have any attendance events"
+    }
   }
 }

@@ -2,5 +2,8 @@
 export default {
   grades: {
     doctype: 'io.cozy.timeseries.grades'
+  },
+  presence: {
+    doctype: 'io.cozy.calendar.presence'
   }
 }

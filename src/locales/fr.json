@@ -39,5 +39,18 @@
         "description": "Poids de cette note dans le calcul de la moyenne générale"
       }
     }
+  },
+  "Presence": {
+    "title": "Vie scolaire",
+    "delay": "Retard",
+    "absence": "Absence",
+    "presence": "Évènement",
+    "justified": "Justifié(e)",
+    "notJustified": "Injustifié(e)",
+    "justifiedUnreceivable": "Motif non valable",
+    "emptyList": {
+      "title": "Aucun évenement",
+      "description": "Vous n'avez pas d'évenements de vie scolaire"
+    }
   }
 }

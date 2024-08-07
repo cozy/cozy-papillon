@@ -11,3 +11,9 @@ export const getAllGrades = async () => {
 
   return data
 }
+
+export const getAllPresence = async () => {
+  const data = await client.queryAll(Q('io.cozy.calendar.presence'))
+
+  return data
+}
