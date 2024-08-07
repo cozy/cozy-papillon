@@ -14,6 +14,8 @@
       "description": "You don't have any grades for this period",
       "periods": "No available period"
     },
+    "selectPeriod": "Select a period",
+    "selectYear": "Select a year",
     "values": {
       "student": {
         "title": "Student's grade",

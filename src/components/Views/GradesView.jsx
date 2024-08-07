@@ -2,16 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { getSubjectName } from 'src/format/subjectName'
 import { getAllGrades } from 'src/queries'
 
-import Button from 'cozy-ui/transpiled/react/Buttons'
-import {
-  DialogBackButton,
-  DialogCloseButton,
-  useCozyDialog
-} from 'cozy-ui/transpiled/react/CozyDialogs'
-import Dialog, {
-  DialogTitle,
-  DialogActions
-} from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -50,12 +40,38 @@ export const GradesView = () => {
   const [loading, setLoading] = useState(true)
 
   const [periods, setPeriods] = useState([])
-  const [selectedPeriod, setSelectedPeriod] = useState('')
+  const [selectedPeriod, setSelectedPeriod] = useState({})
 
   const [periodMenuOpen, setPeriodMenuOpen] = useState(false)
   const periodDropdownRef = React.useRef(null)
 
+  const [years, setYears] = useState([])
+  const [selectedYear, setSelectedYear] = useState(null)
+
+  const [yearMenuOpen, setYearMenuOpen] = useState(false)
+  const yearDropdownRef = React.useRef(null)
+
   const [openedGrade, setOpenedGrade] = useState(null)
+
+  useEffect(() => {
+    if (selectedPeriod) {
+      // find all periods with same name
+      const periodsWithSameName = periods.filter(
+        period => period.title === selectedPeriod.title
+      )
+
+      // find all years
+      const years = periodsWithSameName.reduce((acc, current) => {
+        if (!acc.includes(current.year)) {
+          acc.push(current.year)
+        }
+        return acc
+      }, [])
+
+      setYears(years)
+      setSelectedYear(years[0])
+    }
+  }, [selectedPeriod])
 
   const findClosestPeriod = (periods, date) => {
     // Finds the period that is the closest to the current date
@@ -70,7 +86,7 @@ export const GradesView = () => {
       }
     }
 
-    return sortedPeriods[0].title
+    return sortedPeriods[0]
   }
 
   const loadGrades = async () => {
@@ -79,13 +95,18 @@ export const GradesView = () => {
       .then(data => {
         // Retreive all periods
         const periods = data.reduce((acc, current) => {
-          if (!acc.includes(current.title)) {
-            acc.push(current.title)
+          if (!acc.filter(period => period.title === current.title).length) {
+            acc.push({
+              title: current.title,
+              startDate: current.startDate,
+              endDate: current.endDate,
+              year: new Date(current.startDate).getFullYear()
+            })
           }
           return acc
         }, [])
         setPeriods(periods)
-        setSelectedPeriod(findClosestPeriod(data, new Date()))
+        setSelectedPeriod(findClosestPeriod(periods, new Date()))
 
         // Set the state
         return setSubjects(data)
@@ -116,7 +137,8 @@ export const GradesView = () => {
             padding: '16px',
             display: 'flex',
             alignItems: 'center',
-            width: '100%'
+            width: '100%',
+            gap: '16px'
           }}
         >
           <DropdownButton
@@ -125,7 +147,7 @@ export const GradesView = () => {
             aria-haspopup="true"
             onClick={() => setPeriodMenuOpen(!periodMenuOpen)}
           >
-            {selectedPeriod || 'Sélectionner une période'}
+            {selectedPeriod.title || t('Grades.selectPeriod')}
           </DropdownButton>
 
           <Menu
@@ -143,23 +165,64 @@ export const GradesView = () => {
             keepMounted
             onClose={() => setPeriodMenuOpen(false)}
           >
-            {periods.map((period, i) => (
-              <MenuItem
-                key={i}
-                onClick={() => {
-                  setSelectedPeriod(period)
-                  setPeriodMenuOpen(false)
-                }}
-              >
-                <ListItemText primary={period} />
-              </MenuItem>
-            ))}
+            {periods
+              .sort((a, b) => a.title.localeCompare(b.title))
+              .map((period, i) => (
+                <MenuItem
+                  key={i}
+                  onClick={() => {
+                    setSelectedPeriod(period)
+                    setPeriodMenuOpen(false)
+                  }}
+                  selected={period.title === selectedPeriod.title}
+                >
+                  <ListItemText primary={period.title} />
+                </MenuItem>
+              ))}
 
             {periods.length === 0 && (
               <MenuItem disabled>
                 <ListItemText primary={t('Grades.emptyList.periods')} />
               </MenuItem>
             )}
+          </Menu>
+
+          <DropdownButton
+            ref={yearDropdownRef}
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={() => setYearMenuOpen(!yearMenuOpen)}
+          >
+            {selectedYear || t('Grades.selectYear')}
+          </DropdownButton>
+
+          <Menu
+            open={yearMenuOpen}
+            anchorEl={yearDropdownRef.current}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left'
+            }}
+            keepMounted
+            onClose={() => setYearMenuOpen(false)}
+          >
+            {years.map((year, i) => (
+              <MenuItem
+                key={i}
+                onClick={() => {
+                  setSelectedYear(year)
+                  setYearMenuOpen(false)
+                }}
+                selected={year === selectedYear}
+              >
+                <ListItemText primary={year} />
+              </MenuItem>
+            ))}
           </Menu>
         </Paper>
 
@@ -190,7 +253,11 @@ export const GradesView = () => {
         )}
 
         {subjects
-          .filter(subject => subject.title === selectedPeriod)
+          .filter(subject => subject.title === selectedPeriod.title)
+          .filter(
+            subject =>
+              new Date(subject.startDate).getFullYear() === selectedYear
+          )
           .map((subject, i) => (
             <List
               key={i}

@@ -1,44 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { getSubjectName } from 'src/format/subjectName'
-import { getAllGrades } from 'src/queries'
+import React from 'react'
 
-import Button from 'cozy-ui/transpiled/react/Buttons'
 import {
   DialogBackButton,
   DialogCloseButton,
   useCozyDialog
 } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Dialog, {
-  DialogTitle,
-  DialogActions
-} from 'cozy-ui/transpiled/react/Dialog'
+import Dialog, { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
-import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
 import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
-import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
-import Menu from 'cozy-ui/transpiled/react/Menu'
-import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
-import Paper from 'cozy-ui/transpiled/react/Paper'
-import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
-import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 export const GradeModal = ({ grade, closeModalAction }) => {
   const { isMobile } = useBreakpoints()
-  const {
-    dialogProps,
-    dialogTitleProps,
-    listItemProps,
-    dividerProps,
-    dialogActionsProps
-  } = useCozyDialog({
+  const { dialogProps, dialogTitleProps } = useCozyDialog({
     size: 'medium',
     classes: {
       paper: 'my-class'
