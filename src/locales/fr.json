@@ -6,6 +6,7 @@
     "presence": "Vie scolaire"
   },
   "Grades": {
+    "title": "Notes",
     "dialogContext": "Informations",
     "date": "Date",
     "valuesList": "Résultats et moyennes",

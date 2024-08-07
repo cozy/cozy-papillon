@@ -6,6 +6,7 @@
     "presence": "Attendance"
   },
   "Grades": {
+    "title": "Grades",
     "dialogContext": "Informations",
     "date": "Date",
     "valuesList": "Results and averages",
