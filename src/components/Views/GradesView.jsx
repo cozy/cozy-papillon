@@ -293,7 +293,10 @@ export const GradesView = () => {
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '14px'
+                        gap: '14px',
+                        flex: 1,
+                        width: '100%',
+                        overflow: 'hidden'
                       }}
                     >
                       <div
