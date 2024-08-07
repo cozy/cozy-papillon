@@ -50,8 +50,6 @@ export const GradeModal = ({ grade, closeModalAction }) => {
 
   const { t } = useI18n()
 
-  console.log(grade)
-
   const valuesList = [
     {
       primary: t('Grades.values.student.title'),
@@ -64,12 +62,12 @@ export const GradeModal = ({ grade, closeModalAction }) => {
       secondary: t('Grades.values.class.description'),
       value: `${parseFloat(grade.value.classAverage).toFixed(2)}`
     },
-    {
+    grade.value.classMax >= 0 && {
       primary: t('Grades.values.max.title'),
       secondary: t('Grades.values.max.description'),
       value: `${parseFloat(grade.value.classMax).toFixed(2)}`
     },
-    {
+    grade.value.classMin >= 0 && {
       primary: t('Grades.values.min.title'),
       secondary: t('Grades.values.min.description'),
       value: `${parseFloat(grade.value.classMin).toFixed(2)}`
@@ -102,42 +100,49 @@ export const GradeModal = ({ grade, closeModalAction }) => {
       </List>
 
       <List subheader={<ListSubheader>{t('Grades.valuesList')}</ListSubheader>}>
-        {valuesList.map((value, i) => (
-          <div key={i}>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Typography
-                    variant="body1"
-                    style={{ fontWeight: value.important ? 'bold' : 'normal' }}
-                  >
-                    {value.primary}
-                  </Typography>
-                }
-                secondary={value.secondary}
-              />
+        {valuesList.map(
+          (value, i) =>
+            value && (
+              <div key={i}>
+                <ListItem>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        variant="body1"
+                        style={{
+                          fontWeight: value.important ? 'bold' : 'normal'
+                        }}
+                      >
+                        {value.primary}
+                      </Typography>
+                    }
+                    secondary={value.secondary}
+                  />
 
-              <div
-                className="cozy-grade-chip"
-                style={{ display: 'flex', alignItems: 'flex-end' }}
-              >
-                <Typography
-                  variant="body1"
-                  color="textPrimary"
-                  style={{ fontWeight: value.important ? 'bold' : 'normal' }}
-                >
-                  {parseFloat(value.value).toFixed(2)}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  /{parseFloat(grade.value.outOf).toFixed(0)}
-                </Typography>
+                  <div
+                    className="cozy-grade-chip"
+                    style={{ display: 'flex', alignItems: 'flex-end' }}
+                  >
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      style={{
+                        fontWeight: value.important ? 'bold' : 'normal'
+                      }}
+                    >
+                      {parseFloat(value.value).toFixed(2)}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      /{parseFloat(grade.value.outOf).toFixed(0)}
+                    </Typography>
+                  </div>
+                </ListItem>
+                {i !== valuesList.length - 1 && (
+                  <Divider component="li" variant="inset" />
+                )}
               </div>
-            </ListItem>
-            {i !== valuesList.length - 1 && (
-              <Divider component="li" variant="inset" />
-            )}
-          </div>
-        ))}
+            )
+        )}
       </List>
     </Dialog>
   )
