@@ -4,21 +4,24 @@ const lessonFormats = [
     pretty: 'Accompagnement personnalisé',
     formats: {
       default: ['accompagnement personnalise', 'accompagnemt perso']
-    }
+    },
+    emoji: '🤝'
   },
   {
     label: 'atprofessionnalis',
     pretty: 'Atelier de professionnalisation',
     formats: {
       default: ['atelier de professionnalisation', 'at professionnalis']
-    }
+    },
+    emoji: '🔧'
   },
   {
     label: 'artsplastiques',
     pretty: 'Arts plastiques',
     formats: {
       default: ['arts plastiques', 'artsplastiques']
-    }
+    },
+    emoji: '🎨'
   },
   {
     label: 'bloc1smdsi',
@@ -28,7 +31,8 @@ const lessonFormats = [
         'bloc 1 support et mise a disposition des services informatiques',
         'bloc 1 smdsi'
       ]
-    }
+    },
+    emoji: '💻'
   },
   {
     label: 'bloc2sisr',
@@ -38,7 +42,8 @@ const lessonFormats = [
         'bloc 2 solutions d’infrastructure systemes et reseaux',
         'bloc 2 sisr'
       ]
-    }
+    },
+    emoji: '🔌'
   },
   {
     label: 'bloc2slam',
@@ -48,14 +53,16 @@ const lessonFormats = [
         'bloc 2 solutions logicielles et applications metiers',
         'bloc 2 slam'
       ]
-    }
+    },
+    emoji: '📱'
   },
   {
     label: 'bloc3tp',
     pretty: 'Bloc 3 : Travaux pratiques',
     formats: {
       default: ['bloc 3 travaux pratiques', 'bloc 3 tp']
-    }
+    },
+    emoji: '🛠️'
   },
   {
     label: 'culecojurmanapp',
@@ -65,14 +72,16 @@ const lessonFormats = [
         'culture economique juridique et manageriale appliquee',
         'cul eco jur man app'
       ]
-    }
+    },
+    emoji: '💼'
   },
   {
     label: 'culturegeneetexpr',
     pretty: 'Culture génerale et expression',
     formats: {
       default: ['culture generale et expression', 'culture gene et expr']
-    }
+    },
+    emoji: '📚'
   },
   {
     label: 'cultecojurmanag',
@@ -82,28 +91,32 @@ const lessonFormats = [
         'culture economique juridique et manageriale',
         'cult eco jur manag'
       ]
-    }
+    },
+    emoji: '💼'
   },
   {
     label: 'dnlsesanglais',
     pretty: 'DNL : Sciences économiques et sociales en anglais',
     formats: {
       default: ['dnl ses anglais']
-    }
+    },
+    emoji: '🇬🇧'
   },
   {
     label: 'educationcivique',
     pretty: 'Éducation civique',
     formats: {
       default: ['education civique', 'education civique']
-    }
+    },
+    emoji: '🗳️'
   },
   {
     label: 'enseignscientifique',
     pretty: 'Enseignement scientifique',
     formats: {
       default: ['enseignement scientifique', 'enseign scientifique']
-    }
+    },
+    emoji: '🔬'
   },
   {
     label: 'edphysiquesport',
@@ -115,21 +128,24 @@ const lessonFormats = [
         'education physique et sportive',
         'eps'
       ]
-    }
+    },
+    emoji: '🏃'
   },
   {
     label: 'educationmusicale',
     pretty: 'Éducation musicale',
     formats: {
       default: ['education musicale', 'education musicale']
-    }
+    },
+    emoji: '🎵'
   },
   {
     label: 'francais',
     pretty: 'Français',
     formats: {
       default: ['français', 'francais']
-    }
+    },
+    emoji: '📝'
   },
   {
     label: 'histoiregeo',
@@ -142,28 +158,32 @@ const lessonFormats = [
         'histoire-geographie',
         'histoire-geographie'
       ]
-    }
+    },
+    emoji: '🌍'
   },
   {
     label: 'humanlitterphilo',
     pretty: 'Humanites, Littérature & Philosophie',
     formats: {
       default: ['humanites litterature philosophie', 'human litter philo']
-    }
+    },
+    emoji: '📖'
   },
   {
     label: 'llcanglmondcont',
     pretty: 'LLCER Anglais Monde Contemporain',
     formats: {
       default: ['llcer anglais monde contemporain', 'llc angl mond cont']
-    }
+    },
+    emoji: '🇬🇧'
   },
   {
     label: 'mathspourinformatq',
     pretty: 'Mathématiques pour l’Informatique',
     formats: {
       default: ['mathematiques pour l’informatique', 'maths pour informatq']
-    }
+    },
+    emoji: '🧮'
   },
   {
     label: 'mathematiques',
@@ -175,21 +195,24 @@ const lessonFormats = [
         'mathematiques 1ere',
         'math 1ere'
       ]
-    }
+    },
+    emoji: '📐'
   },
   {
     label: 'numeriquescinform',
     pretty: 'Numérique & Sciences Informatiques',
     formats: {
       default: ['numerique et sciences informatiques', 'numerique sc inform']
-    }
+    },
+    emoji: '💻'
   },
   {
     label: 'physiquechimie',
     pretty: 'Physique-Chimie',
     formats: {
       default: ['physique chimie', 'phys chim']
-    }
+    },
+    emoji: '⚛️'
   },
   {
     label: 'sceconosociales',
@@ -200,7 +223,8 @@ const lessonFormats = [
         'sc econo sociales',
         'sciences economiques et sociales'
       ]
-    }
+    },
+    emoji: '💰'
   },
   {
     label: 'sciencesvieterre',
@@ -211,48 +235,50 @@ const lessonFormats = [
         'sciences de la vie et de la terre',
         'sciences vie terre'
       ]
-    }
+    },
+    emoji: '🌿'
   },
   {
     label: 'scnumeriqtechnol',
     pretty: 'Sciences Numériques & Technologie',
     formats: {
       default: ['sciences numeriques et technologie', 'sc numeriq technol']
-    }
+    },
+    emoji: '💻'
   },
   {
     label: 'viedeclasse',
     pretty: 'Vie de classe',
     formats: {
       default: ['vie de classe', 'vie de classe']
-    }
+    },
+    emoji: '👥'
   }
 ]
 
 export const getSubjectName = subjectId => {
-  let newSubjectId = subjectId.toLowerCase()
-  newSubjectId = newSubjectId.split('ecrit')[0]
-  newSubjectId = newSubjectId.split('oral')[0]
-
-  let subject = lessonFormats.find(lesson => lesson.label === newSubjectId)
-
-  let spec = ''
-  if (subjectId.includes('ecrit')) {
-    spec = 'écrit'
-  } else if (subjectId.includes('oral')) {
-    spec = 'oral'
+  const specMap = {
+    expressionecrite: 'expression écrite',
+    expressionorale: 'expression orale',
+    comprehensionorale: 'compréhension orale',
+    comprehensionecrite: 'compréhension écrite',
+    ecrit: 'écrit',
+    oral: 'oral'
   }
 
+  const newSubjectId = subjectId
+    .toLowerCase()
+    .split(new RegExp(Object.keys(specMap).join('|')))[0]
+  const subject = lessonFormats.find(lesson => lesson.label === newSubjectId)
+  const speciality =
+    Object.entries(specMap).find(([key]) => subjectId.includes(key))?.[1] || ''
+
   return subject
-    ? {
-        ...subject,
-        speciality: spec
-      }
+    ? { ...subject, speciality }
     : {
         label: subjectId,
-        pretty: subjectId,
-        formats: {
-          default: [subjectId]
-        }
+        pretty: newSubjectId,
+        formats: { default: [subjectId] },
+        speciality
       }
 }

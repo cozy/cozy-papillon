@@ -336,7 +336,9 @@ export const GradesView = () => {
                 <div key={grade.id}>
                   <ListItem button onClick={() => setOpenedGrade(grade)}>
                     <ListItemIcon>
-                      <Icon icon={PieChartIcon} />
+                      <Typography variant="h3" color="textPrimary">
+                        {getSubjectName(subject.subject).emoji || '📚'}
+                      </Typography>
                     </ListItemIcon>
                     <ListItemText
                       primary={grade.label || 'Note sans titre'}
