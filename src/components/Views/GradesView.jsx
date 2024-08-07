@@ -14,7 +14,9 @@ import Dialog, {
 } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
+import Empty from 'cozy-ui/transpiled/react/Empty'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
 import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
 import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
@@ -29,6 +31,7 @@ import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import { GradeModal } from '../Dialogs/GradesModal'
 
 const makeStyle = () => ({
@@ -39,7 +42,7 @@ const makeStyle = () => ({
 })
 
 export const GradesView = () => {
-  // const { t } = useI18n()
+  const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
 
@@ -151,10 +154,25 @@ export const GradesView = () => {
                 <ListItemText primary={period} />
               </MenuItem>
             ))}
+
+            {periods.length === 0 && (
+              <MenuItem disabled>
+                <ListItemText primary={t('Grades.emptyList.periods')} />
+              </MenuItem>
+            )}
           </Menu>
         </Paper>
 
         <Divider />
+
+        {subjects.length === 0 && !loading && (
+          <Empty
+            icon={CozyIcon}
+            title={t('Grades.emptyList.title')}
+            text={t('Grades.emptyList.description')}
+            centered
+          />
+        )}
 
         {loading && <LinearProgress />}
 
@@ -195,7 +213,9 @@ export const GradesView = () => {
                         textOverflow: 'ellipsis'
                       }}
                     >
-                      {getSubjectName(subject.subject).pretty} {getSubjectName(subject.subject).speciality || ''}
+                      {getSubjectName(subject.subject).pretty +
+                        ' ' +
+                        getSubjectName(subject.subject).speciality || ''}
                     </Typography>
 
                     <div style={{ display: 'flex', alignItems: 'flex-end' }}>

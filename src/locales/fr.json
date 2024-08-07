@@ -9,6 +9,11 @@
     "dialogContext": "Informations",
     "date": "Date",
     "valuesList": "Résultats et moyennes",
+    "emptyList": {
+      "title": "Aucune note disponible",
+      "description": "Vous n'avez pas de notes pour cette période",
+      "periods": "Aucune période disponible"
+    },
     "values": {
       "student": {
         "title": "Note de l'élève",

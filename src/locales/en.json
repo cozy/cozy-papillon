@@ -9,6 +9,11 @@
     "dialogContext": "Informations",
     "date": "Date",
     "valuesList": "Results and averages",
+    "emptyList": {
+      "title": "No grades",
+      "description": "You don't have any grades for this period",
+      "periods": "No available period"
+    },
     "values": {
       "student": {
         "title": "Student's grade",
