@@ -30,6 +30,12 @@ const makeStyle = () => ({
   }
 })
 
+const removeDuplicate = (array, key = 'title') => {
+  return array.filter(
+    (item, index, self) => index === self.findIndex(t => t[key] === item[key])
+  )
+}
+
 export const GradesView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -82,7 +88,7 @@ export const GradesView = () => {
 
     for (let i = 0; i < sortedPeriods.length; i++) {
       if (new Date(sortedPeriods[i].startDate) > new Date(date)) {
-        return sortedPeriods[i - 1].title
+        return sortedPeriods[i - 1]
       }
     }
 
@@ -182,7 +188,7 @@ export const GradesView = () => {
                 keepMounted
                 onClose={() => setPeriodMenuOpen(false)}
               >
-                {periods
+                {removeDuplicate(periods, 'title')
                   .sort((a, b) => a.title.localeCompare(b.title))
                   .map((period, i) => (
                     <MenuItem
