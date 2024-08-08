@@ -79,14 +79,14 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Typography
                 variant="h5"
-                style={{ 
+                style={{
                   width: '30px',
                   height: '30px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: '50%',
-                  border: '1px solid var(--secondaryColorLightest)',
+                  border: '1px solid var(--secondaryColorLightest)'
                 }}
               >
                 {getSubjectName(subject.subject).emoji || '📚'}
@@ -133,7 +133,7 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
             })}
           />
         </ListItem>
-        <Divider component="li" variant="inset" /> 
+        <Divider component="li" variant="inset" />
         <ListItem>
           <ListItemIcon>
             <Icon icon={PercentIcon} />
