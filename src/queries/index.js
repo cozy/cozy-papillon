@@ -2,6 +2,11 @@ import doctypes from 'src/doctypes'
 
 import CozyClient, { Q } from 'cozy-client'
 
+const DEFAULT_CACHE_TIMEOUT_QUERIES = 9 * 60 * 1000 // 10 minutes
+const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
+  DEFAULT_CACHE_TIMEOUT_QUERIES
+)
+
 const client = CozyClient.fromDOM({
   doctypes
 })
@@ -23,3 +28,17 @@ export const getAllHomeworks = async () => {
 
   return data
 }
+
+export const buildHomeworkQuery = () => ({
+  definition: () =>
+    Q('io.cozy.calendar.todos')
+      .where({
+        _id: { $gt: null }
+      })
+      .sortBy([{ dueDate: 'desc' }, { _id: 'desc' }])
+      .indexFields(['dueDate', '_id']),
+  options: {
+    as: 'io.cozy.calendar.todos',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
