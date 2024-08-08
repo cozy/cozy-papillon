@@ -318,11 +318,7 @@ export const GradesView = () => {
                       <Typography
                         variant="subtitle1"
                         color="textSecondary"
-                        style={{
-                          textWrap: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
                       >
                         {getSubjectName(subject.subject).pretty || ''}
                       </Typography>
@@ -330,11 +326,7 @@ export const GradesView = () => {
                       <Typography
                         variant="caption"
                         color="textSecondary"
-                        style={{
-                          textWrap: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
                       >
                         {getSubjectName(subject.subject).speciality || ''}
                       </Typography>

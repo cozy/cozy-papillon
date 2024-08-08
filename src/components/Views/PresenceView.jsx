@@ -139,11 +139,7 @@ export const PresenceView = () => {
                       <>
                         <Typography
                           variant="h6"
-                          style={{
-                            textWrap: 'noWrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}
+                          noWrap
                         >
                           {event.xType == 'DELAY'
                             ? t('Presence.delay')
@@ -153,11 +149,7 @@ export const PresenceView = () => {
                         </Typography>
                         <Typography
                           variant="body1"
-                          style={{
-                            textWrap: 'noWrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}
+                          noWrap
                         >
                           {event.label}
                         </Typography>
@@ -167,11 +159,7 @@ export const PresenceView = () => {
                       <Typography
                         variant="body2"
                         color="textSecondary"
-                        style={{
-                          textWrap: 'noWrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
                       >
                         {new Date(event.start).toLocaleString('default', {
                           weekday: 'short',

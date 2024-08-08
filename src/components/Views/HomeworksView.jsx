@@ -180,7 +180,7 @@ export const HomeworksView = () => {
                         </div>
                       }
                       secondary={
-                        <Typography variant="body1" color="textPrimary">
+                        <Typography variant="body1" color="textPrimary" noWrap>
                           {hw.summary}
                         </Typography>
                       }
