@@ -1,17 +1,12 @@
 import cx from 'classnames'
-import React, { useState } from 'react'
+import React from 'react'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
-import {
-  getAllHomeworks,
-  getAllPresence,
-  buildHomeworkQuery
-} from 'src/queries'
+import { buildHomeworkQuery } from 'src/queries'
 
 import { BarCenter } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
-import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
 import List from 'cozy-ui/transpiled/react/List'
@@ -20,31 +15,15 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
-import Menu from 'cozy-ui/transpiled/react/Menu'
-import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
 import Paper from 'cozy-ui/transpiled/react/Paper'
 import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
-import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-const makeStyle = isMobile => ({
-  header: {
-    display: 'flex',
-    padding: '1.5rem 2rem',
-    justifyContent: 'space-between'
-  },
-  titlebar: {
-    maxwidth: '100%',
-    flex: 2
-  }
-})
-
 export const HomeworksView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
-  const style = makeStyle(isMobile)
 
   const homeworksQuery = buildHomeworkQuery()
   const {
