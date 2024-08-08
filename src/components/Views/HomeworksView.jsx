@@ -1,8 +1,15 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
-import { getAllHomeworks, getAllPresence } from 'src/queries'
+import {
+  getAllHomeworks,
+  getAllPresence,
+  buildHomeworkQuery
+} from 'src/queries'
 
+import { BarCenter } from 'cozy-bar'
+import { useQuery } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -38,101 +45,79 @@ export const HomeworksView = () => {
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
 
-  const [homeworks, setHomeworks] = useState([])
-  const [loading, setLoading] = useState(true)
+  const homeworksQuery = buildHomeworkQuery()
+  const { data: homeworks, fetchStatus } = useQuery(
+    homeworksQuery.definition,
+    homeworksQuery.options
+  )
 
-  const fetchHws = async () => {
-    // fetch presence events
-    return getAllHomeworks().then(data => {
-      // group by date
-      let newHws = data.reduce((acc, hw) => {
-        // convert YYYYMMDDT000000Z to YYYY-MM-DDT00:00:00Z
-        const nDate = hw.dueDate.replace(
-          /(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,
-          '$1-$2-$3T$4:$5:$6Z'
-        )
+  const isLoading = fetchStatus == 'loading'
 
-        const date = new Date(nDate)
-        const day = date.toISOString()
-        if (acc.find(group => group.date === day)) {
-          return acc.map(group => {
-            if (group.date === day) {
-              return {
-                ...group,
-                hws: [...group.hws, hw]
-              }
-            }
-            return group
-          })
-        }
+  const newHws = (homeworks ?? []).reduce((acc, hw) => {
+    // convert YYYYMMDDT000000Z to YYYY-MM-DDT00:00:00Z
+    const nDate = hw.dueDate.replace(
+      /(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,
+      '$1-$2-$3T$4:$5:$6Z'
+    )
 
-        return [
-          ...acc,
-          {
-            date: date.toISOString(),
-            hws: [hw]
+    const date = new Date(nDate)
+    const day = date.toISOString()
+    if (acc.find(group => group.date === day)) {
+      return acc.map(group => {
+        if (group.date === day) {
+          return {
+            ...group,
+            hws: [...group.hws, hw]
           }
-        ]
-      }, [])
-
-      console.log(newHws)
-
-      // set current True on the closest date
-      const today = new Date()
-      newHws.sort((a, b) => {
-        return (
-          Math.abs(today - new Date(a.date)) -
-          Math.abs(today - new Date(b.date))
-        )
+        }
+        return group
       })
-      newHws[0].current = true
-
-      // sort back by date
-      newHws.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date)
-      })
-
-      setLoading(false)
-      return setHomeworks(newHws)
-    })
-  }
-
-  React.useEffect(() => {
-    fetchHws()
-  }, [])
-
-  // scroll to current date
-  React.useEffect(() => {
-    const current = document.querySelector('.current')
-    if (current) {
-      current.scrollIntoView()
     }
-  }, [homeworks])
+
+    return [
+      ...acc,
+      {
+        date: date.toISOString(),
+        hws: [hw]
+      }
+    ]
+  }, [])
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <Paper
-          square
-          style={{
-            padding: '16px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Typography variant="h4" color="textPrimary">
-            {t('Homeworks.title')}
-          </Typography>
-        </Paper>
+      <div
+        style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+        className={cx('u-flex', isMobile ? 'test' : 'tets')}
+      >
+        {!isMobile ? (
+          <>
+            <Paper
+              square
+              style={{
+                padding: '16px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography variant="h4" color="textPrimary">
+                {t('Homeworks.title')}
+              </Typography>
+            </Paper>
 
-        <Divider />
+            <Divider />
+          </>
+        ) : (
+          <BarCenter>
+            <Typography variant="h5">{t('Homeworks.title')}</Typography>
+          </BarCenter>
+        )}
 
-        {loading && <LinearProgress />}
+        {isLoading && <LinearProgress />}
 
-        {homeworks.length === 0 && !loading && (
+        {newHws.length === 0 && !isLoading && (
           <Empty
             icon={CozyIcon}
             title={t('Homeworks.emptyList.title')}
@@ -147,7 +132,7 @@ export const HomeworksView = () => {
             overflowY: 'scroll'
           }}
         >
-          {homeworks.map((day, i) => (
+          {newHws.map((day, i) => (
             <List key={i} className={day.current ? 'current' : ''}>
               <ListSubheader>
                 <Typography variant="subtitle2" color="textSecondary">

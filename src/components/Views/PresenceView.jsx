@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { getAllPresence } from 'src/queries'
+import { buildPresenceQuery, getAllPresence } from 'src/queries'
 
+import { BarCenter } from 'cozy-bar'
+import { useQuery } from 'cozy-client'
 import Chip from 'cozy-ui/transpiled/react/Chips'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -37,75 +39,74 @@ export const PresenceView = () => {
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
 
-  const [presenceEvents, setPresenceEvents] = useState([])
-  const [loading, setLoading] = useState(true)
+  const presenceQuery = buildPresenceQuery()
+  const { data: presence, fetchStatus } = useQuery(
+    presenceQuery.definition,
+    presenceQuery.options
+  )
 
-  const fetchPresenceEvents = async () => {
-    // fetch presence events
-    return getAllPresence().then(data => {
-      const sorted = data.sort((a, b) => {
-        return new Date(a.start) - new Date(b.start)
-      })
+  console.log(presence)
 
-      const monthGroups = sorted.reduce((acc, event) => {
-        const month = new Date(event.start).getMonth()
-        if (acc.find(group => group.month === month)) {
-          return acc.map(group => {
-            if (group.month === month) {
-              return {
-                ...group,
-                events: [...group.events, event]
-              }
-            }
-            return group
-          })
-        }
-        return [
-          ...acc,
-          {
-            month,
-            prettyMonth: new Date(event.start).toLocaleString('default', {
-              month: 'long',
-              year: 'numeric'
-            }),
-            events: [event]
+  const isLoading = fetchStatus == 'loading'
+
+  const presenceEvents = (presence ?? []).reduce((acc, event) => {
+    const month = new Date(event.start).getMonth()
+    if (acc.find(group => group.month === month)) {
+      return acc.map(group => {
+        if (group.month === month) {
+          return {
+            ...group,
+            events: [...group.events, event]
           }
-        ]
-      }, [])
-
-      setLoading(false)
-      return setPresenceEvents(monthGroups)
-    })
-  }
-
-  React.useEffect(() => {
-    fetchPresenceEvents()
+        }
+        return group
+      })
+    }
+    return [
+      ...acc,
+      {
+        month,
+        prettyMonth: new Date(event.start).toLocaleString('default', {
+          month: 'long',
+          year: 'numeric'
+        }),
+        events: [event]
+      }
+    ]
   }, [])
 
   return (
     <>
       <div>
-        <Paper
-          square
-          style={{
-            padding: '16px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Typography variant="h4" color="textPrimary">
-            {t('Presence.title')}
-          </Typography>
-        </Paper>
+        {!isMobile ? (
+          <>
+            <Paper
+              square
+              style={{
+                padding: '16px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography variant="h4" color="textPrimary">
+                {t('Presence.title')}
+              </Typography>
+            </Paper>
 
-        <Divider />
+            <Divider />
+          </>
+        ) : (
+          <BarCenter>
+            <Typography variant="h5">{t('Presence.title')}</Typography>
+          </BarCenter>
+        )}
 
-        {loading && <LinearProgress />}
+        {isLoading && <LinearProgress />}
 
-        {presenceEvents.length === 0 && !loading && (
+        {presenceEvents.length === 0 && !isLoading && (
           <Empty
             icon={<CozyIcon />}
             title={t('Presence.emptyList.title')}
@@ -137,30 +138,20 @@ export const PresenceView = () => {
                   <ListItemText
                     primary={
                       <>
-                        <Typography
-                          variant="h6"
-                          noWrap
-                        >
+                        <Typography variant="h6" noWrap>
                           {event.xType == 'DELAY'
                             ? t('Presence.delay')
                             : event.xType == 'ABSENCE'
                             ? t('Presence.absence')
                             : t('Presence.presence')}
                         </Typography>
-                        <Typography
-                          variant="body1"
-                          noWrap
-                        >
+                        <Typography variant="body1" noWrap>
                           {event.label}
                         </Typography>
                       </>
                     }
                     secondary={
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        noWrap
-                      >
+                      <Typography variant="body2" color="textSecondary" noWrap>
                         {new Date(event.start).toLocaleString('default', {
                           weekday: 'short',
                           month: 'long',
