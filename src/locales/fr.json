@@ -5,6 +5,9 @@
     "grades": "Notes",
     "presence": "Vie scolaire"
   },
+  "Homeworks": {
+    "title": "Devoirs"
+  },
   "Grades": {
     "title": "Notes",
     "dialogContext": "Informations",

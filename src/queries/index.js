@@ -17,3 +17,9 @@ export const getAllPresence = async () => {
 
   return data
 }
+
+export const getAllHomeworks = async () => {
+  const data = await client.queryAll(Q('io.cozy.calendar.todos'))
+
+  return data
+}

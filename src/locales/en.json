@@ -5,6 +5,9 @@
     "grades": "Grades",
     "presence": "Attendance"
   },
+  "Homeworks": {
+    "title": "Homeworks"
+  },
   "Grades": {
     "title": "Grades",
     "dialogContext": "Informations",

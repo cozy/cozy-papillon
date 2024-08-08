@@ -31,7 +31,7 @@ const makeStyle = isMobile => ({
   }
 })
 
-export const PresenceView = () => {
+export const TimetableView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
