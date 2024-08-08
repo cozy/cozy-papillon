@@ -39,6 +39,7 @@ export const HomeworksView = () => {
   const style = makeStyle(isMobile)
 
   const [homeworks, setHomeworks] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const fetchHws = async () => {
     // fetch presence events
@@ -91,6 +92,7 @@ export const HomeworksView = () => {
         return new Date(a.date) - new Date(b.date)
       })
 
+      setLoading(false)
       return setHomeworks(newHws)
     })
   }
@@ -127,6 +129,16 @@ export const HomeworksView = () => {
         </Paper>
 
         <Divider />
+
+        {loading && <LinearProgress />}
+
+        {homeworks.length === 0 && !loading && (
+          <Empty
+            icon={CozyIcon}
+            title={t('Homeworks.emptyList.title')}
+            description={t('Homeworks.emptyList.description')}
+          />
+        )}
 
         <div
           style={{

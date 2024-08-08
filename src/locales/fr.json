@@ -6,7 +6,11 @@
     "presence": "Vie scolaire"
   },
   "Homeworks": {
-    "title": "Devoirs"
+    "title": "Devoirs",
+    "emptyList": {
+      "title": "Aucun devoir",
+      "description": "Il n'y a pas de devoirs sauvegardés dans votre compte"
+    }
   },
   "Grades": {
     "title": "Notes",
