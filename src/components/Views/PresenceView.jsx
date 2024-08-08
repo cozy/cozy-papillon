@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { buildPresenceQuery, getAllPresence } from 'src/queries'
 
+import { BarCenter } from 'cozy-bar'
+import { useQuery } from 'cozy-client'
 import Chip from 'cozy-ui/transpiled/react/Chips'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -19,7 +21,6 @@ import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { useQuery } from 'cozy-client'
 
 const makeStyle = isMobile => ({
   header: {
@@ -77,23 +78,31 @@ export const PresenceView = () => {
   return (
     <>
       <div>
-        <Paper
-          square
-          style={{
-            padding: '16px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Typography variant="h4" color="textPrimary">
-            {t('Presence.title')}
-          </Typography>
-        </Paper>
+        {!isMobile ? (
+          <>
+            <Paper
+              square
+              style={{
+                padding: '16px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography variant="h4" color="textPrimary">
+                {t('Presence.title')}
+              </Typography>
+            </Paper>
 
-        <Divider />
+            <Divider />
+          </>
+        ) : (
+          <BarCenter>
+            <Typography variant="h5">{t('Presence.title')}</Typography>
+          </BarCenter>
+        )}
 
         {isLoading && <LinearProgress />}
 
@@ -129,30 +138,20 @@ export const PresenceView = () => {
                   <ListItemText
                     primary={
                       <>
-                        <Typography
-                          variant="h6"
-                          noWrap
-                        >
+                        <Typography variant="h6" noWrap>
                           {event.xType == 'DELAY'
                             ? t('Presence.delay')
                             : event.xType == 'ABSENCE'
                             ? t('Presence.absence')
                             : t('Presence.presence')}
                         </Typography>
-                        <Typography
-                          variant="body1"
-                          noWrap
-                        >
+                        <Typography variant="body1" noWrap>
                           {event.label}
                         </Typography>
                       </>
                     }
                     secondary={
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        noWrap
-                      >
+                      <Typography variant="body2" color="textSecondary" noWrap>
                         {new Date(event.start).toLocaleString('default', {
                           weekday: 'short',
                           month: 'long',

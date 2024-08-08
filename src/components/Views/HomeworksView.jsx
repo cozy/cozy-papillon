@@ -8,7 +8,7 @@ import {
   buildHomeworkQuery
 } from 'src/queries'
 
-import { BarRight } from 'cozy-bar'
+import { BarCenter } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
@@ -89,23 +89,31 @@ export const HomeworksView = () => {
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
         className={cx('u-flex', isMobile ? 'test' : 'tets')}
       >
-        <Paper
-          square
-          style={{
-            padding: '16px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Typography variant="h4" color="textPrimary">
-            {t('Homeworks.title')}
-          </Typography>
-        </Paper>
+        {!isMobile ? (
+          <>
+            <Paper
+              square
+              style={{
+                padding: '16px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography variant="h4" color="textPrimary">
+                {t('Homeworks.title')}
+              </Typography>
+            </Paper>
 
-        <Divider />
+            <Divider />
+          </>
+        ) : (
+          <BarCenter>
+            <Typography variant="h5">{t('Homeworks.title')}</Typography>
+          </BarCenter>
+        )}
 
         {isLoading && <LinearProgress />}
 
