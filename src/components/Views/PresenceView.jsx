@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { buildPresenceQuery, getAllPresence } from 'src/queries'
+import React from 'react'
+import { buildPresenceQuery } from 'src/queries'
 
 import { BarCenter } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
@@ -22,30 +22,15 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-const makeStyle = isMobile => ({
-  header: {
-    display: 'flex',
-    padding: '1.5rem 2rem',
-    justifyContent: 'space-between'
-  },
-  titlebar: {
-    maxwidth: '100%',
-    flex: 2
-  }
-})
-
 export const PresenceView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
-  const style = makeStyle(isMobile)
 
   const presenceQuery = buildPresenceQuery()
   const { data: presence, fetchStatus } = useQuery(
     presenceQuery.definition,
     presenceQuery.options
   )
-
-  console.log(presence)
 
   const isLoading = fetchStatus == 'loading'
 
