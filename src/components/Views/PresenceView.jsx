@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { getAllPresence } from 'src/queries'
+import { buildPresenceQuery, getAllPresence } from 'src/queries'
 
 import Chip from 'cozy-ui/transpiled/react/Chips'
 import Divider from 'cozy-ui/transpiled/react/Divider'
@@ -19,6 +19,7 @@ import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useQuery } from 'cozy-client'
 
 const makeStyle = isMobile => ({
   header: {
@@ -37,49 +38,40 @@ export const PresenceView = () => {
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
 
-  const [presenceEvents, setPresenceEvents] = useState([])
-  const [loading, setLoading] = useState(true)
+  const presenceQuery = buildPresenceQuery()
+  const { data: presence, fetchStatus } = useQuery(
+    presenceQuery.definition,
+    presenceQuery.options
+  )
 
-  const fetchPresenceEvents = async () => {
-    // fetch presence events
-    return getAllPresence().then(data => {
-      const sorted = data.sort((a, b) => {
-        return new Date(a.start) - new Date(b.start)
-      })
+  console.log(presence)
 
-      const monthGroups = sorted.reduce((acc, event) => {
-        const month = new Date(event.start).getMonth()
-        if (acc.find(group => group.month === month)) {
-          return acc.map(group => {
-            if (group.month === month) {
-              return {
-                ...group,
-                events: [...group.events, event]
-              }
-            }
-            return group
-          })
-        }
-        return [
-          ...acc,
-          {
-            month,
-            prettyMonth: new Date(event.start).toLocaleString('default', {
-              month: 'long',
-              year: 'numeric'
-            }),
-            events: [event]
+  const isLoading = fetchStatus == 'loading'
+
+  const presenceEvents = (presence ?? []).reduce((acc, event) => {
+    const month = new Date(event.start).getMonth()
+    if (acc.find(group => group.month === month)) {
+      return acc.map(group => {
+        if (group.month === month) {
+          return {
+            ...group,
+            events: [...group.events, event]
           }
-        ]
-      }, [])
-
-      setLoading(false)
-      return setPresenceEvents(monthGroups)
-    })
-  }
-
-  React.useEffect(() => {
-    fetchPresenceEvents()
+        }
+        return group
+      })
+    }
+    return [
+      ...acc,
+      {
+        month,
+        prettyMonth: new Date(event.start).toLocaleString('default', {
+          month: 'long',
+          year: 'numeric'
+        }),
+        events: [event]
+      }
+    ]
   }, [])
 
   return (
@@ -103,9 +95,9 @@ export const PresenceView = () => {
 
         <Divider />
 
-        {loading && <LinearProgress />}
+        {isLoading && <LinearProgress />}
 
-        {presenceEvents.length === 0 && !loading && (
+        {presenceEvents.length === 0 && !isLoading && (
           <Empty
             icon={<CozyIcon />}
             title={t('Presence.emptyList.title')}

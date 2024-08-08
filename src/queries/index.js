@@ -42,3 +42,17 @@ export const buildHomeworkQuery = () => ({
     fetchPolicy: defaultFetchPolicy
   }
 })
+
+export const buildPresenceQuery = () => ({
+  definition: () =>
+    Q('io.cozy.calendar.presence')
+      .where({
+        _id: { $gt: null }
+      })
+      .sortBy([{ start: 'desc' }, { _id: 'desc' }])
+      .indexFields(['start', '_id']),
+  options: {
+    as: 'io.cozy.calendar.presence',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
