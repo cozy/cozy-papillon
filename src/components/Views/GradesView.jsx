@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
-import { getAllGrades } from 'src/queries'
+import { buildGradesQuery, getAllGrades } from 'src/queries'
 
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
@@ -22,6 +22,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { GradeModal } from '../Dialogs/GradesModal'
+import { useQuery } from 'cozy-client'
 
 const makeStyle = () => ({
   cozyGradeChip: {
@@ -41,91 +42,24 @@ export const GradesView = () => {
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
 
-  const [subjects, setSubjects] = useState([])
-  const [loading, setLoading] = useState(true)
+  const homeworksQuery = buildGradesQuery()
+  const { data: subjects, fetchStatus } = useQuery(
+    homeworksQuery.definition,
+    homeworksQuery.options
+  )
 
-  const [periods, setPeriods] = useState([])
-  const [selectedPeriod, setSelectedPeriod] = useState({})
+  const isLoading = fetchStatus == 'loading'
 
+  const [periods, setPeriods] = useState(['Trimestre 1'])
+  const [selectedPeriod, setSelectedPeriod] = useState('Trimestre 1')
   const [periodMenuOpen, setPeriodMenuOpen] = useState(false)
   const periodDropdownRef = React.useRef(null)
-
-  const [years, setYears] = useState([])
-  const [selectedYear, setSelectedYear] = useState(null)
-
+  const [years, setYears] = useState(['2023'])
+  const [selectedYear, setSelectedYear] = useState('2023')
   const [yearMenuOpen, setYearMenuOpen] = useState(false)
   const yearDropdownRef = React.useRef(null)
-
   const [openedGrade, setOpenedGrade] = useState(null)
   const [openedGradeSubject, setOpenedGradeSubject] = useState(null)
-
-  useEffect(() => {
-    if (selectedPeriod) {
-      // find all periods with same name
-      const periodsWithSameName = periods.filter(
-        period => period.title === selectedPeriod.title
-      )
-
-      // find all years
-      const years = periodsWithSameName.reduce((acc, current) => {
-        if (!acc.includes(current.year)) {
-          acc.push(current.year)
-        }
-        return acc
-      }, [])
-
-      setYears(years)
-      setSelectedYear(years[0])
-    }
-  }, [selectedPeriod])
-
-  const findClosestPeriod = (periods, date) => {
-    // Finds the period that is the closest to the current date
-
-    const sortedPeriods = periods.sort((a, b) => {
-      return new Date(a.startDate) - new Date(b.startDate)
-    })
-
-    for (let i = 0; i < sortedPeriods.length; i++) {
-      if (new Date(sortedPeriods[i].startDate) > new Date(date)) {
-        return sortedPeriods[i - 1]
-      }
-    }
-
-    return sortedPeriods[0]
-  }
-
-  const loadGrades = async () => {
-    // Fetches all grades and sets the state
-    return getAllGrades()
-      .then(data => {
-        // Retreive all periods
-        const periods = data.reduce((acc, current) => {
-          if (!acc.filter(period => period.title === current.title).length) {
-            acc.push({
-              title: current.title,
-              startDate: current.startDate,
-              endDate: current.endDate,
-              year: new Date(current.startDate).getFullYear()
-            })
-          }
-          return acc
-        }, [])
-        setPeriods(periods)
-        setSelectedPeriod(findClosestPeriod(periods, new Date()))
-
-        // Set the state
-        return setSubjects(data)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
-
-  useEffect(() => {
-    // Fetch grades on mount
-    loadGrades()
-  }, [])
 
   return (
     <>
@@ -156,7 +90,7 @@ export const GradesView = () => {
             {t('Grades.title')}
           </Typography>
 
-          {!loading && (
+          {!isLoading && (
             <div
               style={{
                 display: 'flex',
@@ -170,7 +104,7 @@ export const GradesView = () => {
                 aria-haspopup="true"
                 onClick={() => setPeriodMenuOpen(!periodMenuOpen)}
               >
-                {selectedPeriod.title || t('Grades.selectPeriod')}
+                {selectedPeriod || t('Grades.selectPeriod')}
               </DropdownButton>
 
               <Menu
@@ -197,7 +131,7 @@ export const GradesView = () => {
                         setSelectedPeriod(period)
                         setPeriodMenuOpen(false)
                       }}
-                      selected={period.title === selectedPeriod.title}
+                      selected={period.title === selectedPeriod}
                     >
                       <ListItemText primary={period.title} />
                     </MenuItem>
@@ -253,7 +187,7 @@ export const GradesView = () => {
 
         <Divider />
 
-        {subjects.length === 0 && !loading && (
+        {(subjects ?? []).length === 0 && !isLoading && (
           <Empty
             icon={CozyIcon}
             title={t('Grades.emptyList.title')}
@@ -262,9 +196,9 @@ export const GradesView = () => {
           />
         )}
 
-        {loading && <LinearProgress />}
+        {isLoading && <LinearProgress />}
 
-        {loading && (
+        {isLoading && (
           <>
             {[...Array(4)].map((elementInArray, index) => (
               <ListSkeleton
@@ -277,12 +211,7 @@ export const GradesView = () => {
           </>
         )}
 
-        {subjects
-          .filter(subject => subject.title === selectedPeriod.title)
-          .filter(
-            subject =>
-              new Date(subject.startDate).getFullYear() === selectedYear
-          )
+        {(subjects ?? [])
           .map((subject, i) => (
             <List
               key={i}

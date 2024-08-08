@@ -11,24 +11,6 @@ const client = CozyClient.fromDOM({
   doctypes
 })
 
-export const getAllGrades = async () => {
-  const data = await client.queryAll(Q('io.cozy.timeseries.grades'))
-
-  return data
-}
-
-export const getAllPresence = async () => {
-  const data = await client.queryAll(Q('io.cozy.calendar.presence'))
-
-  return data
-}
-
-export const getAllHomeworks = async () => {
-  const data = await client.queryAll(Q('io.cozy.calendar.todos'))
-
-  return data
-}
-
 export const buildHomeworkQuery = () => ({
   definition: () =>
     Q('io.cozy.calendar.todos')
@@ -39,6 +21,15 @@ export const buildHomeworkQuery = () => ({
       .indexFields(['dueDate', '_id']),
   options: {
     as: 'io.cozy.calendar.todos',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+export const buildGradesQuery = () => ({
+  definition: () =>
+    Q('io.cozy.timeseries.grades'),
+  options: {
+    as: 'io.cozy.timeseries.grades',
     fetchPolicy: defaultFetchPolicy
   }
 })
