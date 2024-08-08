@@ -10,7 +10,8 @@
     "emptyList": {
       "title": "No homeworks found",
       "description": "There are no homeworks saved in your account"
-    }
+    },
+    "loadMore": "Load more homeworks"
   },
   "Grades": {
     "title": "Grades",

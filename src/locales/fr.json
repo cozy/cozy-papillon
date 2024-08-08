@@ -10,7 +10,8 @@
     "emptyList": {
       "title": "Aucun devoir",
       "description": "Il n'y a pas de devoirs sauvegardés dans votre compte"
-    }
+    },
+    "loadMore": "Charger plus de devoirs"
   },
   "Grades": {
     "title": "Notes",

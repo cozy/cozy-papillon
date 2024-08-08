@@ -19,6 +19,7 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
+import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
 import Menu from 'cozy-ui/transpiled/react/Menu'
 import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
 import Paper from 'cozy-ui/transpiled/react/Paper'
@@ -46,10 +47,12 @@ export const HomeworksView = () => {
   const style = makeStyle(isMobile)
 
   const homeworksQuery = buildHomeworkQuery()
-  const { data: homeworks, fetchStatus } = useQuery(
-    homeworksQuery.definition,
-    homeworksQuery.options
-  )
+  const {
+    data: homeworks,
+    fetchStatus,
+    hasMore,
+    fetchMore
+  } = useQuery(homeworksQuery.definition, homeworksQuery.options)
 
   const isLoading = fetchStatus == 'loading'
 
@@ -191,6 +194,10 @@ export const HomeworksView = () => {
               ))}
             </List>
           ))}
+
+          {hasMore && (
+            <LoadMore label={t('Homeworks.loadMore')} fetchMore={fetchMore} />
+          )}
         </div>
       </div>
     </>
