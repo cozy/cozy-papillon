@@ -25,9 +25,13 @@ export const buildHomeworkQuery = () => ({
   }
 })
 
-export const buildGradesQuery = () => ({
+export const buildGradesQuery = period => ({
   definition: () =>
-    Q('io.cozy.timeseries.grades'),
+    Q('io.cozy.timeseries.grades')
+      .where({
+        title: period || { $gt: null }
+      })
+      .indexFields(['title']),
   options: {
     as: 'io.cozy.timeseries.grades',
     fetchPolicy: defaultFetchPolicy
