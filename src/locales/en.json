@@ -7,7 +7,14 @@
   },
   "Timetable": {
     "title": "Timetable",
-    "to": "to"
+    "to": "to",
+    "start": "Start",
+    "end": "End",
+    "location": "Location",
+    "teacher": "Teacher",
+    "status": "Status",
+    "duration": "Duration",
+    "informations": "Informations"
   },
   "Homeworks": {
     "title": "Homeworks",
