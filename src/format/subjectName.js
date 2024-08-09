@@ -256,6 +256,13 @@ const lessonFormats = [
   }
 ]
 
+const CapitalizeFirstLetter = string => {
+  // if less than 4 characters, capitalize all
+  if (string.length < 4) return string.toUpperCase()
+
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 export const getSubjectName = subjectId => {
   const specMap = {
     expressionecrite: 'expression écrite',
@@ -278,7 +285,7 @@ export const getSubjectName = subjectId => {
     ? { ...subject, speciality }
     : {
         label: subjectId,
-        pretty: newSubjectId,
+        pretty: CapitalizeFirstLetter(newSubjectId),
         formats: { default: [subjectId] },
         speciality
       }

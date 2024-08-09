@@ -5,6 +5,7 @@ import AppLayout from 'src/components/AppLayout'
 import { GradesView } from './Views/GradesView'
 import { PresenceView } from './Views/PresenceView'
 import { HomeworksView } from './Views/HomeworksView'
+import { TimetableView } from './Views/TimetableView'
 
 const routes = [
   {
@@ -12,7 +13,8 @@ const routes = [
     element: <AppLayout />,
     children: [
       {
-        path: ''
+        path: '',
+        element: <TimetableView />
       }
     ]
   },

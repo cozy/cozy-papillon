@@ -5,6 +5,21 @@ const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
   DEFAULT_CACHE_TIMEOUT_QUERIES
 )
 
+export const buildTimetableQuery = (start, end) => ({
+  definition: () =>
+    Q('io.cozy.calendar.event')
+      .where({
+        _id: { $gt: null },
+        start: start ? { $gte: start } : { $gt: null },
+        end: end ? { $lte: end } : { $lt: null }
+      })
+      .indexFields(['start', 'end', '_id']),
+  options: {
+    as: 'io.cozy.calendar.event/' + start + '/' + end,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 export const buildHomeworkQuery = () => ({
   definition: () =>
     Q('io.cozy.calendar.todos')
