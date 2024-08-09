@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 import { buildGradesQuery } from 'src/queries'
@@ -45,15 +45,40 @@ export const GradesView = () => {
 
   const isLoading = fetchStatus == 'loading'
 
-  const periods = [...new Set((subjects ?? []).map(subject => subject.title))]
-  const years = [
+  const allPeriods = [
     ...new Set(
-      (subjects ?? []).map(subject => new Date(subject.startDate).getFullYear())
+      (subjects ?? []).map(subject => ({
+        title: subject.title,
+        year: new Date(subject.startDate).getFullYear()
+      }))
     )
   ]
 
+  const periods = [...new Set((allPeriods ?? []).map(period => period.title))]
+  const years = [...new Set((allPeriods ?? []).map(period => period.year))]
+
   const [selectedPeriod, setSelectedPeriod] = useState('')
   const [selectedYear, setSelectedYear] = useState('')
+
+  // Update year when period changes
+  const updateYear = (period, year) => {
+    const existsInYear = allPeriods.some(
+      p => p.title === period && p.year === year
+    )
+
+    if (!existsInYear) {
+      const availableYear = allPeriods.find(p => p.title === period)?.year
+      if (availableYear) {
+        setSelectedYear(availableYear)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (selectedPeriod && selectedYear) {
+      updateYear(selectedPeriod, selectedYear)
+    }
+  }, [selectedPeriod, selectedYear])
 
   if (selectedPeriod === '' && periods.length > 0) {
     setSelectedPeriod(periods[0])
@@ -85,6 +110,7 @@ export const GradesView = () => {
     periodMenuOpen,
     setYearMenuOpen,
     yearMenuOpen,
+    allPeriods: allPeriods,
     periods,
     years,
     t
@@ -157,25 +183,6 @@ export const GradesView = () => {
             centered
           />
         )}
-
-        {(subjects ?? [])
-          .filter(subject => {
-            return subject.title === selectedPeriod
-          })
-          .filter(subject => {
-            return (
-              new Date(subject.startDate).getFullYear() ===
-              parseInt(selectedYear)
-            )
-          }).length === 0 &&
-          !isLoading && (
-            <Empty
-              icon={CozyIcon}
-              title={t('Grades.emptyList.title')}
-              text={t('Grades.emptyList.description')}
-              centered
-            />
-          )}
 
         {isLoading && (
           <>
@@ -321,6 +328,7 @@ const PeriodSelector = ({
   periodMenuOpen,
   setYearMenuOpen,
   yearMenuOpen,
+  allPeriods,
   periods,
   years,
   t
@@ -349,6 +357,8 @@ const PeriodSelector = ({
         setSelectedYear={setSelectedYear}
         setYearMenuOpen={setYearMenuOpen}
         yearMenuOpen={yearMenuOpen}
+        allPeriods={allPeriods}
+        selectedPeriod={selectedPeriod}
         years={years}
         t={t}
       />
@@ -419,9 +429,11 @@ const PeriodSelectorButton = ({
 const YearSelectorButton = ({
   yearDropdownRef,
   selectedYear,
+  selectedPeriod,
   setSelectedYear,
   setYearMenuOpen,
   yearMenuOpen,
+  allPeriods,
   years,
   t
 }) => {
@@ -451,7 +463,11 @@ const YearSelectorButton = ({
         keepMounted
         onClose={() => setYearMenuOpen(false)}
       >
-        {years.map((year, i) => (
+        {[
+          ...new Set(
+            allPeriods.filter(p => p.title === selectedPeriod).map(p => p.year)
+          )
+        ].map((year, i) => (
           <MenuItem
             key={i}
             onClick={() => {
