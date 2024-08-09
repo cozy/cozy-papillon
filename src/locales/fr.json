@@ -7,7 +7,14 @@
   },
   "Timetable": {
     "title": "Emploi du temps",
-    "to": "au"
+    "to": "au",
+    "start": "Début",
+    "end": "Fin",
+    "location": "Lieu",
+    "teacher": "Professeur",
+    "status": "Statut",
+    "duration": "Durée",
+    "informations": "Informations"
   },
   "Homeworks": {
     "title": "Travail à faire",

@@ -23,6 +23,8 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { TimetableModal } from '../Dialogs/TimetableModal'
+
 const makeStyle = isMobile => ({
   header: {
     display: 'flex',
@@ -92,10 +94,19 @@ export const TimetableView = () => {
     ]
   }, [])
 
-  console.log(timetable)
+  const [openedCourse, setOpenedCourse] = useState(null)
 
   return (
     <>
+      {openedCourse && (
+        <TimetableModal
+          course={openedCourse}
+          closeModalAction={() => {
+            setOpenedCourse(null)
+          }}
+        />
+      )}
+
       <div>
         {!isMobile ? (
           <>
@@ -181,7 +192,13 @@ export const TimetableView = () => {
                       group => group.date === day.toISOString()
                     ) ?? { courses: [] }
                   )?.courses.map(course => (
-                    <ListItem key={course._id} button>
+                    <ListItem
+                      key={course._id}
+                      button
+                      onClick={() => {
+                        setOpenedCourse(course)
+                      }}
+                    >
                       <div
                         style={{
                           display: 'flex',
