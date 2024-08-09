@@ -5,6 +5,10 @@
     "grades": "Grades",
     "presence": "Attendance"
   },
+  "Timetable": {
+    "title": "Timetable",
+    "to": "to"
+  },
   "Homeworks": {
     "title": "Homeworks",
     "emptyList": {

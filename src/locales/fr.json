@@ -5,6 +5,10 @@
     "grades": "Notes",
     "presence": "Vie scolaire"
   },
+  "Timetable": {
+    "title": "Emploi du temps",
+    "to": "au"
+  },
   "Homeworks": {
     "title": "Travail à faire",
     "emptyList": {
