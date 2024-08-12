@@ -283,7 +283,9 @@ const CozyDatePickerInline = ({ date: def, onDateChange, textVariant }) => {
   const [yearMenuOpen, setYearMenuOpen] = useState(false)
 
   const getDaysInMonth = month => {
-    return new Date(date.getFullYear(), month, 0).getDate()
+    const res = new Date(date.getFullYear(), month, 0).getDate()
+    console.log(res)
+    return res
   }
 
   const getMondaysInMonth = (year, month) => {
@@ -306,7 +308,10 @@ const CozyDatePickerInline = ({ date: def, onDateChange, textVariant }) => {
 
     let newDayDate = dayDate
     if (!mondaysInNewMonth.includes(dayDate)) {
-      newDayDate = mondaysInNewMonth[0]
+      // Find the closest Monday in the new month
+      newDayDate = mondaysInNewMonth.reduce((closest, current) =>
+        Math.abs(current - dayDate) < Math.abs(closest - dayDate) ? current : closest
+      )
     }
 
     setDate(new Date(yearDate, monthDate, newDayDate))
@@ -353,7 +358,7 @@ const CozyDatePickerInline = ({ date: def, onDateChange, textVariant }) => {
         open={dayMenuOpen}
         anchorEl={daySelectRef.current}
         keepMounted
-        onClose={() => setDayMenuOpen(false)}
+        onClose={() => setDayMenuOpen(false)} 
       >
         {getMondaysInMonth(yearDate, monthDate + 1).map(i => (
           <MenuItem
@@ -364,7 +369,7 @@ const CozyDatePickerInline = ({ date: def, onDateChange, textVariant }) => {
               setDayMenuOpen(false)
             }}
           >
-            {i} {t('Timetable.to')} {(i + 6) % getDaysInMonth(monthDate + 1)}
+            {i} {t('Timetable.to')} {(i + 6) % getDaysInMonth(monthDate)}
           </MenuItem>
         ))}
       </Menu>
