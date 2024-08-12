@@ -7,7 +7,7 @@ import {
   DialogCloseButton,
   useCozyDialog
 } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Dialog, { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
+import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
@@ -26,17 +26,6 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 export const GradeModal = ({ grade, subject, closeModalAction }) => {
-  const { isMobile } = useBreakpoints()
-  const { dialogProps, dialogTitleProps } = useCozyDialog({
-    size: 'medium',
-    classes: {
-      paper: 'my-class'
-    },
-    open,
-    onClose: closeModalAction,
-    disableEnforceFocus: true
-  })
-
   const { t } = useI18n()
 
   const valuesList = [
@@ -68,12 +57,12 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
   ]
 
   return (
-    <Dialog {...dialogProps}>
-      {!isMobile && <DialogCloseButton onClick={closeModalAction} />}
-
-      <DialogTitle {...dialogTitleProps}>
-        {isMobile ? <DialogBackButton onClick={closeModalAction} /> : null}
-
+    <Dialog
+      open
+      onClose={() => closeModalAction()}
+      disableGutters
+      
+      title={
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
           <MuiBreadcrumbs>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -113,103 +102,105 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
             </Typography>
           </div>
         </div>
-      </DialogTitle>
+      }
 
-      <Divider />
-
-      <List
-        subheader={<ListSubheader>{t('Grades.dialogContext')}</ListSubheader>}
-      >
-        <ListItem>
-          <ListItemIcon>
-            <Icon icon={CalendarIcon} />
-          </ListItemIcon>
-          <ListItemText
-            primary={t('Grades.date')}
-            secondary={new Date(grade.date).toLocaleDateString('fr-FR', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          />
-        </ListItem>
-        <Divider component="li" variant="inset" />
-        <ListItem>
-          <ListItemIcon>
-            <Icon icon={PercentIcon} />
-          </ListItemIcon>
-          <ListItemText
-            primary={t('Grades.values.coefficient.title')}
-            secondary={t('Grades.values.coefficient.description')}
-          />
-
-          <div
-            className="cozy-grade-chip"
-            style={{ display: 'flex', alignItems: 'flex-end' }}
+      content={
+        <div>
+          <List
+            subheader={<ListSubheader>{t('Grades.dialogContext')}</ListSubheader>}
           >
-            <Typography variant="body2" color="textSecondary">
-              x
-            </Typography>
-            <Typography
-              variant="body1"
-              color="textPrimary"
-              style={{ fontWeight: 'bold' }}
-            >
-              {parseFloat(grade.value.coef).toFixed(2)}
-            </Typography>
-          </div>
-        </ListItem>
-      </List>
+            <ListItem>
+              <ListItemIcon>
+                <Icon icon={CalendarIcon} />
+              </ListItemIcon>
+              <ListItemText
+                primary={t('Grades.date')}
+                secondary={new Date(grade.date).toLocaleDateString('fr-FR', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              />
+            </ListItem>
+            <Divider component="li" variant="inset" />
+            <ListItem>
+              <ListItemIcon>
+                <Icon icon={PercentIcon} />
+              </ListItemIcon>
+              <ListItemText
+                primary={t('Grades.values.coefficient.title')}
+                secondary={t('Grades.values.coefficient.description')}
+              />
 
-      <List subheader={<ListSubheader>{t('Grades.valuesList')}</ListSubheader>}>
-        {valuesList.map(
-          (value, i) =>
-            value && (
-              <div key={i}>
-                <ListItem>
-                  <ListItemIcon>
-                    <Icon icon={value.icon} />
-                  </ListItemIcon>
-
-                  <ListItemText
-                    primary={
-                      <Typography
-                        variant="body1"
-                        style={{
-                          fontWeight: value.important ? 'bold' : 'normal'
-                        }}
-                      >
-                        {value.primary}
-                      </Typography>
-                    }
-                    secondary={value.secondary}
-                  />
-
-                  <div
-                    className="cozy-grade-chip"
-                    style={{ display: 'flex', alignItems: 'flex-end' }}
-                  >
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      style={{
-                        fontWeight: value.important ? 'bold' : 'normal'
-                      }}
-                    >
-                      {parseFloat(value.value).toFixed(2)}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      /{parseFloat(grade.value.outOf).toFixed(0)}
-                    </Typography>
-                  </div>
-                </ListItem>
-                {i !== valuesList.length - 1 && (
-                  <Divider component="li" variant="inset" />
-                )}
+              <div
+                className="cozy-grade-chip"
+                style={{ display: 'flex', alignItems: 'flex-end' }}
+              >
+                <Typography variant="body2" color="textSecondary">
+                  x
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="textPrimary"
+                  style={{ fontWeight: 'bold' }}
+                >
+                  {parseFloat(grade.value.coef).toFixed(2)}
+                </Typography>
               </div>
-            )
-        )}
-      </List>
-    </Dialog>
+            </ListItem>
+          </List>
+
+          <List subheader={<ListSubheader>{t('Grades.valuesList')}</ListSubheader>}>
+            {valuesList.map(
+              (value, i) =>
+                value && (
+                  <div key={i}>
+                    <ListItem>
+                      <ListItemIcon>
+                        <Icon icon={value.icon} />
+                      </ListItemIcon>
+
+                      <ListItemText
+                        primary={
+                          <Typography
+                            variant="body1"
+                            style={{
+                              fontWeight: value.important ? 'bold' : 'normal'
+                            }}
+                          >
+                            {value.primary}
+                          </Typography>
+                        }
+                        secondary={value.secondary}
+                      />
+
+                      <div
+                        className="cozy-grade-chip"
+                        style={{ display: 'flex', alignItems: 'flex-end' }}
+                      >
+                        <Typography
+                          variant="body1"
+                          color="textPrimary"
+                          style={{
+                            fontWeight: value.important ? 'bold' : 'normal'
+                          }}
+                        >
+                          {parseFloat(value.value).toFixed(2)}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          /{parseFloat(grade.value.outOf).toFixed(0)}
+                        </Typography>
+                      </div>
+                    </ListItem>
+                    {i !== valuesList.length - 1 && (
+                      <Divider component="li" variant="inset" />
+                    )}
+                  </div>
+                )
+            )}
+          </List>
+        </div>
+      }
+    />
   )
 }

@@ -1,13 +1,7 @@
 import React from 'react'
 import { getSubjectName } from 'src/format/subjectName'
 
-import MuiBreadcrumbs from 'cozy-ui/transpiled/react/Breadcrumbs'
-import {
-  DialogBackButton,
-  DialogCloseButton,
-  useCozyDialog
-} from 'cozy-ui/transpiled/react/CozyDialogs'
-import Dialog, { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
+import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import InfoIcon from 'cozy-ui/transpiled/react/Icons/Info'
@@ -26,19 +20,8 @@ import PeopleIcon from 'cozy-ui/transpiled/react/Icons/People'
 
 export const TimetableModal = ({ course, closeModalAction }) => {
   const { isMobile } = useBreakpoints()
-  const { dialogProps, dialogTitleProps } = useCozyDialog({
-    size: 'medium',
-    classes: {
-      paper: 'my-class'
-    },
-    open,
-    onClose: closeModalAction,
-    disableEnforceFocus: true
-  })
 
   const { t } = useI18n()
-
-  console.log(course)
 
   const Time = [
     {
@@ -79,54 +62,56 @@ export const TimetableModal = ({ course, closeModalAction }) => {
   ]
 
   return (
-    <Dialog {...dialogProps}>
-      {!isMobile && <DialogCloseButton onClick={closeModalAction} />}
+    <Dialog
+      open
+      onClose={() => closeModalAction()}
+      disableGutters
 
-      <DialogTitle {...dialogTitleProps}>
-        {isMobile ? <DialogBackButton onClick={closeModalAction} /> : null}
+      title={
+          <div>
+            <Typography variant="h5">
+              {getSubjectName(course.subject).pretty}
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              {new Date(course.start).toLocaleDateString('default', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </Typography>
+          </div>
+      }
 
+      content={
         <div>
-          <Typography variant="h5">
-            {getSubjectName(course.subject).pretty}
-          </Typography>
-          <Typography variant="subtitle2" color="textSecondary">
-            {new Date(course.start).toLocaleDateString('default', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          </Typography>
+          <List>
+            <ListSubheader>{t('Timetable.duration')}</ListSubheader>
+
+            {Time.map((info, index) => (
+              <ListItem key={index}>
+                <ListItemIcon>
+                  {info.icon && <Icon icon={info.icon} />}
+                </ListItemIcon>
+                <ListItemText primary={info.title} secondary={info.subtitle} />
+              </ListItem>
+            ))}
+          </List>
+
+          <List>
+            <ListSubheader>{t('Timetable.informations')}</ListSubheader>
+
+            {Informations.map((info, index) => (
+              <ListItem key={index}>
+                <ListItemIcon>
+                  {info.icon && <Icon icon={info.icon} />}
+                </ListItemIcon>
+                <ListItemText primary={info.title} secondary={info.subtitle} />
+              </ListItem>
+            ))}
+          </List>
         </div>
-      </DialogTitle>
-
-      <Divider />
-
-      <List>
-        <ListSubheader>{t('Timetable.duration')}</ListSubheader>
-
-        {Time.map((info, index) => (
-          <ListItem key={index}>
-            <ListItemIcon>
-              {info.icon && <Icon icon={info.icon} />}
-            </ListItemIcon>
-            <ListItemText primary={info.title} secondary={info.subtitle} />
-          </ListItem>
-        ))}
-      </List>
-
-      <List>
-        <ListSubheader>{t('Timetable.informations')}</ListSubheader>
-
-        {Informations.map((info, index) => (
-          <ListItem key={index}>
-            <ListItemIcon>
-              {info.icon && <Icon icon={info.icon} />}
-            </ListItemIcon>
-            <ListItemText primary={info.title} secondary={info.subtitle} />
-          </ListItem>
-        ))}
-      </List>
-    </Dialog>
+      }
+    />
   )
 }
