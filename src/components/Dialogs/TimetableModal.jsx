@@ -5,7 +5,6 @@ import { buildTimetableItemQuery } from 'src/queries'
 
 import { useQuery } from 'cozy-client'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Divider from 'cozy-ui/transpiled/react/Divider'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ClockIcon from 'cozy-ui/transpiled/react/Icons/Clock'
 import ClockOutlineIcon from 'cozy-ui/transpiled/react/Icons/ClockOutline'
@@ -18,7 +17,6 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 export const TimetableModal = () => {
