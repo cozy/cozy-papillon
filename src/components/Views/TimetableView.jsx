@@ -24,6 +24,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { TimetableModal } from '../Dialogs/TimetableModal'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 const makeStyle = isMobile => ({
   header: {
@@ -41,6 +42,7 @@ export const TimetableView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
+  const navigate = useNavigate()
 
   const [startDate, setStartDate] = useState(new Date('2024-03-01'))
   startDate.setDate(startDate.getDate() - (startDate.getDay() - 1))
@@ -94,18 +96,9 @@ export const TimetableView = () => {
     ]
   }, [])
 
-  const [openedCourse, setOpenedCourse] = useState(null)
-
   return (
     <>
-      {openedCourse && (
-        <TimetableModal
-          course={openedCourse}
-          closeModalAction={() => {
-            setOpenedCourse(null)
-          }}
-        />
-      )}
+      <Outlet />
 
       <div>
         {!isMobile ? (
@@ -196,7 +189,7 @@ export const TimetableView = () => {
                       key={course._id}
                       button
                       onClick={() => {
-                        setOpenedCourse(course)
+                        navigate(`/timetable/course/${course._id}`)
                       }}
                     >
                       <div
