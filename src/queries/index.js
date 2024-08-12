@@ -20,6 +20,19 @@ export const buildTimetableQuery = (start, end) => ({
   }
 })
 
+export const buildTimetableItemQuery = id => ({
+  definition: () =>
+    Q('io.cozy.calendar.event')
+      .where({
+        _id: id
+      })
+      .indexFields(['_id']),
+  options: {
+    as: 'io.cozy.calendar.event.item/' + id,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 export const buildHomeworkQuery = () => ({
   definition: () =>
     Q('io.cozy.calendar.todos')
@@ -43,6 +56,19 @@ export const buildGradesQuery = period => ({
       .indexFields(['title']),
   options: {
     as: 'io.cozy.timeseries.grades',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+export const buildGradeItemQuery = id => ({
+  definition: () =>
+    Q('io.cozy.timeseries.grades')
+      .where({
+        _id : id
+      })
+      .indexFields(['_id']),
+  options: {
+    as: 'io.cozy.timeseries.grades.item/' + id,
     fetchPolicy: defaultFetchPolicy
   }
 })
