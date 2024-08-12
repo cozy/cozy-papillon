@@ -8,6 +8,7 @@ import { HomeworksView } from './Views/HomeworksView'
 import { TimetableView } from './Views/TimetableView'
 import { TimetableModal } from './Dialogs/TimetableModal'
 import { GradeModal } from './Dialogs/GradesModal'
+import { HomeworkModal } from './Dialogs/HomeworkModal'
 
 const routes = [
   {
@@ -26,7 +27,13 @@ const routes = [
       },
       {
         path: 'homeworks',
-        element: <HomeworksView />
+        element: <HomeworksView />,
+        children: [
+          {
+            path: 'homework/:homeworkId',
+            element: <HomeworkModal />
+          }
+        ]
       },
       {
         path: 'grades',
