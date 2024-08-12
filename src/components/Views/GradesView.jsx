@@ -24,6 +24,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { GradeModal } from '../Dialogs/GradesModal'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 const makeStyle = () => ({
   cozyGradeChip: {
@@ -36,6 +37,7 @@ export const GradesView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const style = makeStyle(isMobile)
+  const navigate = useNavigate()
 
   const gradesQuery = buildGradesQuery()
   const { data: subjects, fetchStatus } = useQuery(
@@ -88,9 +90,6 @@ export const GradesView = () => {
     setSelectedYear(years[0])
   }
 
-  const [openedGrade, setOpenedGrade] = useState(null)
-  const [openedGradeSubject, setOpenedGradeSubject] = useState(null)
-
   const [periodMenuOpen, setPeriodMenuOpen] = useState(false)
   const [yearMenuOpen, setYearMenuOpen] = useState(false)
 
@@ -118,16 +117,7 @@ export const GradesView = () => {
 
   return (
     <>
-      {openedGrade && (
-        <GradeModal
-          grade={openedGrade}
-          subject={openedGradeSubject}
-          closeModalAction={() => {
-            setOpenedGrade(null)
-            setOpenedGradeSubject(null)
-          }}
-        />
-      )}
+      <Outlet />
 
       {isMobile && (
         <>
@@ -277,8 +267,7 @@ export const GradesView = () => {
                   <ListItem
                     button
                     onClick={() => {
-                      setOpenedGrade(grade)
-                      setOpenedGradeSubject(subject)
+                      navigate(`/grades/grade/${subject._id}/${grade.id}`)
                     }}
                   >
                     <ListItemIcon>

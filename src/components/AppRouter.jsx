@@ -6,44 +6,40 @@ import { GradesView } from './Views/GradesView'
 import { PresenceView } from './Views/PresenceView'
 import { HomeworksView } from './Views/HomeworksView'
 import { TimetableView } from './Views/TimetableView'
+import { TimetableModal } from './Dialogs/TimetableModal'
+import { GradeModal } from './Dialogs/GradesModal'
 
 const routes = [
   {
-    path: 'timetable',
+    path: '',
     element: <AppLayout />,
     children: [
       {
-        path: '',
-        element: <TimetableView />
-      }
-    ]
-  },
-  {
-    path: 'homeworks',
-    element: <AppLayout />,
-    children: [
+        path: 'timetable',
+        element: <TimetableView />,
+        children: [
+          {
+            path: 'course/:courseId',
+            element: <TimetableModal />
+          }
+        ]
+      },
       {
-        path: '',
+        path: 'homeworks',
         element: <HomeworksView />
-      }
-    ]
-  },
-  {
-    path: 'grades',
-    element: <AppLayout />,
-    children: [
+      },
       {
-        path: '',
-        element: <GradesView />
-      }
-    ]
-  },
-  {
-    path: 'presence',
-    element: <AppLayout />,
-    children: [
+        path: 'grades',
+        element: <GradesView />,
+        children: [
+          {
+            path: 'grade/:subjectId/:gradeId',
+            element: <GradeModal />
+          }
+        ]
+      },
       {
-        path: '',
+        path: 'presence',
         element: <PresenceView />
       }
     ]
