@@ -47,7 +47,7 @@ const AppLayout = () => {
   const currentTab = location.pathname.slice(1)
 
   const makeProps = route => {
-    const routeIsMatching = currentTab === route[0]
+    const routeIsMatching = currentTab.includes(route[0])
     return {
       onClick: () => {
         navigate('/' + route.join('/'))
