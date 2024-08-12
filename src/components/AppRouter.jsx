@@ -41,12 +41,12 @@ const routes = [
       {
         path: 'presence',
         element: <PresenceView />
-      }
+      },
+      {
+        path: '/*',
+        element: <Navigate replace to="/timetable" />
+      },
     ]
-  },
-  {
-    path: '*',
-    element: <Navigate replace to="/grades" />
   }
 ]
 

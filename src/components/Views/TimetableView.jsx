@@ -277,7 +277,6 @@ const CozyDatePickerInline = ({ date: def, onDateChange, textVariant }) => {
 
   const getDaysInMonth = month => {
     const res = new Date(date.getFullYear(), month, 0).getDate()
-    console.log(res)
     return res
   }
 

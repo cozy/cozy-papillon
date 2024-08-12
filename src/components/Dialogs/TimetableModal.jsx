@@ -79,7 +79,11 @@ export const TimetableModal = () => {
     <Dialog
       open
       disableGutters
-      onClose={() => navigate(-1)}
+      onClose={() =>
+        navigate('..', {
+          replace: true
+        })
+      }
       title={
         <div>
           <Typography variant="h5">

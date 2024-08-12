@@ -1,6 +1,9 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getSubjectName } from 'src/format/subjectName'
+import { buildGradeItemQuery } from 'src/queries'
 
+import { useQuery } from 'cozy-client'
 import MuiBreadcrumbs from 'cozy-ui/transpiled/react/Breadcrumbs'
 import {
   DialogBackButton,
@@ -24,9 +27,6 @@ import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useQuery } from 'cozy-client'
-import { buildGradeItemQuery } from 'src/queries'
 
 export const GradeModal = () => {
   const { t } = useI18n()
@@ -42,10 +42,10 @@ export const GradeModal = () => {
     gradeItemQuery.options
   )
 
-  const grade = subject && subject.series.find(grade => grade.id === gradeId);
+  const grade = subject && subject.series.find(grade => grade.id === gradeId)
 
-  if(!grade) {
-    return <div />;
+  if (!grade) {
+    return <div />
   }
 
   const valuesList = [
@@ -79,9 +79,12 @@ export const GradeModal = () => {
   return (
     <Dialog
       open
-      onClose={() => navigate(-1)}
+      onClose={() =>
+        navigate('..', {
+          replace: true
+        })
+      }
       disableGutters
-      
       title={
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
           <MuiBreadcrumbs>
@@ -123,11 +126,12 @@ export const GradeModal = () => {
           </div>
         </div>
       }
-
       content={
         <div>
           <List
-            subheader={<ListSubheader>{t('Grades.dialogContext')}</ListSubheader>}
+            subheader={
+              <ListSubheader>{t('Grades.dialogContext')}</ListSubheader>
+            }
           >
             <ListItem>
               <ListItemIcon>
@@ -170,7 +174,9 @@ export const GradeModal = () => {
             </ListItem>
           </List>
 
-          <List subheader={<ListSubheader>{t('Grades.valuesList')}</ListSubheader>}>
+          <List
+            subheader={<ListSubheader>{t('Grades.valuesList')}</ListSubheader>}
+          >
             {valuesList.map(
               (value, i) =>
                 value && (
