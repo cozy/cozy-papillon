@@ -15,21 +15,17 @@ export const buildTimetableQuery = (start, end) => ({
       })
       .indexFields(['start', 'end', '_id']),
   options: {
-    as: 'io.cozy.calendar.event/' + start + '/' + end,
+    as: 'io.cozy.calendar.event/start/' + start + '/end/' + end,
     fetchPolicy: defaultFetchPolicy
   }
 })
 
 export const buildTimetableItemQuery = id => ({
-  definition: () =>
-    Q('io.cozy.calendar.event')
-      .where({
-        _id: id
-      })
-      .indexFields(['_id']),
+  definition: () => Q('io.cozy.calendar.event').getById(id),
   options: {
-    as: 'io.cozy.calendar.event.item/' + id,
-    fetchPolicy: defaultFetchPolicy
+    as: 'io.cozy.calendar.event/' + id,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true
   }
 })
 
@@ -61,15 +57,11 @@ export const buildGradesQuery = period => ({
 })
 
 export const buildGradeItemQuery = id => ({
-  definition: () =>
-    Q('io.cozy.timeseries.grades')
-      .where({
-        _id : id
-      })
-      .indexFields(['_id']),
+  definition: () => Q('io.cozy.timeseries.grades').getById(id),
   options: {
-    as: 'io.cozy.timeseries.grades.item/' + id,
-    fetchPolicy: defaultFetchPolicy
+    as: 'io.cozy.timeseries.grades/' + id,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true
   }
 })
 

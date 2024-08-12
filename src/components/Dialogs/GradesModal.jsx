@@ -37,12 +37,11 @@ export const GradeModal = () => {
   console.log('gradeId', gradeId)
 
   const gradeItemQuery = buildGradeItemQuery(subjectId)
-  const { data: subjects, fetchStatus } = useQuery(
+  const { data: subject, fetchStatus } = useQuery(
     gradeItemQuery.definition,
     gradeItemQuery.options
   )
 
-  const subject = subjects ? subjects[0] : null;
   const grade = subject && subject.series.find(grade => grade.id === gradeId);
 
   if(!grade) {
