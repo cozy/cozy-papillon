@@ -20,10 +20,12 @@ import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { Outlet, useNavigate, useNavigation } from 'react-router-dom'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
+  const navigate = useNavigate()
 
   const homeworksQuery = buildHomeworkQuery()
   const {
@@ -67,6 +69,8 @@ export const HomeworksView = () => {
 
   return (
     <>
+      <Outlet />
+
       <div
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
         className={cx('u-flex', isMobile ? 'test' : 'tets')}
@@ -129,7 +133,12 @@ export const HomeworksView = () => {
 
               {day.hws.map((hw, j) => (
                 <div key={j}>
-                  <ListItem>
+                  <ListItem
+                    button
+                    onClick={() => {
+                      navigate(`homework/${hw._id}`)
+                    }}
+                  >
                     <ListItemIcon>
                       <Typography variant="h3" color="textPrimary">
                         {getSubjectName(hw.subject).emoji || '📚'}

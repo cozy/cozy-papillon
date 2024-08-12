@@ -43,6 +43,15 @@ export const buildHomeworkQuery = () => ({
   }
 })
 
+export const buildHomeworkItemQuery = id => ({
+  definition: () => Q('io.cozy.calendar.todos').getById(id),
+  options: {
+    as: 'io.cozy.calendar.todos/' + id,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true
+  }
+})
+
 export const buildGradesQuery = period => ({
   definition: () =>
     Q('io.cozy.timeseries.grades')
