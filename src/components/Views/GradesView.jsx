@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 import { buildGradesQuery } from 'src/queries'
 
-import { BarRight, BarCenter } from 'cozy-bar'
+import { BarCenter, BarRight } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
-import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
 import List from 'cozy-ui/transpiled/react/List'
@@ -14,8 +14,6 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
-import Menu from 'cozy-ui/transpiled/react/Menu'
-import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
 import Paper from 'cozy-ui/transpiled/react/Paper'
 import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
@@ -23,8 +21,11 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { GradeModal } from '../Dialogs/GradesModal'
-import { Outlet, useNavigate } from 'react-router-dom'
+import {
+  PeriodSelector,
+  PeriodSelectorButton,
+  YearSelectorButton
+} from '../Atoms/PeriodSelector'
 
 const makeStyle = () => ({
   cozyGradeChip: {
@@ -302,173 +303,6 @@ export const GradesView = () => {
             </List>
           ))}
       </div>
-    </>
-  )
-}
-
-const PeriodSelector = ({
-  periodDropdownRef,
-  yearDropdownRef,
-  selectedPeriod,
-  setSelectedPeriod,
-  selectedYear,
-  setSelectedYear,
-  setPeriodMenuOpen,
-  periodMenuOpen,
-  setYearMenuOpen,
-  yearMenuOpen,
-  allPeriods,
-  periods,
-  years,
-  t
-}) => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '20px'
-      }}
-    >
-      <PeriodSelectorButton
-        periodDropdownRef={periodDropdownRef}
-        selectedPeriod={selectedPeriod}
-        setSelectedPeriod={setSelectedPeriod}
-        setPeriodMenuOpen={setPeriodMenuOpen}
-        periodMenuOpen={periodMenuOpen}
-        periods={periods}
-        t={t}
-      />
-
-      <YearSelectorButton
-        yearDropdownRef={yearDropdownRef}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-        setYearMenuOpen={setYearMenuOpen}
-        yearMenuOpen={yearMenuOpen}
-        allPeriods={allPeriods}
-        selectedPeriod={selectedPeriod}
-        years={years}
-        t={t}
-      />
-    </div>
-  )
-}
-
-const PeriodSelectorButton = ({
-  periodDropdownRef,
-  selectedPeriod,
-  setSelectedPeriod,
-  setPeriodMenuOpen,
-  periodMenuOpen,
-  periods,
-  t,
-  textVariant
-}) => {
-  return (
-    <>
-      <DropdownButton
-        ref={periodDropdownRef}
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={() => setPeriodMenuOpen(!periodMenuOpen)}
-        textVariant={textVariant}
-      >
-        {selectedPeriod || t('Grades.selectPeriod')}
-      </DropdownButton>
-
-      <Menu
-        open={periodMenuOpen}
-        anchorEl={periodDropdownRef.current}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left'
-        }}
-        keepMounted
-        onClose={() => setPeriodMenuOpen(false)}
-      >
-        {periods.map((period, i) => (
-          <MenuItem
-            key={i}
-            onClick={() => {
-              setSelectedPeriod(period)
-              setPeriodMenuOpen(false)
-            }}
-            selected={period === selectedPeriod}
-          >
-            <ListItemText primary={period} />
-          </MenuItem>
-        ))}
-
-        {periods.length === 0 && (
-          <MenuItem disabled>
-            <ListItemText primary={t('Grades.emptyList.periods')} />
-          </MenuItem>
-        )}
-      </Menu>
-    </>
-  )
-}
-
-const YearSelectorButton = ({
-  yearDropdownRef,
-  selectedYear,
-  selectedPeriod,
-  setSelectedYear,
-  setYearMenuOpen,
-  yearMenuOpen,
-  allPeriods,
-  years,
-  t
-}) => {
-  return (
-    <>
-      <DropdownButton
-        ref={yearDropdownRef}
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={() => setYearMenuOpen(!yearMenuOpen)}
-      >
-        {selectedYear || t('Grades.selectYear')}
-      </DropdownButton>
-
-      <Menu
-        open={yearMenuOpen}
-        anchorEl={yearDropdownRef.current}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left'
-        }}
-        keepMounted
-        onClose={() => setYearMenuOpen(false)}
-      >
-        {[
-          ...new Set(
-            allPeriods.filter(p => p.title === selectedPeriod).map(p => p.year)
-          )
-        ].map((year, i) => (
-          <MenuItem
-            key={i}
-            onClick={() => {
-              setSelectedYear(year)
-              setYearMenuOpen(false)
-            }}
-            selected={year === selectedYear}
-          >
-            <ListItemText primary={year} />
-          </MenuItem>
-        ))}
-      </Menu>
     </>
   )
 }

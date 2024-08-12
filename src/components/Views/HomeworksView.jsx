@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 import { buildHomeworkQuery } from 'src/queries'
@@ -20,7 +21,6 @@ import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { Outlet, useNavigate, useNavigation } from 'react-router-dom'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
