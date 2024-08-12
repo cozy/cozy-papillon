@@ -9,6 +9,8 @@ import React from 'react'
 import AppProviders from 'src/components/AppProviders'
 import setupApp from 'src/targets/browser/setupApp'
 import AppRouter from 'src/components/AppRouter'
+import CozyDevtools from 'cozy-client/dist/devtools'
+import flag from 'cozy-flags'
 
 const init = function () {
   const { root, client, lang, polyglot } = setupApp()
@@ -16,7 +18,7 @@ const init = function () {
   root.render(
     <AppProviders client={client} lang={lang} polyglot={polyglot}>
       <AppRouter />
-      <p>Hey !</p>
+      {flag('debug') && <CozyDevtools />}
     </AppProviders>
   )
 }
