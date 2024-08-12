@@ -24,9 +24,30 @@ import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useQuery } from 'cozy-client'
+import { buildGradeItemQuery } from 'src/queries'
 
-export const GradeModal = ({ grade, subject, closeModalAction }) => {
+export const GradeModal = () => {
   const { t } = useI18n()
+  const { subjectId, gradeId } = useParams()
+  const navigate = useNavigate()
+
+  console.log('subjectId', subjectId)
+  console.log('gradeId', gradeId)
+
+  const gradeItemQuery = buildGradeItemQuery(subjectId)
+  const { data: subjects, fetchStatus } = useQuery(
+    gradeItemQuery.definition,
+    gradeItemQuery.options
+  )
+
+  const subject = subjects ? subjects[0] : null;
+  const grade = subject && subject.series.find(grade => grade.id === gradeId);
+
+  if(!grade) {
+    return <div />;
+  }
 
   const valuesList = [
     {
@@ -59,7 +80,7 @@ export const GradeModal = ({ grade, subject, closeModalAction }) => {
   return (
     <Dialog
       open
-      onClose={() => closeModalAction()}
+      onClose={() => navigate(-1)}
       disableGutters
       
       title={
