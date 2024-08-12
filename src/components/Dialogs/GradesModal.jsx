@@ -218,7 +218,7 @@ export const GradeModal = () => {
                         </Typography>
                       </div>
                     </ListItem>
-                    {i !== valuesList.length - 1 && (
+                    {i !== valuesList.filter(Boolean).length - 1 && (
                       <Divider component="li" variant="inset" />
                     )}
                   </div>
