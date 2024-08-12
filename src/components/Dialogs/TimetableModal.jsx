@@ -26,12 +26,10 @@ export const TimetableModal = () => {
   const navigate = useNavigate()
 
   const timetableItemQuery = buildTimetableItemQuery(courseId)
-  const { data: courses, fetchStatus } = useQuery(
+  const { data: course, fetchStatus } = useQuery(
     timetableItemQuery.definition,
     timetableItemQuery.options
   )
-
-  const course = courses ? courses[0] : null
 
   const { t } = useI18n()
 
@@ -81,7 +79,11 @@ export const TimetableModal = () => {
     <Dialog
       open
       disableGutters
-      onClose={() => navigate(-1)}
+      onClose={() =>
+        navigate('..', {
+          replace: true
+        })
+      }
       title={
         <div>
           <Typography variant="h5">
