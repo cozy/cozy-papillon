@@ -9,13 +9,13 @@ _:pushpin: Note:_ we recommend to use [Yarn] instead of NPM for package manageme
 
 ### Install
 
-Hacking the Cozy Ogma app requires you to [setup a dev environment][setup].
+Hacking the Cozy Papillon app requires you to [setup a dev environment][setup].
 
 You can then clone the app repository and install dependencies:
 
 ```sh
-$ git clone https://github.com/cozy/ogma.git
-$ cd ogma
+$ git clone https://github.com/cozy/cozy-papillon-app.git
+$ cd cozy-papillon-app
 $ yarn install
 ```
 
@@ -30,17 +30,17 @@ You can run your application inside a Cozy thanks to the [cozy-stack docker imag
 
 ```sh
 # in a terminal, run your app in watch mode with a docker running Cozy
-$ cd ogma
+$ cd cozy-papillon-app
 $ yarn start
 ```
 
 ```sh
 # in an other terminal, run the docker image
-$ cd ogma
+$ cd cozy-papillon-app
 $ yarn stack:docker:dev
 ```
 
-After the build and the docker image launched, your app is now available at http://ogma.cozy.tools:8080.
+After the build and the docker image launched, your app is now available at http://papillon.cozy.tools:8080.
 
 Note: By default, HMR (Hot Module Replacement) is enabled on your front application. To have it working, we have disabled our CSP (Content Security Policy) when running `yarn stack:docker:dev`. This is not the configuration we'll have in a production environnement. To test our app in real conditions, build your application by running `yarn build` and launch the docker image with the `yarn stack:docker:prod` command.
 
@@ -70,7 +70,7 @@ yarn link cozy-ui
 Tests are run by [jest] under the hood. You can easily run the tests suite with:
 
 ```sh
-$ cd ogma
+$ cd cozy-papillon-app
 $ yarn test
 ```
 
@@ -91,7 +91,7 @@ Whenever your app needs to use a given `doctype`, you should:
 
 ### Open a Pull-Request
 
-If you want to work on Ogma and submit code modifications, feel free to open pull-requests! See the [contributing guide][contribute] for more information about how to properly open pull-requests.
+If you want to work on Cozy Papillon and submit code modifications, feel free to open pull-requests! See the [contributing guide][contribute] for more information about how to properly open pull-requests.
 
 
 ## Community
@@ -117,7 +117,7 @@ As a _developer_, you have to modify json in `/src/locales`. New locales will be
 
 ### Maintainer
 
-The lead maintainer for Ogma is [cozy](https://github.com/cozy), send him/her a :beers: to say hello!
+The lead maintainer for Cozy Papillon is [cozy](https://github.com/cozy), send him/her a :beers: to say hello!
 
 
 ### Get in touch
@@ -132,7 +132,7 @@ You can reach the Cozy Community by:
 
 ## License
 
-Ogma is developed by cozy and distributed under the [AGPL v3 license][agpl-3.0].
+Cozy Papillon is developed by cozy and distributed under the [AGPL v3 license][agpl-3.0].
 
 
 [papillon]: https://getpapillon.xyz/ "Papillon"
