@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import { subjectColor } from 'src/format/subjectColor'
-import { getSubjectName } from 'src/format/subjectName'
+import { Outlet } from 'react-router-dom'
 import { buildTimetableQuery } from 'src/queries'
 
 import { useQuery } from 'cozy-client'
 import List from 'cozy-ui/transpiled/react/List'
-import ListItem from 'cozy-ui/transpiled/react/ListItem'
-import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import { CircularProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { CozyDatePickerInline } from '../Atoms/CozyDatePickerInline'
 import { TabTitle } from '../Atoms/TabTitle'
+import { CozyDatePickerInline } from '../Atoms/Timetable/CozyDatePickerInline'
+import { TimetableItem } from '../Atoms/Timetable/TimetableItem'
 
 export const TimetableView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
-  const navigate = useNavigate()
 
   const [startDate, setStartDate] = useState(new Date('2024-03-01'))
   startDate.setDate(startDate.getDate() - (startDate.getDay() - 1))
@@ -32,8 +28,7 @@ export const TimetableView = () => {
   const {
     data: courses,
     fetchStatus,
-    fetch,
-    fetchMore
+    fetch
   } = useQuery(timetableQuery.definition, timetableQuery.options)
 
   useEffect(() => {
@@ -87,146 +82,61 @@ export const TimetableView = () => {
           />
         </TabTitle>
 
-        <div>
-          {timetable.length !== 0 ? (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: !isMobile ? 'row' : 'column',
-                height: '100%'
-              }}
-            >
-              {(days ?? []).map(day => {
-                // is saturday and no courses
-                if (
-                  day.getDay() === 6 &&
-                  !timetable.find(group => group.date === day.toISOString())
-                ) {
-                  return null
-                }
+        {timetable.length !== 0 ? (
+          <div
+            style={{
+              flexDirection: !isMobile ? 'row' : 'column'
+            }}
+            className="u-flex u-w-100 u-h-100"
+          >
+            {(days ?? []).map(day => {
+              // If it's saturday and there are no courses, don't show the day
+              if (
+                day.getDay() === 6 &&
+                !timetable.find(group => group.date === day.toISOString())
+              ) {
+                return null
+              }
 
-                return (
-                  <div
-                    key={day.toISOString()}
-                    style={{
-                      display: 'flex',
-                      flex: 1,
-                      flexDirection: 'column',
-                      width: '100%',
-                      height: '100%',
-                      overflowX: 'hidden'
-                    }}
-                  >
-                    <List>
-                      <ListSubheader>
-                        {day.toLocaleDateString('default', {
-                          weekday: 'long',
-                          day: '2-digit'
-                        })}
-                      </ListSubheader>
-
-                      {(
-                        timetable.find(
-                          group => group.date === day.toISOString()
-                        ) ?? { courses: [] }
-                      )?.courses.map(course => (
-                        <ListItem
-                          key={course._id}
-                          button
-                          onClick={() => {
-                            navigate(`/timetable/course/${course._id}`)
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              minWidth: '4px',
-                              height: '64px',
-                              borderRadius: '50px',
-                              backgroundColor: subjectColor(course.subject)
-                            }}
-                          />
-
-                          <ListItemText
-                            primary={
-                              <>
-                                <Typography
-                                  variant="subtitle2"
-                                  color="textSecondary"
-                                  noWrap
-                                >
-                                  {new Date(course.start).toLocaleTimeString(
-                                    [],
-                                    {
-                                      hour: '2-digit',
-                                      minute: '2-digit'
-                                    }
-                                  )}{' '}
-                                </Typography>
-                                <Typography
-                                  variant="h6"
-                                  color="textPrimary"
-                                  noWrap
-                                >
-                                  {getSubjectName(course.subject).pretty}
-                                </Typography>
-                              </>
-                            }
-                            secondary={
-                              <>
-                                <Typography
-                                  variant="body2"
-                                  color="textSecondary"
-                                  noWrap
-                                >
-                                  {course.location}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  color="textSecondary"
-                                  noWrap
-                                >
-                                  {course.organizer}
-                                </Typography>
-                              </>
-                            }
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </div>
-                )
-              })}
-            </div>
-          ) : (
-            <div>
-              {fetchStatus === 'loading' ? (
-                <div>
-                  <CircularProgress />
-                </div>
-              ) : (
+              return (
                 <div
+                  key={day.toISOString()}
                   style={{
-                    display: 'flex',
-                    flex: 1,
-                    flexDirection: 'column',
-                    width: '100%',
-                    height: '100%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: '16px'
+                    overflowX: 'hidden'
                   }}
+                  className="u-flex u-flex-column u-w-100 u-h-100"
                 >
-                  <Typography variant="h6" color="textSecondary">
-                    {t('Timetable.noCourses')}
-                  </Typography>
+                  <List>
+                    <ListSubheader>
+                      {day.toLocaleDateString('default', {
+                        weekday: 'long',
+                        day: '2-digit'
+                      })}
+                    </ListSubheader>
+
+                    {(
+                      timetable.find(
+                        group => group.date === day.toISOString()
+                      ) ?? { courses: [] }
+                    )?.courses.map(course => (
+                      <TimetableItem course={course} key={course._id} />
+                    ))}
+                  </List>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
+              )
+            })}
+          </div>
+        ) : (
+          <div className="u-flex u-flex-column u-flex-justify-center u-flex-items-center u-p-1 u-w-100 u-h-100">
+            {fetchStatus === 'loading' ? (
+              <CircularProgress />
+            ) : (
+              <Typography variant="h6" color="textSecondary">
+                {t('Timetable.noCourses')}
+              </Typography>
+            )}
+          </div>
+        )}
       </div>
     </>
   )

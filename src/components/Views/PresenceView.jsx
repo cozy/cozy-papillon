@@ -20,6 +20,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { TabTitle } from '../Atoms/TabTitle'
+import { PresenceItem } from '../Atoms/Presence/PresenceItem'
 
 export const PresenceView = () => {
   const { t } = useI18n()
@@ -80,70 +81,7 @@ export const PresenceView = () => {
               </Typography>
             </ListSubheader>
             {group.events.map((event, j) => (
-              <div key={event._id}>
-                <ListItem key={event._id}>
-                  <ListItemIcon>
-                    <Icon
-                      icon={
-                        event.xType == 'DELAY'
-                          ? ClockIcon
-                          : event.xType == 'ABSENCE'
-                          ? WalkIcon
-                          : BellIcon
-                      }
-                    />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <>
-                        <Typography variant="h6" noWrap>
-                          {event.xType == 'DELAY'
-                            ? t('Presence.delay')
-                            : event.xType == 'ABSENCE'
-                            ? t('Presence.absence')
-                            : t('Presence.presence')}
-                        </Typography>
-                        <Typography variant="body1" noWrap>
-                          {event.label}
-                        </Typography>
-                      </>
-                    }
-                    secondary={
-                      <Typography variant="body2" color="textSecondary" noWrap>
-                        {new Date(event.start).toLocaleString('default', {
-                          weekday: 'short',
-                          month: 'long',
-                          day: 'numeric',
-                          year: 'numeric',
-                          hour: 'numeric',
-                          minute: 'numeric'
-                        })}
-                      </Typography>
-                    }
-                  />
-
-                  <Chip
-                    label={
-                      event.xJustified
-                        ? t('Presence.justified')
-                        : event.label
-                        ? t('Presence.justifiedUnreceivable')
-                        : t('Presence.notJustified')
-                    }
-                    color={
-                      event.xJustified
-                        ? 'success'
-                        : event.label
-                        ? 'default'
-                        : 'error'
-                    }
-                    disabled={!event.xJustified && event.label}
-                  />
-                </ListItem>
-                {j !== group.events.length - 1 && (
-                  <Divider component="li" variant="inset" />
-                )}
-              </div>
+              <PresenceItem key={event._id} event={event} j={j} group={group} />
             ))}
           </List>
         ))}
