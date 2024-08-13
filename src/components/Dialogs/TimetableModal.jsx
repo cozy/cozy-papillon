@@ -24,7 +24,7 @@ export const TimetableModal = () => {
   const navigate = useNavigate()
 
   const timetableItemQuery = buildTimetableItemQuery(courseId)
-  const { data: course, fetchStatus } = useQuery(
+  const { data: course } = useQuery(
     timetableItemQuery.definition,
     timetableItemQuery.options
   )

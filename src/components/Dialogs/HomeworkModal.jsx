@@ -12,14 +12,10 @@ export const HomeworkModal = () => {
   const navigate = useNavigate()
 
   const timetableItemQuery = buildHomeworkItemQuery(homeworkId)
-  const { data: homework, fetchStatus } = useQuery(
+  const { data: homework } = useQuery(
     timetableItemQuery.definition,
     timetableItemQuery.options
   )
-
-  if (!homework) {
-    return <div />
-  }
 
   // convert YYYYMMDDT000000Z to YYYY-MM-DDT00:00:00Z
   const newDueDate =
@@ -59,7 +55,7 @@ export const HomeworkModal = () => {
           </div>
         </div>
       }
-      content={homework?.summary}
+      content={homework?.summary ?? ''}
     />
   )
 }
