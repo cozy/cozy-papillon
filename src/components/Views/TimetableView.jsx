@@ -121,6 +121,18 @@ export const TimetableView = () => {
                     )?.courses.map(course => (
                       <TimetableItem course={course} key={course._id} />
                     ))}
+
+                    {(
+                      timetable.find(
+                        group => group.date === day.toISOString()
+                      ) ?? { courses: [] }
+                    )?.courses.length === 0 && (
+                      <div className="u-flex u-flex-column u-flex-justify-center u-flex-items-center u-p-1 u-w-100">
+                        <Typography variant="body2" color="textSecondary">
+                          {t('Timetable.noCourses')}
+                        </Typography>
+                      </div>
+                    )}
                   </List>
                 </div>
               )

@@ -15,7 +15,8 @@
     "status": "Statut",
     "duration": "Durée",
     "informations": "Informations",
-    "noCourses": "Aucun cours"
+    "noCourses": "Aucun cours",
+    "cancelled": "Cours annulé"
   },
   "Homeworks": {
     "title": "Travail à faire",
