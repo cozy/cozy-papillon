@@ -15,7 +15,8 @@
     "status": "Status",
     "duration": "Duration",
     "informations": "Informations",
-    "noCourses": "No courses"
+    "noCourses": "No courses",
+    "cancelled": "Cancelled course"
   },
   "Homeworks": {
     "title": "Homeworks",
