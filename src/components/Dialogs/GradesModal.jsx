@@ -27,48 +27,43 @@ export const GradeModal = () => {
   const { subjectId, gradeId } = useParams()
   const navigate = useNavigate()
 
-  console.log('subjectId', subjectId)
-  console.log('gradeId', gradeId)
-
   const gradeItemQuery = buildGradeItemQuery(subjectId)
-  const { data: subject, fetchStatus } = useQuery(
+  const { data: subject } = useQuery(
     gradeItemQuery.definition,
     gradeItemQuery.options
   )
 
   const grade = subject && subject.series.find(grade => grade.id === gradeId)
 
-  if (!grade) {
-    return <div />
-  }
-
-  const valuesList = [
-    {
-      primary: t('Grades.values.student.title'),
-      secondary: t('Grades.values.student.description'),
-      value: `${parseFloat(grade.value.student).toFixed(2)}`,
-      icon: PieChartIcon,
-      important: true
-    },
-    {
-      primary: t('Grades.values.class.title'),
-      secondary: t('Grades.values.class.description'),
-      value: `${parseFloat(grade.value.classAverage).toFixed(2)}`,
-      icon: TeamIcon
-    },
-    grade.value.classMax >= 0 && {
-      primary: t('Grades.values.max.title'),
-      secondary: t('Grades.values.max.description'),
-      value: `${parseFloat(grade.value.classMax).toFixed(2)}`,
-      icon: CreditIcon
-    },
-    grade.value.classMin >= 0 && {
-      primary: t('Grades.values.min.title'),
-      secondary: t('Grades.values.min.description'),
-      value: `${parseFloat(grade.value.classMin).toFixed(2)}`,
-      icon: DebitIcon
-    }
-  ]
+  const valuesList = grade
+    ? [
+        {
+          primary: t('Grades.values.student.title'),
+          secondary: t('Grades.values.student.description'),
+          value: `${parseFloat(grade.value.student).toFixed(2)}`,
+          icon: PieChartIcon,
+          important: true
+        },
+        {
+          primary: t('Grades.values.class.title'),
+          secondary: t('Grades.values.class.description'),
+          value: `${parseFloat(grade.value.classAverage).toFixed(2)}`,
+          icon: TeamIcon
+        },
+        grade.value.classMax >= 0 && {
+          primary: t('Grades.values.max.title'),
+          secondary: t('Grades.values.max.description'),
+          value: `${parseFloat(grade.value.classMax).toFixed(2)}`,
+          icon: CreditIcon
+        },
+        grade.value.classMin >= 0 && {
+          primary: t('Grades.values.min.title'),
+          secondary: t('Grades.values.min.description'),
+          value: `${parseFloat(grade.value.classMin).toFixed(2)}`,
+          icon: DebitIcon
+        }
+      ]
+    : []
 
   return (
     <Dialog
@@ -95,27 +90,28 @@ export const GradeModal = () => {
                   border: '1px solid var(--secondaryColorLightest)'
                 }}
               >
-                {getSubjectName(subject.subject).emoji || '📚'}
+                {subject && (getSubjectName(subject.subject).emoji || '📚')}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {getSubjectName(subject.subject).pretty || 'Aucune matière'}
+                {subject &&
+                  (getSubjectName(subject.subject).pretty || 'Aucune matière')}
               </Typography>
             </div>
             <Typography variant="subtitle1" color="textPrimary">
-              {grade.label || 'Note sans titre'}
+              {grade && (grade.label || 'Note sans titre')}
             </Typography>
           </MuiBreadcrumbs>
 
           <div style={{ display: 'flex', alignItems: 'flex-end' }}>
             <Typography variant="h2" color="textPrimary">
-              {parseFloat(grade.value.student).toFixed(2)}
+              {grade && parseFloat(grade.value.student).toFixed(2)}
             </Typography>
             <Typography
               variant="body1"
               color="textSecondary"
               style={{ marginBottom: '2px' }}
             >
-              /{grade.value.outOf}
+              /{grade && grade.value.outOf}
             </Typography>
           </div>
         </div>
@@ -133,11 +129,14 @@ export const GradeModal = () => {
               </ListItemIcon>
               <ListItemText
                 primary={t('Grades.date')}
-                secondary={new Date(grade.date).toLocaleDateString('fr-FR', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
+                secondary={
+                  grade &&
+                  new Date(grade.date).toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })
+                }
               />
             </ListItem>
             <Divider component="li" variant="inset" />
@@ -162,7 +161,7 @@ export const GradeModal = () => {
                   color="textPrimary"
                   style={{ fontWeight: 'bold' }}
                 >
-                  {parseFloat(grade.value.coef).toFixed(2)}
+                  {grade && parseFloat(grade.value.coef).toFixed(2)}
                 </Typography>
               </div>
             </ListItem>
