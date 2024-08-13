@@ -18,6 +18,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { TabTitle } from '../Atoms/TabTitle'
+import { HomeworkItem } from '../Atoms/Homeworks/HomeworkItem'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
@@ -100,53 +101,7 @@ export const HomeworksView = () => {
               </ListSubheader>
 
               {day.hws.map((hw, j) => (
-                <div key={j}>
-                  <ListItem
-                    button
-                    onClick={() => {
-                      navigate(`homework/${hw._id}`)
-                    }}
-                  >
-                    <ListItemIcon>
-                      <Typography variant="h3" color="textPrimary">
-                        {getSubjectName(hw.subject).emoji || '📚'}
-                      </Typography>
-                    </ListItemIcon>
-
-                    <ListItemText
-                      primary={
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: '8px',
-                              height: '8px',
-                              borderRadius: '50%',
-                              backgroundColor: subjectColor(hw.subject)
-                            }}
-                          />
-                          <Typography variant="subtitle2" color="textSecondary">
-                            {getSubjectName(hw.subject).pretty}
-                          </Typography>
-                        </div>
-                      }
-                      secondary={
-                        <Typography variant="body1" color="textPrimary" noWrap>
-                          {hw.summary}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  {j < day.hws.length - 1 && (
-                    <Divider component="li" variant="inset" />
-                  )}
-                </div>
+                <HomeworkItem key={j} hw={hw} j={j} day={day} />
               ))}
             </List>
           ))}
