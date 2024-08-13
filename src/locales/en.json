@@ -14,7 +14,8 @@
     "teacher": "Teacher",
     "status": "Status",
     "duration": "Duration",
-    "informations": "Informations"
+    "informations": "Informations",
+    "noCourses": "No courses"
   },
   "Homeworks": {
     "title": "Homeworks",

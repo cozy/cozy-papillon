@@ -14,7 +14,8 @@
     "teacher": "Professeur",
     "status": "Statut",
     "duration": "Durée",
-    "informations": "Informations"
+    "informations": "Informations",
+    "noCourses": "Aucun cours"
   },
   "Homeworks": {
     "title": "Travail à faire",
