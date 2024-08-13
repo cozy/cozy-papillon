@@ -4,20 +4,18 @@ import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 import { buildTimetableQuery } from 'src/queries'
 
-import { BarCenter, BarRight } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
-import Divider from 'cozy-ui/transpiled/react/Divider'
 import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
-import Paper from 'cozy-ui/transpiled/react/Paper'
 import { CircularProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { CozyDatePickerInline } from '../Atoms/CozyDatePickerInline'
+import { TabTitle } from '../Atoms/TabTitle'
 
 export const TimetableView = () => {
   const { t } = useI18n()
@@ -81,50 +79,15 @@ export const TimetableView = () => {
       <Outlet />
 
       <div>
-        {!isMobile ? (
-          <>
-            <Paper
-              square
-              style={{
-                padding: '16px',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography variant="h4" color="textPrimary">
-                {t('Timetable.title')}
-              </Typography>
+        <TabTitle title={t('Timetable.title')}>
+          <CozyDatePickerInline
+            date={startDate}
+            onDateChange={date => setStartDate(date)}
+            textVariant="subtitle1"
+          />
+        </TabTitle>
 
-              <CozyDatePickerInline
-                date={startDate}
-                onDateChange={date => setStartDate(date)}
-                textVariant="subtitle1"
-              />
-            </Paper>
-
-            <Divider />
-          </>
-        ) : (
-          <>
-            <BarCenter>
-              <Typography variant="h5">{t('Timetable.title')}</Typography>
-            </BarCenter>
-            <BarRight>
-              <CozyDatePickerInline
-                date={startDate}
-                onDateChange={date => setStartDate(date)}
-                textVariant="subtitle1"
-              />
-            </BarRight>
-          </>
-        )}
-
-        <Divider />
-
-        <div style={{}}>
+        <div>
           {timetable.length !== 0 ? (
             <div
               style={{

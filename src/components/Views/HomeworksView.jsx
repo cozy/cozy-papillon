@@ -1,11 +1,9 @@
-import cx from 'classnames'
 import React from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 import { buildHomeworkQuery } from 'src/queries'
 
-import { BarCenter } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -16,11 +14,10 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
-import Paper from 'cozy-ui/transpiled/react/Paper'
-import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { TabTitle } from '../Atoms/TabTitle'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
@@ -71,37 +68,8 @@ export const HomeworksView = () => {
     <>
       <Outlet />
 
-      <div
-        style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
-        className={cx('u-flex', isMobile ? 'test' : 'tets')}
-      >
-        {!isMobile ? (
-          <>
-            <Paper
-              square
-              style={{
-                padding: '16px',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography variant="h4" color="textPrimary">
-                {t('Homeworks.title')}
-              </Typography>
-            </Paper>
-
-            <Divider />
-          </>
-        ) : (
-          <BarCenter>
-            <Typography variant="h5">{t('Homeworks.title')}</Typography>
-          </BarCenter>
-        )}
-
-        {isLoading && <LinearProgress />}
+      <div>
+        <TabTitle title={t('Homeworks.title')} loading={isLoading} />
 
         {newHws.length === 0 && !isLoading && (
           <Empty
