@@ -7,6 +7,8 @@ import { useQuery } from 'cozy-client'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
+import { SubjectTitle } from '../Atoms/SubjectTitle'
+
 export const HomeworkModal = () => {
   const { homeworkId } = useParams()
   const navigate = useNavigate()
@@ -33,28 +35,7 @@ export const HomeworkModal = () => {
           replace: true
         })
       }
-      title={
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Typography variant="h3">
-            {homework?.subject && getSubjectName(homework.subject).emoji}
-          </Typography>
-          <div>
-            <Typography variant="h6">
-              {homework?.subject && getSubjectName(homework.subject).pretty}
-            </Typography>
-            {homework?.dueDate && newDueDate && (
-              <Typography variant="subtitle2" color="textSecondary">
-                {new Date(newDueDate).toLocaleDateString('default', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </Typography>
-            )}
-          </div>
-        </div>
-      }
+      title={<SubjectTitle subject={homework?.subject} date={newDueDate} />}
       content={homework?.summary ?? ''}
     />
   )
