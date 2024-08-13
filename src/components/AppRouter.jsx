@@ -50,9 +50,9 @@ const routes = [
         element: <PresenceView />
       },
       {
-        path: '/*',
+        path: '',
         element: <Navigate replace to="/timetable" />
-      },
+      }
     ]
   }
 ]
