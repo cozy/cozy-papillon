@@ -59,7 +59,7 @@ export const buildGradesQuery = period => ({
       })
       .indexFields(['title']),
   options: {
-    as: 'io.cozy.timeseries.grades',
+    as: 'io.cozy.timeseries.grades/period/' + period,
     fetchPolicy: defaultFetchPolicy
   }
 })
