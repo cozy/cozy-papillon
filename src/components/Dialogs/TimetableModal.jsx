@@ -18,6 +18,7 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { SubjectTitle } from '../Atoms/SubjectTitle'
 
 export const TimetableModal = () => {
   const { courseId } = useParams()
@@ -82,21 +83,7 @@ export const TimetableModal = () => {
           replace: true
         })
       }
-      title={
-        <div>
-          <Typography variant="h5">
-            {getSubjectName(course?.subject ?? '').pretty ?? 'Non défini'}
-          </Typography>
-          <Typography variant="subtitle2" color="textSecondary">
-            {new Date(course?.start).toLocaleDateString('default', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            }) ?? 'Non défini'}
-          </Typography>
-        </div>
-      }
+      title={<SubjectTitle subject={course?.subject} date={course?.start} />}
       content={
         <div>
           <List>
