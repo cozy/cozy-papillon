@@ -1,11 +1,9 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getSubjectName } from 'src/format/subjectName'
 import { buildHomeworkItemQuery } from 'src/queries'
 
 import { useQuery } from 'cozy-client'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { SubjectTitle } from '../Atoms/SubjectTitle'
 

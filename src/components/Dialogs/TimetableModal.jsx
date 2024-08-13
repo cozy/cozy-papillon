@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getSubjectName } from 'src/format/subjectName'
 import { buildTimetableItemQuery } from 'src/queries'
 
 import { useQuery } from 'cozy-client'
@@ -16,8 +15,8 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import { SubjectTitle } from '../Atoms/SubjectTitle'
 
 export const TimetableModal = () => {
