@@ -9,11 +9,10 @@ export const buildTimetableQuery = (start, end) => ({
   definition: () =>
     Q('io.cozy.calendar.event')
       .where({
-        _id: { $gt: null },
         start: start ? { $gte: start } : { $gt: null },
         end: end ? { $lte: end } : { $lt: null }
       })
-      .indexFields(['start', 'end', '_id']),
+      .indexFields(['start', 'end']),
   options: {
     as: 'io.cozy.calendar.event/start/' + start + '/end/' + end,
     fetchPolicy: defaultFetchPolicy
@@ -33,10 +32,10 @@ export const buildHomeworkQuery = () => ({
   definition: () =>
     Q('io.cozy.calendar.todos')
       .where({
-        _id: { $gt: null }
+        dueDate: { $gt: null }
       })
-      .sortBy([{ dueDate: 'desc' }, { _id: 'desc' }])
-      .indexFields(['dueDate', '_id']),
+      .sortBy([{ dueDate: 'desc' }])
+      .indexFields(['dueDate']),
   options: {
     as: 'io.cozy.calendar.todos',
     fetchPolicy: defaultFetchPolicy
@@ -78,10 +77,10 @@ export const buildPresenceQuery = () => ({
   definition: () =>
     Q('io.cozy.calendar.presence')
       .where({
-        _id: { $gt: null }
+        start: { $gt: null }
       })
-      .sortBy([{ start: 'desc' }, { _id: 'desc' }])
-      .indexFields(['start', '_id']),
+      .sortBy([{ start: 'desc' }])
+      .indexFields(['start']),
   options: {
     as: 'io.cozy.calendar.presence',
     fetchPolicy: defaultFetchPolicy
