@@ -31,9 +31,10 @@ export const CozyDatePickerInline = ({
   const [monthMenuOpen, setMonthMenuOpen] = useState(false)
   const [yearMenuOpen, setYearMenuOpen] = useState(false)
 
-  const getDaysInMonth = month => {
-    const res = new Date(date.getFullYear(), month, 0).getDate()
-    return res
+  const getDaysInMonth = (month, offset = 0) => {
+    const res = new Date(date.getFullYear(), month, 0)
+    res.setDate(res.getDate() + offset)
+    return res.getDate()
   }
 
   const getMondaysInMonth = (year, month) => {
@@ -119,7 +120,7 @@ export const CozyDatePickerInline = ({
               setDayMenuOpen(false)
             }}
           >
-            {i} {t('Timetable.to')} {(i + 6) % getDaysInMonth(monthDate)}
+            {i} {t('Timetable.to')} {getDaysInMonth(monthDate, 6)}
           </MenuItem>
         ))}
       </Menu>
