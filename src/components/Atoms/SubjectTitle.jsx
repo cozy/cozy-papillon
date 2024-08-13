@@ -5,7 +5,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 
 export const SubjectTitle = ({ subject, date }) => {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+    <div style={{ gap: 16 }} className="u-flex u-flex-items-center">
       <Typography variant="h3">
         {subject && (getSubjectName(subject).emoji || '📚')}
       </Typography>

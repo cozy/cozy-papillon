@@ -1,7 +1,6 @@
 import React from 'react'
 import { buildPresenceQuery } from 'src/queries'
 
-import { BarCenter } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
 import Chip from 'cozy-ui/transpiled/react/Chips'
 import Divider from 'cozy-ui/transpiled/react/Divider'
@@ -16,11 +15,11 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
-import Paper from 'cozy-ui/transpiled/react/Paper'
-import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import { TabTitle } from '../Atoms/TabTitle'
 
 export const PresenceView = () => {
   const { t } = useI18n()
@@ -63,33 +62,7 @@ export const PresenceView = () => {
   return (
     <>
       <div>
-        {!isMobile ? (
-          <>
-            <Paper
-              square
-              style={{
-                padding: '16px',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography variant="h4" color="textPrimary">
-                {t('Presence.title')}
-              </Typography>
-            </Paper>
-
-            <Divider />
-          </>
-        ) : (
-          <BarCenter>
-            <Typography variant="h5">{t('Presence.title')}</Typography>
-          </BarCenter>
-        )}
-
-        {isLoading && <LinearProgress />}
+        <TabTitle title={t('Presence.title')} loading={isLoading} />
 
         {presenceEvents.length === 0 && !isLoading && (
           <Empty

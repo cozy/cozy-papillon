@@ -4,7 +4,6 @@ import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 import { buildGradesQuery } from 'src/queries'
 
-import { BarCenter, BarRight } from 'cozy-bar'
 import { useQuery } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -14,8 +13,6 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
-import Paper from 'cozy-ui/transpiled/react/Paper'
-import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import ListSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListSkeleton'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -26,6 +23,7 @@ import {
   PeriodSelectorButton,
   YearSelectorButton
 } from '../Atoms/PeriodSelector'
+import { TabTitle } from '../Atoms/TabTitle'
 
 const makeStyle = () => ({
   cozyGradeChip: {
@@ -120,51 +118,31 @@ export const GradesView = () => {
     <>
       <Outlet />
 
-      {isMobile && (
-        <>
-          <BarCenter>
-            <PeriodSelectorButton
-              textVariant="h5"
-              {...periodSelectorProps}
-              periodDropdownRef={mobilePeriodDropdownRef}
-              yearDropdownRef={mobileYearDropdownRef}
-            />
-          </BarCenter>
-          <BarRight>
+      <div>
+        <TabTitle
+          title={
+            !isMobile ? (
+              t('Grades.title')
+            ) : (
+              <PeriodSelectorButton
+                textVariant="h5"
+                {...periodSelectorProps}
+                periodDropdownRef={mobilePeriodDropdownRef}
+                yearDropdownRef={mobileYearDropdownRef}
+              />
+            )
+          }
+          loading={isLoading}
+        >
+          {isMobile ? (
             <YearSelectorButton
               {...periodSelectorProps}
               yearDropdownRef={mobileYearDropdownRef}
             />
-          </BarRight>
-        </>
-      )}
-
-      <div>
-        {!isMobile && (
-          <>
-            <Paper
-              square
-              style={{
-                padding: '16px',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography variant="h4" color="textPrimary">
-                {t('Grades.title')}
-              </Typography>
-
-              <PeriodSelector {...periodSelectorProps} />
-            </Paper>
-
-            <Divider />
-          </>
-        )}
-
-        {isLoading && <LinearProgress />}
+          ) : (
+            <PeriodSelector {...periodSelectorProps} />
+          )}
+        </TabTitle>
 
         {(subjects ?? []).length === 0 && !isLoading && (
           <Empty
