@@ -1,29 +1,21 @@
 import React from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import { subjectColor } from 'src/format/subjectColor'
-import { getSubjectName } from 'src/format/subjectName'
+import { Outlet } from 'react-router-dom'
 import { buildHomeworkQuery } from 'src/queries'
 
 import { useQuery } from 'cozy-client'
-import Divider from 'cozy-ui/transpiled/react/Divider'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
 import List from 'cozy-ui/transpiled/react/List'
-import ListItem from 'cozy-ui/transpiled/react/ListItem'
-import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
-import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { TabTitle } from '../Atoms/TabTitle'
+
 import { HomeworkItem } from '../Atoms/Homeworks/HomeworkItem'
+import { TabTitle } from '../Atoms/TabTitle'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
-  const { isMobile } = useBreakpoints()
-  const navigate = useNavigate()
 
   const homeworksQuery = buildHomeworkQuery()
   const {

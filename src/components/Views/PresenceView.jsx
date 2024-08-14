@@ -7,7 +7,6 @@ import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
 import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { PresenceItem } from '../Atoms/Presence/PresenceItem'
@@ -15,7 +14,6 @@ import { TabTitle } from '../Atoms/TabTitle'
 
 export const PresenceView = () => {
   const { t } = useI18n()
-  const { isMobile } = useBreakpoints()
 
   const presenceQuery = buildPresenceQuery()
   const { data: presence, fetchStatus } = useQuery(
