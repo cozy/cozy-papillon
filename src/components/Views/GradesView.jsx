@@ -13,10 +13,10 @@ import { GradeItem } from '../Atoms/Grades/GradeItem'
 import { GradesSubjectSubheader } from '../Atoms/Grades/GradesSubjectSubheader'
 import {
   PeriodSelector,
-  PeriodSelectorButton,
-  YearSelectorButton
 } from '../Atoms/Grades/PeriodSelector'
 import { TabTitle } from '../Atoms/TabTitle'
+import { PeriodSelectorButton } from '../Atoms/Grades/PeriodSelectorButton'
+import { YearSelectorButton } from '../Atoms/Grades/YearSelectorButton'
 
 export const GradesView = () => {
   const { t } = useI18n()
