@@ -11,12 +11,10 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { GradeItem } from '../Atoms/Grades/GradeItem'
 import { GradesSubjectSubheader } from '../Atoms/Grades/GradesSubjectSubheader'
-import {
-  PeriodSelector,
-} from '../Atoms/Grades/PeriodSelector'
-import { TabTitle } from '../Atoms/TabTitle'
+import { PeriodSelector } from '../Atoms/Grades/PeriodSelector'
 import { PeriodSelectorButton } from '../Atoms/Grades/PeriodSelectorButton'
 import { YearSelectorButton } from '../Atoms/Grades/YearSelectorButton'
+import { TabTitle } from '../Atoms/TabTitle'
 
 export const GradesView = () => {
   const { t } = useI18n()
