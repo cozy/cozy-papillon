@@ -7,22 +7,22 @@ const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
 
 export const buildTimetableQuery = (start, end) => ({
   definition: () =>
-    Q('io.cozy.calendar.event')
+    Q('io.cozy.calendar.events')
       .where({
         start: start ? { $gte: start } : { $gt: null },
         end: end ? { $lte: end } : { $lt: null }
       })
       .indexFields(['start', 'end']),
   options: {
-    as: 'io.cozy.calendar.event/start/' + start + '/end/' + end,
+    as: 'io.cozy.calendar.events/start/' + start + '/end/' + end,
     fetchPolicy: defaultFetchPolicy
   }
 })
 
 export const buildTimetableItemQuery = id => ({
-  definition: () => Q('io.cozy.calendar.event').getById(id),
+  definition: () => Q('io.cozy.calendar.events').getById(id),
   options: {
-    as: 'io.cozy.calendar.event/' + id,
+    as: 'io.cozy.calendar.events/' + id,
     fetchPolicy: defaultFetchPolicy,
     singleDocData: true
   }
