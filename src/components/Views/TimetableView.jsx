@@ -22,15 +22,17 @@ export const TimetableView = () => {
   const endDate = new Date(startDate)
   endDate.setDate(endDate.getDate() + 6)
 
-  const timetableQuery = buildTimetableQuery(startDate, endDate)
-  const {
-    data: courses,
-    fetchStatus,
-    fetch
-  } = useQuery(timetableQuery.definition, timetableQuery.options)
+  const [timetableQuery, setTimetableQuery] = useState(
+    buildTimetableQuery(startDate, endDate)
+  )
+  const { data: courses, fetchStatus } = useQuery(
+    timetableQuery.definition,
+    timetableQuery.options
+  )
 
   useEffect(() => {
-    fetch()
+    // Update query when startDate changes
+    setTimetableQuery(buildTimetableQuery(startDate, endDate))
   }, [startDate])
 
   // list 6 days (monday to saturday)
