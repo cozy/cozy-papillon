@@ -52,7 +52,11 @@ export const GradesSubjectSubheader = ({ subject }) => {
           >
             {parseFloat(subject.aggregation.avgGrades).toFixed(2)}
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            style={{ marginBottom: 0.5 }}
+          >
             /20
           </Typography>
         </div>

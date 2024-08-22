@@ -44,7 +44,11 @@ export const GradeItem = ({ grade, j, subject }) => {
           <Typography variant="body1" color="textPrimary">
             {parseFloat(grade.value.student).toFixed(2)}
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            style={{ marginBottom: 0.5 }}
+          >
             /{parseFloat(grade.value.outOf).toFixed(0)}
           </Typography>
         </div>
