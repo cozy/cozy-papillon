@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
 
+import Checkbox from 'cozy-ui/transpiled/react/Checkbox'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
@@ -21,9 +22,13 @@ export const HomeworkItem = ({ hw, j, day }) => {
         }}
       >
         <ListItemIcon>
+          <Checkbox checked={hw.completed} disabled />
+
+          {/*
           <Typography variant="h3" color="textPrimary">
             {getSubjectName(hw.subject).emoji || '📚'}
           </Typography>
+          */}
         </ListItemIcon>
 
         <ListItemText
