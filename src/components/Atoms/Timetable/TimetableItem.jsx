@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { subjectColor } from 'src/format/subjectColor'
 import { getSubjectName } from 'src/format/subjectName'
+import { timeDist } from 'src/format/timeDist'
 
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
@@ -29,12 +30,29 @@ export const TimetableItem = ({ course }) => {
         primary={
           <>
             {course.status !== 'CANCELLED' ? (
-              <Typography variant="subtitle2" color="textSecondary" noWrap>
-                {new Date(course.start).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}{' '}
-              </Typography>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '4px',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant="subtitle2" color="textPrimary" noWrap>
+                  {new Date(course.start).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}{' '}
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  noWrap
+                  style={{ fontWeight: 400, fontSize: 12 }}
+                >
+                  | {timeDist(new Date(course.start), new Date(course.end))}
+                </Typography>
+              </div>
             ) : (
               <Typography variant="subtitle2" color="error" noWrap>
                 {t('Timetable.cancelled')}
