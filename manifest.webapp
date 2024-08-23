@@ -1,0 +1,73 @@
+{
+  "name": "Papillon",
+  "slug": "papillon",
+  "icon": "icon.svg",
+  "categories": [],
+  "version": "0.1.0",
+  "licence": "AGPL-3.0",
+  "editor": "",
+  "source": "https://github.com/cozy/cozy-papillon.git@build",
+  "developer": {
+    "name": "Cozy Cloud",
+    "url": "https://cozy.io"
+  },
+  "routes": {
+    "/": {
+      "folder": "/",
+      "index": "index.html",
+      "public": false
+    }
+  },
+  "permissions": {
+    "apps": {
+      "description": "Required by the cozy-bar to display the icons of the apps",
+      "type": "io.cozy.apps",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "files": {
+      "type": "io.cozy.files",
+      "description": "Required by Papillon",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "calendar": {
+      "type": "io.cozy.calendar.*",
+      "description": "Required by Papillon",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "grades": {
+      "type": "io.cozy.timeseries.grades",
+      "description": "Required by Papillon",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "accounts": {
+      "type": "io.cozy.accounts",
+      "description": "Required by Papillon",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "identities": {
+      "type": "io.cozy.identities",
+      "description": "Required by Papillon",
+      "verbs": [
+        "GET"
+      ]
+    }
+  },
+  "locales": {
+    "en": {},
+    "fr": {}
+  },
+  "langs": [
+    "en",
+    "fr"
+  ]
+}
