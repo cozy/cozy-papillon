@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { buildTimetableQuery } from 'src/queries'
 
@@ -19,8 +19,11 @@ export const TimetableView = () => {
   const [startDate, setStartDate] = useState(new Date('2024-03-01'))
   startDate.setDate(startDate.getDate() - (startDate.getDay() - 1))
 
-  const endDate = new Date(startDate)
-  endDate.setDate(endDate.getDate() + 6)
+  const endDate = useMemo(() => {
+    const date = new Date(startDate)
+    date.setDate(date.getDate() + 6)
+    return date
+  }, [startDate])
 
   const timetableQuery = buildTimetableQuery(startDate, endDate)
 
@@ -30,38 +33,41 @@ export const TimetableView = () => {
   )
 
   // list 6 days (monday to saturday)
-  const days = [...Array(6).keys()].map(i => {
-    const date = new Date(startDate)
-    date.setDate(date.getDate() + i)
-    date.setHours(0, 0, 0, 0)
-    return date
-  })
+  const days = useMemo(() => {
+    return [...Array(6).keys()].map(i => {
+      const date = new Date(startDate)
+      date.setDate(date.getDate() + i)
+      date.setHours(0, 0, 0, 0)
+      return date
+    })
+  }, [startDate])
 
-  // group courses by day
-  const timetable = (courses ?? []).reduce((acc, course) => {
-    const date = new Date(course.start)
-    date.setHours(0, 0, 0, 0)
-    const day = date.toISOString()
-    if (acc.find(group => group.date === day)) {
-      return acc.map(group => {
-        if (group.date === day) {
-          return {
-            ...group,
-            courses: [...group.courses, course]
+  const timetable = useMemo(() => {
+    return (courses ?? []).reduce((acc, course) => {
+      const date = new Date(course.start)
+      date.setHours(0, 0, 0, 0)
+      const day = date.toISOString()
+      if (acc.find(group => group.date === day)) {
+        return acc.map(group => {
+          if (group.date === day) {
+            return {
+              ...group,
+              courses: [...group.courses, course]
+            }
           }
-        }
-        return group
-      })
-    }
-
-    return [
-      ...acc,
-      {
-        date: date.toISOString(),
-        courses: [course]
+          return group
+        })
       }
-    ]
-  }, [])
+
+      return [
+        ...acc,
+        {
+          date: date.toISOString(),
+          courses: [course]
+        }
+      ]
+    }, [])
+  }, [courses])
 
   return (
     <>
