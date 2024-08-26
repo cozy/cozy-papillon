@@ -5,16 +5,38 @@ const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
   DEFAULT_CACHE_TIMEOUT_QUERIES
 )
 
-export const buildTimetableQuery = (start, end) => ({
+export const buildAccountsQuery = () => ({
+  definition: () =>
+    Q('io.cozy.accounts')
+      .where({
+        account_type: 'pronote'
+      })
+      .indexFields(['account_type']),
+  options: {
+    as: 'io.cozy.accounts/pronote',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+export const buildTimetableQuery = (sourceAccountIdentifier, start, end) => ({
   definition: () =>
     Q('io.cozy.calendar.events')
       .where({
         start: start ? { $gte: start } : { $gt: null },
-        end: end ? { $lte: end } : { $lt: null }
+        end: end ? { $lte: end } : { $lt: null },
+        cozyMetadata: {
+          sourceAccountIdentifier
+        }
       })
-      .indexFields(['start', 'end']),
+      .indexFields(['start', 'end', 'cozyMetadata.sourceAccountIdentifier']),
   options: {
-    as: 'io.cozy.calendar.events/start/' + start + '/end/' + end,
+    as:
+      'io.cozy.calendar.events/start/' +
+      start +
+      '/end/' +
+      end +
+      '/account/' +
+      sourceAccountIdentifier,
     fetchPolicy: defaultFetchPolicy
   }
 })
@@ -28,16 +50,19 @@ export const buildTimetableItemQuery = id => ({
   }
 })
 
-export const buildHomeworkQuery = () => ({
+export const buildHomeworkQuery = sourceAccountIdentifier => ({
   definition: () =>
     Q('io.cozy.calendar.todos')
       .where({
-        dueDate: { $gt: null }
+        dueDate: { $gt: null },
+        cozyMetadata: {
+          sourceAccountIdentifier
+        }
       })
       .sortBy([{ dueDate: 'desc' }])
-      .indexFields(['dueDate']),
+      .indexFields(['dueDate', 'cozyMetadata.sourceAccountIdentifier']),
   options: {
-    as: 'io.cozy.calendar.todos',
+    as: 'io.cozy.calendar.todos/account/' + sourceAccountIdentifier,
     fetchPolicy: defaultFetchPolicy
   }
 })
@@ -51,15 +76,22 @@ export const buildHomeworkItemQuery = id => ({
   }
 })
 
-export const buildGradesQuery = period => ({
+export const buildGradesQuery = (sourceAccountIdentifier, period) => ({
   definition: () =>
     Q('io.cozy.timeseries.grades')
       .where({
-        title: period || { $gt: null }
+        title: period || { $gt: null },
+        cozyMetadata: {
+          sourceAccountIdentifier
+        }
       })
-      .indexFields(['title']),
+      .indexFields(['title', 'cozyMetadata.sourceAccountIdentifier']),
   options: {
-    as: 'io.cozy.timeseries.grades/period/' + period,
+    as:
+      'io.cozy.timeseries.grades/period/' +
+      period +
+      '/account/' +
+      sourceAccountIdentifier,
     fetchPolicy: defaultFetchPolicy
   }
 })
@@ -73,16 +105,19 @@ export const buildGradeItemQuery = id => ({
   }
 })
 
-export const buildPresenceQuery = () => ({
+export const buildPresenceQuery = (sourceAccountIdentifier) => ({
   definition: () =>
     Q('io.cozy.calendar.presence')
       .where({
-        start: { $gt: null }
+        start: { $gt: null },
+        cozyMetadata: {
+          sourceAccountIdentifier
+        }
       })
       .sortBy([{ start: 'desc' }])
-      .indexFields(['start']),
+      .indexFields(['start', 'cozyMetadata.sourceAccountIdentifier']),
   options: {
-    as: 'io.cozy.calendar.presence',
+    as: 'io.cozy.calendar.presence/account/' + sourceAccountIdentifier,
     fetchPolicy: defaultFetchPolicy
   }
 })

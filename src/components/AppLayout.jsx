@@ -1,9 +1,9 @@
 import cx from 'classnames'
-import React from 'react'
+import React, { createContext, useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { BarComponent, BarCenter } from 'cozy-bar'
-import { useClient } from 'cozy-client'
+import { useClient, useQuery } from 'cozy-client'
 import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
 import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/Checkbox'
 import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
@@ -20,6 +20,19 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import Button from 'cozy-ui/transpiled/react/Buttons'
+import People from 'cozy-ui/transpiled/react/Icons/People'
+import { buildAccountsQuery } from 'src/queries'
+import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
+import Menu from 'cozy-ui/transpiled/react/Menu'
+import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
+import List from 'cozy-ui/transpiled/react/List'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
+import { AccountSwitcher } from './Atoms/AccountSwitcher'
+
+export const AccountContext = createContext()
 
 const ExampleRouterNavLink = ({
   children,
@@ -46,6 +59,8 @@ const AppLayout = () => {
   const location = useLocation()
   const currentTab = location.pathname.slice(1)
 
+  const [currentAccount, setCurrentAccount] = useState(null)
+
   const makeProps = route => {
     const routeIsMatching = currentTab.includes(route[0])
     return {
@@ -57,48 +72,61 @@ const AppLayout = () => {
   }
 
   return (
-    <Layout>
-      <Sidebar>
-        <Nav>
-          <NavItem>
-            <NavLink {...makeProps(['timetable'])}>
-              <NavIcon icon={CalendarIcon} />
-              <NavText>{t('Sidebar.timetable')}</NavText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink {...makeProps(['homeworks'])}>
-              <NavIcon icon={CheckboxIcon} />
-              <NavText>{t('Sidebar.homeworks')}</NavText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink {...makeProps(['grades'])}>
-              <NavIcon icon={PieChartIcon} />
-              <NavText>{t('Sidebar.grades')}</NavText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink {...makeProps(['presence'])}>
-              <NavIcon icon={WalkIcon} />
-              <NavText>{t('Sidebar.presence')}</NavText>
-            </NavLink>
-          </NavItem>
-        </Nav>
-      </Sidebar>
-      <BarComponent />
-      <Main>
-        <Content>
-          {isMobile && (
-            <BarCenter>
-              <Typography variant="h5">{client.appMetadata.slug}</Typography>
-            </BarCenter>
+    <AccountContext.Provider value={{ currentAccount, setCurrentAccount }}>
+      <Layout>
+        <Sidebar>
+          {!isMobile && (
+            <div
+              style={{
+                margin: '1rem',
+                marginBottom: '-0.5rem',
+              }}
+            >
+              <AccountSwitcher />
+            </div>
           )}
-          <Outlet />
-        </Content>
-      </Main>
-      <Alerter t={t} />
-    </Layout>
+
+          <Nav>
+            <NavItem>
+              <NavLink {...makeProps(['timetable'])}>
+                <NavIcon icon={CalendarIcon} />
+                <NavText>{t('Sidebar.timetable')}</NavText>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink {...makeProps(['homeworks'])}>
+                <NavIcon icon={CheckboxIcon} />
+                <NavText>{t('Sidebar.homeworks')}</NavText>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink {...makeProps(['grades'])}>
+                <NavIcon icon={PieChartIcon} />
+                <NavText>{t('Sidebar.grades')}</NavText>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink {...makeProps(['presence'])}>
+                <NavIcon icon={WalkIcon} />
+                <NavText>{t('Sidebar.presence')}</NavText>
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Sidebar>
+        <BarComponent />
+        <Main>
+          <Content>
+            {isMobile && (
+              <BarCenter>
+                <Typography variant="h5">{client.appMetadata.slug}</Typography>
+              </BarCenter>
+            )}
+            <Outlet />
+          </Content>
+        </Main>
+        <Alerter t={t} />
+      </Layout>
+    </AccountContext.Provider>
   )
 }
 

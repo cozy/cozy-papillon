@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Outlet } from 'react-router-dom'
 import { buildHomeworkQuery } from 'src/queries'
 
@@ -13,11 +13,14 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { HomeworkItem } from '../Atoms/Homeworks/HomeworkItem'
 import { TabTitle } from '../Atoms/TabTitle'
+import { AccountContext } from '../AppLayout'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
 
-  const homeworksQuery = buildHomeworkQuery()
+  const { currentAccount } = useContext(AccountContext)
+
+  const homeworksQuery = buildHomeworkQuery(currentAccount?.name)
   const {
     data: homeworks,
     fetchStatus,

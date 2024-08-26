@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { buildTimetableQuery } from 'src/queries'
 
@@ -8,6 +8,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { AccountContext } from '../AppLayout'
 import { TabTitle } from '../Atoms/TabTitle'
 import { CozyDatePickerInline } from '../Atoms/Timetable/CozyDatePickerInline'
 import { TimetableDay } from '../Atoms/Timetable/TimetableDay'
@@ -16,16 +17,32 @@ export const TimetableView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  const [startDate, setStartDate] = useState(new Date('2024-03-01'))
-  startDate.setDate(startDate.getDate() - (startDate.getDay() - 1))
+  const { currentAccount } = useContext(AccountContext)
+
+  const [startDate, setStartDate] = useState(new Date())
+
+  useEffect(() => {
+    let nsd = new Date(startDate)
+    nsd.setDate(nsd.getDate() - (nsd.getDay() - 1))
+    nsd.setHours(0, 0, 0, 0)
+
+    if (nsd.getDate() !== startDate.getDate()) {
+      setStartDate(new Date(nsd))
+    }
+  }, [startDate])
 
   const endDate = useMemo(() => {
     const date = new Date(startDate)
+
     date.setDate(date.getDate() + 6)
     return date
   }, [startDate])
 
-  const timetableQuery = buildTimetableQuery(startDate, endDate)
+  const timetableQuery = buildTimetableQuery(
+    currentAccount?.name,
+    startDate,
+    endDate
+  )
 
   const { data: courses, fetchStatus } = useQuery(
     timetableQuery.definition,

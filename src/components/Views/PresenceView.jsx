@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { buildPresenceQuery } from 'src/queries'
 
 import { useQuery } from 'cozy-client'
@@ -11,11 +11,14 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { PresenceItem } from '../Atoms/Presence/PresenceItem'
 import { TabTitle } from '../Atoms/TabTitle'
+import { AccountContext } from '../AppLayout'
 
 export const PresenceView = () => {
   const { t } = useI18n()
 
-  const presenceQuery = buildPresenceQuery()
+  const { currentAccount } = useContext(AccountContext)
+
+  const presenceQuery = buildPresenceQuery(currentAccount?.name)
   const { data: presence, fetchStatus } = useQuery(
     presenceQuery.definition,
     presenceQuery.options
