@@ -11,7 +11,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { PresenceItem } from '../Atoms/Presence/PresenceItem'
 import { TabTitle } from '../Atoms/TabTitle'
-import { AccountContext } from '../AppLayout'
+import { AccountContext } from '../Provider/AccountProvider'
 
 export const PresenceView = () => {
   const { t } = useI18n()

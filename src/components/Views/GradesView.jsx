@@ -15,7 +15,7 @@ import { PeriodSelector } from '../Atoms/Grades/PeriodSelector'
 import { PeriodSelectorButton } from '../Atoms/Grades/PeriodSelectorButton'
 import { YearSelectorButton } from '../Atoms/Grades/YearSelectorButton'
 import { TabTitle } from '../Atoms/TabTitle'
-import { AccountContext } from '../AppLayout'
+import { AccountContext } from '../Provider/AccountProvider'
 
 export const GradesView = () => {
   const { t } = useI18n()

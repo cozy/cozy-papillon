@@ -8,6 +8,7 @@ import LeftIcon from 'cozy-ui/transpiled/react/Icons/Left'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 import Menu from 'cozy-ui/transpiled/react/Menu'
 import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 export const CozyDatePickerInline = ({
@@ -17,6 +18,7 @@ export const CozyDatePickerInline = ({
 }) => {
   const [date, setDate] = useState(new Date(def))
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
 
   useEffect(() => {
     if (onDateChange) {
@@ -122,25 +124,27 @@ export const CozyDatePickerInline = ({
         })}
       </DropdownButton>
 
-      <div
-        style={{
-          margin: '-4px 2px',
-          marginLeft: '6px',
-          gap: '8px',
-          display: 'flex',
-          border: '1px solid var(--hintTextColor)',
-          borderRadius: '40px',
-          padding: '3px 6px'
-        }}
-      >
-        <IconButton size="small" onClick={() => goToPrevWeek()}>
-          <Icon icon={LeftIcon} />
-        </IconButton>
+      {!isMobile && (
+        <div
+          style={{
+            margin: '-4px 2px',
+            marginLeft: '6px',
+            gap: '8px',
+            display: 'flex',
+            border: '1px solid var(--hintTextColor)',
+            borderRadius: '40px',
+            padding: '3px 6px'
+          }}
+        >
+          <IconButton size="small" onClick={() => goToPrevWeek()}>
+            <Icon icon={LeftIcon} />
+          </IconButton>
 
-        <IconButton size="small" onClick={() => goToNextWeek()}>
-          <Icon icon={RightIcon} />
-        </IconButton>
-      </div>
+          <IconButton size="small" onClick={() => goToNextWeek()}>
+            <Icon icon={RightIcon} />
+          </IconButton>
+        </div>
+      )}
 
       <Menu
         open={dayMenuOpen}

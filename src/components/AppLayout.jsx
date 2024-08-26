@@ -1,17 +1,17 @@
 import cx from 'classnames'
-import React, { createContext, useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
-import { BarComponent, BarCenter } from 'cozy-bar'
-import { useClient, useQuery } from 'cozy-client'
+import { BarCenter, BarComponent } from 'cozy-bar'
+import { useClient } from 'cozy-client'
 import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
 import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/Checkbox'
 import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
 import WalkIcon from 'cozy-ui/transpiled/react/Icons/Walk'
-import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
+import { Content, Layout, Main } from 'cozy-ui/transpiled/react/Layout'
 import Nav, {
-  NavItem,
   NavIcon,
+  NavItem,
   NavText,
   genNavLink
 } from 'cozy-ui/transpiled/react/Nav'
@@ -20,19 +20,8 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import Button from 'cozy-ui/transpiled/react/Buttons'
-import People from 'cozy-ui/transpiled/react/Icons/People'
-import { buildAccountsQuery } from 'src/queries'
-import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
-import Menu from 'cozy-ui/transpiled/react/Menu'
-import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
-import List from 'cozy-ui/transpiled/react/List'
-import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
-import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { AccountSwitcher } from './Atoms/AccountSwitcher'
-
-export const AccountContext = createContext()
+import { AccountProvider } from './Provider/AccountProvider'
 
 const ExampleRouterNavLink = ({
   children,
@@ -53,13 +42,11 @@ const NavLink = genNavLink(ExampleRouterNavLink)
 
 const AppLayout = () => {
   const { t } = useI18n()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, is } = useBreakpoints()
   const client = useClient()
   const navigate = useNavigate()
   const location = useLocation()
   const currentTab = location.pathname.slice(1)
-
-  const [currentAccount, setCurrentAccount] = useState(null)
 
   const makeProps = route => {
     const routeIsMatching = currentTab.includes(route[0])
@@ -72,7 +59,7 @@ const AppLayout = () => {
   }
 
   return (
-    <AccountContext.Provider value={{ currentAccount, setCurrentAccount }}>
+    <AccountProvider>
       <Layout>
         <Sidebar>
           {!isMobile && (
@@ -126,7 +113,7 @@ const AppLayout = () => {
         </Main>
         <Alerter t={t} />
       </Layout>
-    </AccountContext.Provider>
+    </AccountProvider>
   )
 }
 

@@ -1,46 +1,17 @@
-import cx from 'classnames'
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { buildAccountsQuery } from 'src/queries'
 
-import { BarComponent, BarCenter } from 'cozy-bar'
-import BottomIcon from 'cozy-ui/transpiled/react/Icons/Bottom'
-import { useClient, useQuery } from 'cozy-client'
+import { useQuery } from 'cozy-client'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
+import ActionsMenuWrapper from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuWrapper'
 import Button from 'cozy-ui/transpiled/react/Buttons'
-import Chip from 'cozy-ui/transpiled/react/Chips'
-import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
-import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/Checkbox'
-import ExchangeIcon from 'cozy-ui/transpiled/react/Icons/Exchange'
+import BottomIcon from 'cozy-ui/transpiled/react/Icons/Bottom'
 import People from 'cozy-ui/transpiled/react/Icons/People'
-import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
-import WalkIcon from 'cozy-ui/transpiled/react/Icons/Walk'
-import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
-import List from 'cozy-ui/transpiled/react/List'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
-import Menu from 'cozy-ui/transpiled/react/Menu'
-import Nav, {
-  NavItem,
-  NavIcon,
-  NavText,
-  genNavLink
-} from 'cozy-ui/transpiled/react/Nav'
-import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-
-import { AccountContext } from '../AppLayout'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import { AccountContext } from '../Provider/AccountProvider'
 
 export const AccountSwitcher = () => {
   const { currentAccount, setCurrentAccount } = useContext(AccountContext)
@@ -120,7 +91,7 @@ export const AccountSwitcher = () => {
         size="small"
       />
 
-      <Menu
+      <ActionsMenuWrapper
         open={accountMenuShown}
         anchorEl={btnRef.current}
         anchorOrigin={{
@@ -135,7 +106,7 @@ export const AccountSwitcher = () => {
         onClose={() => setAccountMenuShown(false)}
       >
         {accountsList.map(account => (
-          <MenuItem
+          <ActionsMenuItem
             key={account._id}
             onClick={() => {
               setCurrentAccount(account)
@@ -150,9 +121,9 @@ export const AccountSwitcher = () => {
               primary={account.name}
               secondary={translatedAccType(account.account_type)}
             />
-          </MenuItem>
+          </ActionsMenuItem>
         ))}
-      </Menu>
+      </ActionsMenuWrapper>
     </div>
   )
 }

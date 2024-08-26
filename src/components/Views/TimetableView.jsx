@@ -8,10 +8,10 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { AccountContext } from '../AppLayout'
 import { TabTitle } from '../Atoms/TabTitle'
 import { CozyDatePickerInline } from '../Atoms/Timetable/CozyDatePickerInline'
 import { TimetableDay } from '../Atoms/Timetable/TimetableDay'
+import { AccountContext } from '../Provider/AccountProvider'
 
 export const TimetableView = () => {
   const { t } = useI18n()

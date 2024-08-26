@@ -13,7 +13,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { HomeworkItem } from '../Atoms/Homeworks/HomeworkItem'
 import { TabTitle } from '../Atoms/TabTitle'
-import { AccountContext } from '../AppLayout'
+import { AccountContext } from '../Provider/AccountProvider'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
