@@ -10,6 +10,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { buildAccountsQuery } from 'src/queries'
 
 import { BarComponent, BarCenter } from 'cozy-bar'
+import BottomIcon from 'cozy-ui/transpiled/react/Icons/Bottom'
 import { useClient, useQuery } from 'cozy-client'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Chip from 'cozy-ui/transpiled/react/Chips'
@@ -109,7 +110,7 @@ export const AccountSwitcher = () => {
               opacity: 0.5
             }}
           >
-            <Icon icon={ExchangeIcon} size="14px" />
+            <Icon icon={BottomIcon} size="14px" />
           </div>
         }
         style={{
