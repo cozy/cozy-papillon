@@ -71,6 +71,10 @@ export const AccountSwitcher = () => {
 
   const btnRef = useRef(null)
 
+  if (!accountsList || accountsList.length < 2) {
+    return null
+  }
+
   return (
     <div>
       <Button
