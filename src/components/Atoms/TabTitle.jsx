@@ -7,6 +7,8 @@ import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import { AccountSwitcher } from './AccountSwitcher'
+
 export const TabTitle = ({ title, children, loading }) => {
   const { isMobile } = useBreakpoints()
 
@@ -30,7 +32,17 @@ export const TabTitle = ({ title, children, loading }) => {
           <BarCenter>
             <Typography variant="h5">{title}</Typography>
           </BarCenter>
-          <BarRight>{children}</BarRight>
+          <BarRight>
+            {children}
+
+            <div
+              style={{
+                marginLeft: '1rem'
+              }}
+            >
+              <AccountSwitcher />
+            </div>
+          </BarRight>
         </>
       )}
 

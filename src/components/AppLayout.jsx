@@ -1,17 +1,17 @@
 import cx from 'classnames'
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
-import { BarComponent, BarCenter } from 'cozy-bar'
+import { BarCenter, BarComponent } from 'cozy-bar'
 import { useClient } from 'cozy-client'
 import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
 import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/Checkbox'
 import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
 import WalkIcon from 'cozy-ui/transpiled/react/Icons/Walk'
-import { Layout, Main, Content } from 'cozy-ui/transpiled/react/Layout'
+import { Content, Layout, Main } from 'cozy-ui/transpiled/react/Layout'
 import Nav, {
-  NavItem,
   NavIcon,
+  NavItem,
   NavText,
   genNavLink
 } from 'cozy-ui/transpiled/react/Nav'
@@ -20,6 +20,9 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import { AccountSwitcher } from './Atoms/AccountSwitcher'
+import { AccountProvider } from './Provider/AccountProvider'
 
 const ExampleRouterNavLink = ({
   children,
@@ -59,6 +62,17 @@ const AppLayout = () => {
   return (
     <Layout>
       <Sidebar>
+        {!isMobile && (
+          <div
+            style={{
+              margin: '1rem',
+              marginBottom: '-0.5rem'
+            }}
+          >
+            <AccountSwitcher />
+          </div>
+        )}
+
         <Nav>
           <NavItem>
             <NavLink {...makeProps(['timetable'])}>
