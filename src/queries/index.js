@@ -22,21 +22,20 @@ export const buildTimetableQuery = (sourceAccountIdentifier, start, end) => ({
   definition: () =>
     Q('io.cozy.calendar.events')
       .where({
-        start: start ? { $gte: start } : { $gt: null },
-        end: end ? { $lte: end } : { $lt: null },
+        start: end ? { $lte: end, $gte: start } : { $lt: null, $gte: start },
         cozyMetadata: {
           sourceAccountIdentifier
         }
       })
-      .indexFields(['start', 'end', 'cozyMetadata.sourceAccountIdentifier']),
+      .indexFields(['cozyMetadata.sourceAccountIdentifier', 'start']),
   options: {
     as:
-      'io.cozy.calendar.events/start/' +
+      'io.cozy.calendar.events/account/' +
+      sourceAccountIdentifier +
+      '/start/' +
       start +
       '/end/' +
-      end +
-      '/account/' +
-      sourceAccountIdentifier,
+      end,
     fetchPolicy: defaultFetchPolicy
   }
 })
@@ -60,7 +59,7 @@ export const buildHomeworkQuery = sourceAccountIdentifier => ({
         }
       })
       .sortBy([{ dueDate: 'desc' }])
-      .indexFields(['dueDate', 'cozyMetadata.sourceAccountIdentifier']),
+      .indexFields(['cozyMetadata.sourceAccountIdentifier', 'dueDate']),
   options: {
     as: 'io.cozy.calendar.todos/account/' + sourceAccountIdentifier,
     fetchPolicy: defaultFetchPolicy
@@ -85,13 +84,13 @@ export const buildGradesQuery = (sourceAccountIdentifier, period) => ({
           sourceAccountIdentifier
         }
       })
-      .indexFields(['title', 'cozyMetadata.sourceAccountIdentifier']),
+      .indexFields(['cozyMetadata.sourceAccountIdentifier', 'title']),
   options: {
     as:
-      'io.cozy.timeseries.grades/period/' +
-      period +
-      '/account/' +
-      sourceAccountIdentifier,
+      'io.cozy.timeseries.grades/account/' +
+      sourceAccountIdentifier +
+      '/period/' +
+      period,
     fetchPolicy: defaultFetchPolicy
   }
 })
@@ -105,7 +104,7 @@ export const buildGradeItemQuery = id => ({
   }
 })
 
-export const buildPresenceQuery = (sourceAccountIdentifier) => ({
+export const buildPresenceQuery = sourceAccountIdentifier => ({
   definition: () =>
     Q('io.cozy.calendar.presence')
       .where({
@@ -115,7 +114,7 @@ export const buildPresenceQuery = (sourceAccountIdentifier) => ({
         }
       })
       .sortBy([{ start: 'desc' }])
-      .indexFields(['start', 'cozyMetadata.sourceAccountIdentifier']),
+      .indexFields(['cozyMetadata.sourceAccountIdentifier', 'start']),
   options: {
     as: 'io.cozy.calendar.presence/account/' + sourceAccountIdentifier,
     fetchPolicy: defaultFetchPolicy
