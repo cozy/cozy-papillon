@@ -22,7 +22,7 @@ export const buildTimetableQuery = (sourceAccountIdentifier, start, end) => ({
   definition: () =>
     Q('io.cozy.calendar.events')
       .where({
-        start: end ? { $lte: end, $gte: start } : { $lt: null, $gte: start },
+        start: end ? { $lte: end, $gte: start } : { $gte: start },
         cozyMetadata: {
           sourceAccountIdentifier
         }
