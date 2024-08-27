@@ -1,4 +1,9 @@
 {
+  "Layout": {
+    "onboardImportText": "Importez vos données scolaires",
+    "importFromButton": "Importer depuis",
+    "exploreServices": "Explorer les services"
+  },
   "Sidebar": {
     "timetable": "Emploi du temps",
     "homeworks": "Travail à faire",

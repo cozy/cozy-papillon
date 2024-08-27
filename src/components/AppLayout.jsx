@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { useState } from 'react'
+import React from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { BarCenter, BarComponent } from 'cozy-bar'
@@ -15,6 +15,9 @@ import Nav, {
   NavText,
   genNavLink
 } from 'cozy-ui/transpiled/react/Nav'
+import {
+  CircularProgress
+} from 'cozy-ui/transpiled/react/Progress'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -22,7 +25,8 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { AccountSwitcher } from './Atoms/AccountSwitcher'
-import { AccountProvider } from './Provider/AccountProvider'
+import { useAccountContext } from './Provider/AccountProvider'
+import { EmptyDataView } from './Views/EmptyDataView'
 
 const ExampleRouterNavLink = ({
   children,
@@ -48,6 +52,13 @@ const AppLayout = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const currentTab = location.pathname.slice(1)
+  const {
+    currentAccount,
+    setCurrentAccount,
+    accountsList,
+    setAccountsList,
+    fetchStatus
+  } = useAccountContext()
 
   const makeProps = route => {
     const routeIsMatching = currentTab.includes(route[0])
@@ -57,6 +68,23 @@ const AppLayout = () => {
       },
       active: routeIsMatching
     }
+  }
+
+  if (accountsList.length == 0) {
+    return (
+      <Layout>
+        <BarComponent />
+        <Main>
+          <Content>
+            {fetchStatus === 'loaded' ? (
+              <EmptyDataView />
+            ) : (
+              <CircularProgress />
+            )}
+          </Content>
+        </Main>
+      </Layout>
+    )
   }
 
   return (

@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { buildAccountsQuery } from 'src/queries'
+import React, { useRef, useState } from 'react'
 
-import { useQuery } from 'cozy-client'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import ActionsMenuWrapper from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuWrapper'
 import Button from 'cozy-ui/transpiled/react/Buttons'
@@ -11,26 +9,13 @@ import People from 'cozy-ui/transpiled/react/Icons/People'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+
 import { useAccountContext } from '../Provider/AccountProvider'
 
 export const AccountSwitcher = () => {
-  const { currentAccount, setCurrentAccount } = useAccountContext()
-
-  const accountsQuery = buildAccountsQuery()
-
-  const { data: accounts, fetchStatus } = useQuery(
-    accountsQuery.definition,
-    accountsQuery.options
-  )
-
-  const accountsList = accounts ? accounts : []
+  const { currentAccount, setCurrentAccount, accountsList, setAccountsList } =
+    useAccountContext()
   const [accountMenuShown, setAccountMenuShown] = useState(false)
-
-  useEffect(() => {
-    if (accountsList.length > 0 && !currentAccount) {
-      setCurrentAccount(accountsList[0])
-    }
-  }, [accountsList])
 
   const translatedAccType = type => {
     switch (type) {
@@ -51,7 +36,6 @@ export const AccountSwitcher = () => {
     <div>
       <Button
         ref={btnRef}
-        busy={fetchStatus === 'loading'}
         label={
           <Typography
             noWrap
