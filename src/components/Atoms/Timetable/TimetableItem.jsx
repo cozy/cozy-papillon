@@ -23,6 +23,9 @@ export const TimetableItem = ({ course }) => {
         navigate(`/timetable/course/${course._id}`)
       }}
       disabled={course.status == 'CANCELLED'}
+      style={{
+        height: 92
+      }}
     >
       <SubjectColor color={subjectColor(course.subject)} />
 

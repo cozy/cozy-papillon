@@ -16,7 +16,10 @@
     "duration": "Durée",
     "informations": "Informations",
     "noCourses": "Aucun cours",
-    "cancelled": "Cours annulé"
+    "cancelled": "Cours annulé",
+    "pauseNoCourses": "Pas de cours",
+    "pauseMidday": "Pause méridienne",
+    "during": "pendant"
   },
   "Homeworks": {
     "title": "Travail à faire",

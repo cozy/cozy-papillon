@@ -16,7 +16,10 @@
     "duration": "Duration",
     "informations": "Informations",
     "noCourses": "No courses",
-    "cancelled": "Cancelled course"
+    "cancelled": "Cancelled course",
+    "pauseNoCourses": "No lessons",
+    "pauseMidday": "Midday break",
+    "during": "during"
   },
   "Homeworks": {
     "title": "Homeworks",

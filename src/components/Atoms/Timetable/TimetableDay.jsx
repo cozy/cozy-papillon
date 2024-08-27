@@ -4,10 +4,19 @@ import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import { TimetableItem } from './TimetableItem'
+import { TimetableSeparator } from './TimetableSeparator'
 
 export const TimetableDay = ({ day, timetable }) => {
   const { t } = useI18n()
+
+  const courses =
+    (
+      timetable.find(group => group.date === day.toISOString()) ?? {
+        courses: []
+      }
+    )?.courses ?? []
 
   return (
     <div
@@ -25,12 +34,19 @@ export const TimetableDay = ({ day, timetable }) => {
           })}
         </ListSubheader>
 
-        {(
-          timetable.find(group => group.date === day.toISOString()) ?? {
-            courses: []
-          }
-        )?.courses.map(course => (
-          <TimetableItem course={course} key={course._id} />
+        {courses.map((course, i) => (
+          <>
+            <TimetableItem course={course} key={course._id} />
+
+            {courses[i + 1] &&
+              new Date(course.end).getTime() + 3600000 <
+                new Date(courses[i + 1].start).getTime() && (
+                <TimetableSeparator
+                  end={new Date(course.end)}
+                  start={new Date(courses[i + 1].start)}
+                />
+              )}
+          </>
         ))}
 
         {(
