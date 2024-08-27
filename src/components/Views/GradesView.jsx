@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { buildGradesQuery } from 'src/queries'
 
@@ -15,13 +15,13 @@ import { PeriodSelector } from '../Atoms/Grades/PeriodSelector'
 import { PeriodSelectorButton } from '../Atoms/Grades/PeriodSelectorButton'
 import { YearSelectorButton } from '../Atoms/Grades/YearSelectorButton'
 import { TabTitle } from '../Atoms/TabTitle'
-import { AccountContext } from '../Provider/AccountProvider'
+import { useAccountContext } from '../Provider/AccountProvider'
 
 export const GradesView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  const { currentAccount } = useContext(AccountContext)
+  const { currentAccount } = useAccountContext()
 
   const gradesQuery = buildGradesQuery(currentAccount?.name)
   const { data: subjects, fetchStatus } = useQuery(

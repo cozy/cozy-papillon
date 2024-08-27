@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { buildAccountsQuery } from 'src/queries'
 
 import { useQuery } from 'cozy-client'
@@ -11,10 +11,10 @@ import People from 'cozy-ui/transpiled/react/Icons/People'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import { AccountContext } from '../Provider/AccountProvider'
+import { useAccountContext } from '../Provider/AccountProvider'
 
 export const AccountSwitcher = () => {
-  const { currentAccount, setCurrentAccount } = useContext(AccountContext)
+  const { currentAccount, setCurrentAccount } = useAccountContext()
 
   const accountsQuery = buildAccountsQuery()
 

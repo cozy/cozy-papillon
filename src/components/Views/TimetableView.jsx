@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { buildTimetableQuery } from 'src/queries'
 
@@ -11,13 +11,13 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { TabTitle } from '../Atoms/TabTitle'
 import { CozyDatePickerInline } from '../Atoms/Timetable/CozyDatePickerInline'
 import { TimetableDay } from '../Atoms/Timetable/TimetableDay'
-import { AccountContext } from '../Provider/AccountProvider'
+import { useAccountContext } from '../Provider/AccountProvider'
 
 export const TimetableView = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  const { currentAccount } = useContext(AccountContext)
+  const { currentAccount } = useAccountContext()
 
   const [startDate, setStartDate] = useState(new Date())
 
