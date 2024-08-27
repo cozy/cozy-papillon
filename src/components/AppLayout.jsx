@@ -20,6 +20,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import { AccountSwitcher } from './Atoms/AccountSwitcher'
 import { AccountProvider } from './Provider/AccountProvider'
 
@@ -59,61 +60,59 @@ const AppLayout = () => {
   }
 
   return (
-    <AccountProvider>
-      <Layout>
-        <Sidebar>
-          {!isMobile && (
-            <div
-              style={{
-                margin: '1rem',
-                marginBottom: '-0.5rem',
-              }}
-            >
-              <AccountSwitcher />
-            </div>
-          )}
+    <Layout>
+      <Sidebar>
+        {!isMobile && (
+          <div
+            style={{
+              margin: '1rem',
+              marginBottom: '-0.5rem'
+            }}
+          >
+            <AccountSwitcher />
+          </div>
+        )}
 
-          <Nav>
-            <NavItem>
-              <NavLink {...makeProps(['timetable'])}>
-                <NavIcon icon={CalendarIcon} />
-                <NavText>{t('Sidebar.timetable')}</NavText>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink {...makeProps(['homeworks'])}>
-                <NavIcon icon={CheckboxIcon} />
-                <NavText>{t('Sidebar.homeworks')}</NavText>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink {...makeProps(['grades'])}>
-                <NavIcon icon={PieChartIcon} />
-                <NavText>{t('Sidebar.grades')}</NavText>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink {...makeProps(['presence'])}>
-                <NavIcon icon={WalkIcon} />
-                <NavText>{t('Sidebar.presence')}</NavText>
-              </NavLink>
-            </NavItem>
-          </Nav>
-        </Sidebar>
-        <BarComponent />
-        <Main>
-          <Content>
-            {isMobile && (
-              <BarCenter>
-                <Typography variant="h5">{client.appMetadata.slug}</Typography>
-              </BarCenter>
-            )}
-            <Outlet />
-          </Content>
-        </Main>
-        <Alerter t={t} />
-      </Layout>
-    </AccountProvider>
+        <Nav>
+          <NavItem>
+            <NavLink {...makeProps(['timetable'])}>
+              <NavIcon icon={CalendarIcon} />
+              <NavText>{t('Sidebar.timetable')}</NavText>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink {...makeProps(['homeworks'])}>
+              <NavIcon icon={CheckboxIcon} />
+              <NavText>{t('Sidebar.homeworks')}</NavText>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink {...makeProps(['grades'])}>
+              <NavIcon icon={PieChartIcon} />
+              <NavText>{t('Sidebar.grades')}</NavText>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink {...makeProps(['presence'])}>
+              <NavIcon icon={WalkIcon} />
+              <NavText>{t('Sidebar.presence')}</NavText>
+            </NavLink>
+          </NavItem>
+        </Nav>
+      </Sidebar>
+      <BarComponent />
+      <Main>
+        <Content>
+          {isMobile && (
+            <BarCenter>
+              <Typography variant="h5">{client.appMetadata.slug}</Typography>
+            </BarCenter>
+          )}
+          <Outlet />
+        </Content>
+      </Main>
+      <Alerter t={t} />
+    </Layout>
   )
 }
 
