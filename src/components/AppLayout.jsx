@@ -42,7 +42,7 @@ const NavLink = genNavLink(ExampleRouterNavLink)
 
 const AppLayout = () => {
   const { t } = useI18n()
-  const { isMobile, is } = useBreakpoints()
+  const { isMobile } = useBreakpoints()
   const client = useClient()
   const navigate = useNavigate()
   const location = useLocation()
