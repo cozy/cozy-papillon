@@ -1,9 +1,10 @@
 import React from 'react'
 
-export const SubjectColor = ({ color }) => {
+export const SubjectColor = ({ color, style }) => {
   return (
     <div
       style={{
+        ...style,
         minWidth: '4px',
         backgroundColor: color || '#888'
       }}
