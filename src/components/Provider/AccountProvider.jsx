@@ -23,7 +23,16 @@ export const AccountProvider = ({ children }) => {
 
   useEffect(() => {
     if (fetchStatus === 'loaded') {
-      setAccountsList(accounts)
+      const newAccounts = accounts
+
+      // Sort accounts by creation date
+      newAccounts.sort(
+        (a, b) =>
+          new Date(b.cozyMetadata.createdAt) -
+          new Date(a.cozyMetadata.createdAt)
+      )
+
+      setAccountsList(newAccounts)
     }
   }, [fetchStatus])
 
