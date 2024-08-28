@@ -9,6 +9,7 @@ import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { HomeworkItem } from '../Atoms/Homeworks/HomeworkItem'
@@ -17,6 +18,7 @@ import { useAccountContext } from '../Provider/AccountProvider'
 
 export const HomeworksView = () => {
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
 
   const { currentAccount } = useAccountContext()
 
@@ -79,12 +81,14 @@ export const HomeworksView = () => {
           style={{
             height: '100%',
             overflow: 'auto',
-            overflowY: 'scroll'
+            overflowY: 'scroll',
+            padding: isMobile ? '0' : '0 16px',
+            marginTop: -8
           }}
         >
           {newHws.map((day, i) => (
             <List key={i} className={day.current ? 'current' : ''}>
-              <ListSubheader>
+              <ListSubheader style={{ borderRadius: isMobile ? 0 : 8}}>
                 <Typography variant="subtitle2" color="textSecondary">
                   {new Date(day.date).toLocaleDateString('default', {
                     weekday: 'long',
