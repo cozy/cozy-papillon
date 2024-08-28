@@ -1,5 +1,8 @@
 import React from 'react'
 
+import Paper from 'cozy-ui/transpiled/react/Paper'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
 import { PeriodSelectorButton } from './PeriodSelectorButton'
 import { YearSelectorButton } from './YearSelectorButton'
 
@@ -19,12 +22,22 @@ export const PeriodSelector = ({
   years,
   t
 }) => {
+  const { isMobile } = useBreakpoints()
+  const elevation = 4
+
   return (
-    <div
+    <Paper
+      elevation={elevation}
       style={{
+        height: 40,
+        padding: '0 8px',
+        overflow: 'hidden',
+        borderRadius: 40,
         display: 'flex',
+        gap: '16px',
         alignItems: 'center',
-        gap: '20px'
+        justifyContent: 'center',
+        width: isMobile ? '100%' : 'auto'
       }}
     >
       <PeriodSelectorButton
@@ -48,6 +61,6 @@ export const PeriodSelector = ({
         years={years}
         t={t}
       />
-    </div>
+    </Paper>
   )
 }

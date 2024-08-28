@@ -14,41 +14,27 @@ export const TabTitle = ({ title, children, loading }) => {
 
   return (
     <>
-      {!isMobile ? (
-        <>
-          <Paper
-            square
-            className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
-          >
-            <Typography variant="h4" color="textPrimary">
-              {title}
-            </Typography>
-
-            {children}
-          </Paper>
-        </>
-      ) : (
-        <>
-          <BarCenter>
-            <Typography variant="h5">{title}</Typography>
-          </BarCenter>
-          <BarRight>
-            {children}
-
-            <div
-              style={{
-                marginLeft: '1rem'
-              }}
-            >
-              <AccountSwitcher />
-            </div>
-          </BarRight>
-        </>
+      {isMobile && (
+        <BarCenter>
+          <AccountSwitcher />
+        </BarCenter>
       )}
 
-      {loading && <LinearProgress />}
+      {!isMobile || children ? (
+        <Paper
+          square
+          elevation={0}
+          style={{
+            height: 68,
+            minHeight: 68
+          }}
+          className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
+        >
+          {!isMobile && <AccountSwitcher />}
 
-      {!isMobile && <Divider />}
+          {children}
+        </Paper>
+      ) : null}
     </>
   )
 }

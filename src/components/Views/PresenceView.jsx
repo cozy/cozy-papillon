@@ -7,6 +7,7 @@ import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
 import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { PresenceItem } from '../Atoms/Presence/PresenceItem'
@@ -15,6 +16,7 @@ import { useAccountContext } from '../Provider/AccountProvider'
 
 export const PresenceView = () => {
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
 
   const { currentAccount } = useAccountContext()
 
@@ -66,8 +68,15 @@ export const PresenceView = () => {
         )}
 
         {presenceEvents.map(group => (
-          <List key={group.month}>
-            <ListSubheader>
+          <List
+            key={group.month}
+            style={{
+              marginTop: '-8px',
+              marginLeft: isMobile ? '0px' : '16px',
+              marginRight: isMobile ? '0px' : '16px'
+            }}
+          >
+            <ListSubheader style={{ borderRadius: isMobile ? 0 : 8 }}>
               <Typography variant="subtitle2" color="textSecondary">
                 {group.prettyMonth}
               </Typography>

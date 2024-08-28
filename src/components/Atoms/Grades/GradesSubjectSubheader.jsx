@@ -4,10 +4,13 @@ import { getSubjectName } from 'src/format/subjectName'
 
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 export const GradesSubjectSubheader = ({ subject }) => {
+  const { isMobile } = useBreakpoints()
+
   return (
-    <ListSubheader>
+    <ListSubheader style={{ borderRadius: isMobile ? 0 : 8 }}>
       <div
         style={{
           display: 'flex',

@@ -15,9 +15,7 @@ import Nav, {
   NavText,
   genNavLink
 } from 'cozy-ui/transpiled/react/Nav'
-import {
-  CircularProgress
-} from 'cozy-ui/transpiled/react/Progress'
+import { CircularProgress } from 'cozy-ui/transpiled/react/Progress'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -89,18 +87,7 @@ const AppLayout = () => {
 
   return (
     <Layout>
-      <Sidebar>
-        {!isMobile && (
-          <div
-            style={{
-              margin: '1rem',
-              marginBottom: '-0.5rem'
-            }}
-          >
-            <AccountSwitcher />
-          </div>
-        )}
-
+      <Sidebar style={isMobile ? { overflow: 'hidden' } : {}}>
         <Nav>
           <NavItem>
             <NavLink {...makeProps(['timetable'])}>

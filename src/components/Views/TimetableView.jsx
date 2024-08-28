@@ -91,36 +91,24 @@ export const TimetableView = () => {
       <Outlet />
 
       <div>
-        <TabTitle
-          title={
-            !isMobile ? (
-              t('Timetable.title')
-            ) : (
-              <CozyDatePickerInline
-                date={startDate}
-                onDateChange={date => setStartDate(date)}
-                textVariant="h5"
-              />
-            )
-          }
-        >
-          {!isMobile && (
-            <CozyDatePickerInline
-              date={startDate}
-              onDateChange={date => setStartDate(date)}
-              textVariant="subtitle1"
-            />
-          )}
+        <TabTitle title={t('Timetable.title')}>
+          <CozyDatePickerInline
+            date={startDate}
+            onDateChange={date => setStartDate(date)}
+            textVariant="subtitle1"
+          />
         </TabTitle>
 
         {timetable.length !== 0 ? (
           <div
             style={{
-              flexDirection: !isMobile ? 'row' : 'column'
+              flexDirection: !isMobile ? 'row' : 'column',
+              padding: isMobile ? '0' : '0 16px',
+              marginTop: -8
             }}
             className="u-flex u-w-100 u-h-100"
           >
-            {(days ?? []).map(day => {
+            {(days ?? []).map((day, index) => {
               // If it's saturday and there are no courses, don't show the day
               if (
                 day.getDay() === 6 &&
@@ -132,6 +120,7 @@ export const TimetableView = () => {
               return (
                 <TimetableDay
                   day={day}
+                  index={index}
                   timetable={timetable}
                   key={day.toISOString()}
                 />

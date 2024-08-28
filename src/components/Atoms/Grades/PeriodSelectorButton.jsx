@@ -4,6 +4,7 @@ import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import Menu from 'cozy-ui/transpiled/react/Menu'
 import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 export const PeriodSelectorButton = ({
   periodDropdownRef,
@@ -15,6 +16,8 @@ export const PeriodSelectorButton = ({
   t,
   textVariant
 }) => {
+  const { isMobile } = useBreakpoints()
+
   return (
     <>
       <DropdownButton
@@ -23,6 +26,11 @@ export const PeriodSelectorButton = ({
         aria-haspopup="true"
         onClick={() => setPeriodMenuOpen(!periodMenuOpen)}
         textVariant={textVariant}
+        style={{
+          height: '100%',
+          paddingLeft: 16,
+          width: isMobile ? '100%' : 'auto'
+        }}
       >
         {selectedPeriod || t('Grades.selectPeriod')}
       </DropdownButton>
