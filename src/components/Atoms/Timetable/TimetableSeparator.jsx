@@ -26,10 +26,17 @@ export const TimetableSeparator = ({ end, start }) => {
       button
       style={{
         backgroundColor: 'var(--secondaryBackground)',
-        height: 92
+        height: 92,
+        borderRadius: 8,
+        marginLeft: 4,
+        marginRight: 4,
+        width: 'calc(100% - 8px)'
       }}
     >
-      <SubjectColor color="var(--secondaryColor)" style={{ opacity: 0.3 }} />
+      <SubjectColor
+        color="var(--secondaryColor)"
+        style={{ opacity: 0.3, marginLeft: -4 }}
+      />
 
       <ListItemText
         primary={

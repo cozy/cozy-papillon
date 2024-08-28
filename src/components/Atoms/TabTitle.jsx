@@ -18,11 +18,10 @@ export const TabTitle = ({ title, children, loading }) => {
         <>
           <Paper
             square
+            elevation={0}
             className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
           >
-            <Typography variant="h4" color="textPrimary">
-              {title}
-            </Typography>
+            <AccountSwitcher />
 
             {children}
           </Paper>
@@ -30,25 +29,15 @@ export const TabTitle = ({ title, children, loading }) => {
       ) : (
         <>
           <BarCenter>
-            <Typography variant="h5">{title}</Typography>
+            <AccountSwitcher />
           </BarCenter>
           <BarRight>
             {children}
-
-            <div
-              style={{
-                marginLeft: '1rem'
-              }}
-            >
-              <AccountSwitcher />
-            </div>
           </BarRight>
         </>
       )}
 
       {loading && <LinearProgress />}
-
-      {!isMobile && <Divider />}
     </>
   )
 }

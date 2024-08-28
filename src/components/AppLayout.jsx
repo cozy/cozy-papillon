@@ -90,17 +90,6 @@ const AppLayout = () => {
   return (
     <Layout>
       <Sidebar>
-        {!isMobile && (
-          <div
-            style={{
-              margin: '1rem',
-              marginBottom: '-0.5rem'
-            }}
-          >
-            <AccountSwitcher />
-          </div>
-        )}
-
         <Nav>
           <NavItem>
             <NavLink {...makeProps(['timetable'])}>

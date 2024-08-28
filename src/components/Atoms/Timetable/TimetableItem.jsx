@@ -24,7 +24,8 @@ export const TimetableItem = ({ course }) => {
       }}
       disabled={course.status == 'CANCELLED'}
       style={{
-        height: 92
+        height: 92,
+        borderRadius: 8
       }}
     >
       <SubjectColor color={subjectColor(course.subject)} />
@@ -37,7 +38,7 @@ export const TimetableItem = ({ course }) => {
                 style={{
                   display: 'flex',
                   gap: '4px',
-                  alignItems: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <Typography variant="subtitle2" color="textPrimary" noWrap>

@@ -3,13 +3,15 @@ import React from 'react'
 import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { TimetableItem } from './TimetableItem'
 import { TimetableSeparator } from './TimetableSeparator'
 
-export const TimetableDay = ({ day, timetable }) => {
+export const TimetableDay = ({ day, timetable, index }) => {
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
 
   const courses =
     (
@@ -27,7 +29,20 @@ export const TimetableDay = ({ day, timetable }) => {
       className="u-flex u-flex-column u-w-100 u-h-100"
     >
       <List>
-        <ListSubheader>
+        <ListSubheader
+          style={
+            !isMobile
+              ? {
+                  borderTopLeftRadius: index === 0 ? 8 : 0,
+                  borderBottomLeftRadius: index === 0 ? 8 : 0,
+                  borderTopRightRadius: index === 4 ? 8 : 0,
+                  borderBottomRightRadius: index === 4 ? 8 : 0
+                }
+              : {
+                  borderRadius: 8
+                }
+          }
+        >
           {day.toLocaleDateString('default', {
             weekday: 'long',
             day: '2-digit'

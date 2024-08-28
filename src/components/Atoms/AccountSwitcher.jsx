@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import ActionsMenuWrapper from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuWrapper'
 import Button from 'cozy-ui/transpiled/react/Buttons'
+import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import BottomIcon from 'cozy-ui/transpiled/react/Icons/Bottom'
 import People from 'cozy-ui/transpiled/react/Icons/People'
@@ -34,46 +35,11 @@ export const AccountSwitcher = () => {
 
   return (
     <div>
-      <Button
-        ref={btnRef}
-        label={
-          <Typography
-            noWrap
-            variant="subtitle"
-            color="body1"
-            style={{ fontWeight: 600 }}
-          >
-            {currentAccount ? currentAccount.name : ''}
-          </Typography>
-        }
-        onClick={() => setAccountMenuShown(true)}
-        startIcon={
-          <div
-            style={{
-              marginLeft: '2px',
-              marginRight: '2px'
-            }}
-          >
-            <Icon icon={People} size="14px" />
-          </div>
-        }
-        endIcon={
-          <div
-            style={{
-              marginLeft: '2px',
-              marginRight: '2px',
-              opacity: 0.5
-            }}
-          >
-            <Icon icon={BottomIcon} size="14px" />
-          </div>
-        }
-        style={{
-          maxWidth: '100%'
-        }}
-        variant="secondary"
-        size="small"
-      />
+      <DropdownButton ref={btnRef} onClick={() => setAccountMenuShown(true)}>
+        <Typography noWrap variant="h5" color="textPrimary">
+          {currentAccount ? currentAccount.name : ''}
+        </Typography>
+      </DropdownButton>
 
       <ActionsMenuWrapper
         open={accountMenuShown}
