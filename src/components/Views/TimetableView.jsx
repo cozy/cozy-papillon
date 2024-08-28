@@ -91,26 +91,12 @@ export const TimetableView = () => {
       <Outlet />
 
       <div>
-        <TabTitle
-          title={
-            !isMobile ? (
-              t('Timetable.title')
-            ) : (
-              <CozyDatePickerInline
-                date={startDate}
-                onDateChange={date => setStartDate(date)}
-                textVariant="h5"
-              />
-            )
-          }
-        >
-          {!isMobile && (
-            <CozyDatePickerInline
-              date={startDate}
-              onDateChange={date => setStartDate(date)}
-              textVariant="subtitle1"
-            />
-          )}
+        <TabTitle title={t('Timetable.title')}>
+          <CozyDatePickerInline
+            date={startDate}
+            onDateChange={date => setStartDate(date)}
+            textVariant="subtitle1"
+          />
         </TabTitle>
 
         {timetable.length !== 0 ? (

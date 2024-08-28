@@ -36,7 +36,7 @@ export const AccountSwitcher = () => {
   return (
     <div>
       <DropdownButton ref={btnRef} onClick={() => setAccountMenuShown(true)}>
-        <Typography noWrap variant="h5" color="textPrimary">
+        <Typography noWrap variant="h4" color="textPrimary">
           {currentAccount ? currentAccount.name : ''}
         </Typography>
       </DropdownButton>
