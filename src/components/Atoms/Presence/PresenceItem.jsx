@@ -17,7 +17,7 @@ export const PresenceItem = ({ event, j, group }) => {
 
   return (
     <div key={event._id}>
-      <ListItem key={event._id}>
+      <ListItem key={event._id} style={{ borderRadius: 8 }}>
         <ListItemIcon>
           <Icon
             icon={

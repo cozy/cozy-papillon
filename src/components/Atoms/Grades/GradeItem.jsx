@@ -26,6 +26,7 @@ export const GradeItem = ({ grade, j, subject }) => {
         onClick={() => {
           navigate(`/grades/grade/${subject._id}/${grade.id}`)
         }}
+        style={{ borderRadius: 8 }}
       >
         <ListItemIcon>
           <Typography variant="h3" color="textPrimary">

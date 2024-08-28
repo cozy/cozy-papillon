@@ -20,6 +20,7 @@ export const HomeworkItem = ({ hw, j, day }) => {
         onClick={() => {
           navigate(`homework/${hw._id}`)
         }}
+        style={{ borderRadius: 8 }}
       >
         <ListItemIcon>
           <Checkbox checked={hw.completed} disabled />
