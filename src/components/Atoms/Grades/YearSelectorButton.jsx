@@ -22,6 +22,10 @@ export const YearSelectorButton = ({
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={() => setYearMenuOpen(!yearMenuOpen)}
+        style={{
+          height: '100%',
+          paddingRight: 16
+        }}
       >
         {selectedYear || t('Grades.selectYear')}
       </DropdownButton>
