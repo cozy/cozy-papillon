@@ -24,8 +24,8 @@ export const TabTitle = ({ title, children, loading }) => {
         square
         elevation={0}
         style={{
-          height: 64,
-          minHeight: 64
+          height: 68,
+          minHeight: 68
         }}
         className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
       >
