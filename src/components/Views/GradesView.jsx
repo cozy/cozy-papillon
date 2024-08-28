@@ -128,7 +128,19 @@ export const GradesView = () => {
         .map((subject, i) => (
           <List
             key={i}
-            subheader={<GradesSubjectSubheader subject={subject} />}
+            subheader={
+              isMobile ? (
+                <GradesSubjectSubheader subject={subject} />
+              ) : (
+                <div>
+                  <GradesSubjectSubheader subject={subject} />
+                </div>
+              )
+            }
+            style={{
+              marginLeft: isMobile ? '0px' : '16px',
+              marginRight: isMobile ? '0px' : '16px'
+            }}
           >
             {subject.series.map((grade, j) => (
               <GradeItem key={j} grade={grade} j={j} subject={subject} />
