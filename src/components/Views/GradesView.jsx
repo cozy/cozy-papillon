@@ -40,6 +40,17 @@ export const GradesView = () => {
     )
   ]
 
+  // if "Hors période" is present, make it last
+  allPeriods.sort((a, b) => {
+    if (a.title === 'Hors période') {
+      return 1
+    }
+    if (b.title === 'Hors période') {
+      return -1
+    }
+    return 0
+  })
+
   const periods = [...new Set((allPeriods ?? []).map(period => period.title))]
   const years = [...new Set((allPeriods ?? []).map(period => period.year))]
 
@@ -81,6 +92,13 @@ export const GradesView = () => {
   const yearDropdownRef = React.useRef(null)
   const mobilePeriodDropdownRef = React.useRef(null)
   const mobileYearDropdownRef = React.useRef(null)
+
+  useEffect(() => {
+    // if current period does not exist in the list of periods, set it to the first period
+    if (!periods.includes(selectedPeriod)) {
+      setSelectedPeriod(periods[0])
+    }
+  }, [subjects])
 
   const periodSelectorProps = {
     periodDropdownRef,
@@ -145,6 +163,15 @@ export const GradesView = () => {
             {subject.series.map((grade, j) => (
               <GradeItem key={j} grade={grade} j={j} subject={subject} />
             ))}
+
+            {subject.series.length == 0 && (
+              <Empty
+                icon={CozyIcon}
+                title={t('Grades.emptyList.title')}
+                text={t('Grades.emptyList.description')}
+                centered
+              />
+            )}
           </List>
         ))}
     </>
