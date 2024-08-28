@@ -117,7 +117,8 @@ export const TimetableView = () => {
           <div
             style={{
               flexDirection: !isMobile ? 'row' : 'column',
-              padding: isMobile ? '0 8px' : '0 16px'
+              padding: isMobile ? '0' : '0 16px',
+              marginTop: -8
             }}
             className="u-flex u-w-100 u-h-100"
           >

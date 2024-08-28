@@ -39,7 +39,7 @@ export const TimetableDay = ({ day, timetable, index }) => {
                   borderBottomRightRadius: index === 4 ? 8 : 0
                 }
               : {
-                  borderRadius: 8
+                  borderRadius: 0
                 }
           }
         >
@@ -50,7 +50,11 @@ export const TimetableDay = ({ day, timetable, index }) => {
         </ListSubheader>
 
         {courses.map((course, i) => (
-          <>
+          <div key={course._id}
+            style={{
+              margin: isMobile ? '-4px 4px' : '0',
+            }}
+          >
             <TimetableItem course={course} key={course._id} />
 
             {courses[i + 1] &&
@@ -61,7 +65,7 @@ export const TimetableDay = ({ day, timetable, index }) => {
                   start={new Date(courses[i + 1].start)}
                 />
               )}
-          </>
+          </div>
         ))}
 
         {(
