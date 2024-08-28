@@ -20,19 +20,21 @@ export const TabTitle = ({ title, children, loading }) => {
         </BarCenter>
       )}
 
-      <Paper
-        square
-        elevation={0}
-        style={{
-          height: 68,
-          minHeight: 68
-        }}
-        className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
-      >
-        {!isMobile && <AccountSwitcher />}
+      {!isMobile || children ? (
+        <Paper
+          square
+          elevation={0}
+          style={{
+            height: 68,
+            minHeight: 68
+          }}
+          className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
+        >
+          {!isMobile && <AccountSwitcher />}
 
-        {children}
-      </Paper>
+          {children}
+        </Paper>
+      ) : null}
     </>
   )
 }
