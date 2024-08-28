@@ -103,29 +103,8 @@ export const GradesView = () => {
     <>
       <Outlet />
 
-      <TabTitle
-        title={
-          !isMobile ? (
-            t('Grades.title')
-          ) : (
-            <PeriodSelectorButton
-              textVariant="h5"
-              {...periodSelectorProps}
-              periodDropdownRef={mobilePeriodDropdownRef}
-              yearDropdownRef={mobileYearDropdownRef}
-            />
-          )
-        }
-        loading={isLoading}
-      >
-        {isMobile ? (
-          <YearSelectorButton
-            {...periodSelectorProps}
-            yearDropdownRef={mobileYearDropdownRef}
-          />
-        ) : (
-          <PeriodSelector {...periodSelectorProps} />
-        )}
+      <TabTitle title={t('Grades.title')} loading={isLoading}>
+        <PeriodSelector {...periodSelectorProps} />
       </TabTitle>
 
       {(subjects ?? []).length === 0 && !isLoading && (

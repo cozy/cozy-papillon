@@ -24,7 +24,8 @@ export const TabTitle = ({ title, children, loading }) => {
         square
         elevation={0}
         style={{
-          height: 70,
+          height: 64,
+          minHeight: 64
         }}
         className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
       >
@@ -32,8 +33,6 @@ export const TabTitle = ({ title, children, loading }) => {
 
         {children}
       </Paper>
-
-      {loading && <LinearProgress />}
     </>
   )
 }
