@@ -22,7 +22,9 @@ export const HomeworksView = () => {
 
   const { currentAccount } = useAccountContext()
 
-  const homeworksQuery = buildHomeworkQuery(currentAccount?.name)
+  const homeworksQuery = buildHomeworkQuery(
+    currentAccount?.cozyMetadata?.sourceAccountIdentifier
+  )
   const {
     data: homeworks,
     fetchStatus,
@@ -88,7 +90,7 @@ export const HomeworksView = () => {
         >
           {newHws.map((day, i) => (
             <List key={i} className={day.current ? 'current' : ''}>
-              <ListSubheader style={{ borderRadius: isMobile ? 0 : 8}}>
+              <ListSubheader style={{ borderRadius: isMobile ? 0 : 8 }}>
                 <Typography variant="subtitle2" color="textSecondary">
                   {new Date(day.date).toLocaleDateString('default', {
                     weekday: 'long',

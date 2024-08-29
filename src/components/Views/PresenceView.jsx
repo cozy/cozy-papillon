@@ -20,7 +20,9 @@ export const PresenceView = () => {
 
   const { currentAccount } = useAccountContext()
 
-  const presenceQuery = buildPresenceQuery(currentAccount?.name)
+  const presenceQuery = buildPresenceQuery(
+    currentAccount?.cozyMetadata?.sourceAccountIdentifier
+  )
   const { data: presence, fetchStatus } = useQuery(
     presenceQuery.definition,
     presenceQuery.options

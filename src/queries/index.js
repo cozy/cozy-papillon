@@ -7,13 +7,15 @@ const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
 
 export const buildAccountsQuery = () => ({
   definition: () =>
-    Q('io.cozy.accounts')
+    Q('io.cozy.identities')
       .where({
-        account_type: 'pronote'
+        cozyMetadata: {
+          createdByApp: 'pronote'
+        }
       })
-      .indexFields(['account_type']),
+      .indexFields(['cozyMetadata.createdByApp']),
   options: {
-    as: 'io.cozy.accounts/pronote',
+    as: 'io.cozy.identities/pronote',
     fetchPolicy: defaultFetchPolicy
   }
 })

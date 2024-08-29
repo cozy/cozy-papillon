@@ -39,7 +39,7 @@ export const TimetableView = () => {
   }, [startDate])
 
   const timetableQuery = buildTimetableQuery(
-    currentAccount?.name,
+    currentAccount?.cozyMetadata?.sourceAccountIdentifier,
     startDate,
     endDate
   )

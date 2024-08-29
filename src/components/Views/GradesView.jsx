@@ -23,7 +23,9 @@ export const GradesView = () => {
 
   const { currentAccount } = useAccountContext()
 
-  const gradesQuery = buildGradesQuery(currentAccount?.name)
+  const gradesQuery = buildGradesQuery(
+    currentAccount?.cozyMetadata?.sourceAccountIdentifier
+  )
   const { data: subjects, fetchStatus } = useQuery(
     gradesQuery.definition,
     gradesQuery.options

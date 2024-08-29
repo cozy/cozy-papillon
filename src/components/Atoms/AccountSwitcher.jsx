@@ -13,6 +13,14 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { useAccountContext } from '../Provider/AccountProvider'
 
+const getStudentClass = jobTitle => {
+  if (jobTitle.includes('de')) {
+    return jobTitle.split('de')[1].trim()
+  }
+
+  return jobTitle
+}
+
 export const AccountSwitcher = () => {
   const { currentAccount, setCurrentAccount, accountsList, setAccountsList } =
     useAccountContext()
@@ -37,7 +45,8 @@ export const AccountSwitcher = () => {
     <div>
       <DropdownButton ref={btnRef} onClick={() => setAccountMenuShown(true)}>
         <Typography noWrap variant="h4" color="textPrimary">
-          {currentAccount ? currentAccount.name : ''}
+          {currentAccount?.contact?.name?.givenName}{' '}
+          {currentAccount?.contact?.name?.familyName}
         </Typography>
       </DropdownButton>
 
@@ -64,13 +73,47 @@ export const AccountSwitcher = () => {
             }}
             selected={currentAccount?._id === account._id}
           >
-            <ListItemIcon>
-              <Icon icon={People} />
-            </ListItemIcon>
-            <ListItemText
-              primary={account.name}
-              secondary={translatedAccType(account.account_type)}
-            />
+            <div
+              style={{
+                minWidth: 42,
+                width: 42,
+                height: 20,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '0px solid var(--secondaryColorLightest)',
+                backgroundColor: 'var(--secondaryColorLightest)',
+                borderRadius: '5px',
+              }}
+            >
+              <p
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  fontSize: '12.5px',
+                  color: 'var(--secondaryTextColor)',
+                  fontWeight: 600,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {getStudentClass(account?.contact?.jobTitle)}
+              </p>
+            </div>
+            <ListItemText>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                style={{ fontWeight: 600 }}
+              >
+                {account?.contact?.name?.givenName}{' '}
+                {account?.contact?.name?.familyName}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {account?.contact?.company}
+              </Typography>
+            </ListItemText>
           </ActionsMenuItem>
         ))}
       </ActionsMenuWrapper>
