@@ -10,6 +10,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { GradeItem } from '../Atoms/Grades/GradeItem'
+import GradesChart from '../Atoms/Grades/GradesChart'
 import { GradesSubjectSubheader } from '../Atoms/Grades/GradesSubjectSubheader'
 import { PeriodSelector } from '../Atoms/Grades/PeriodSelector'
 import { TabTitle } from '../Atoms/TabTitle'
@@ -122,6 +123,16 @@ export const GradesView = () => {
       <TabTitle title={t('Grades.title')} loading={isLoading}>
         <PeriodSelector {...periodSelectorProps} />
       </TabTitle>
+
+      {(subjects ?? []).length > 0 && !isLoading && (
+        <GradesChart
+          subjects={
+            subjects
+              ? subjects.filter(subject => subject.title === selectedPeriod)
+              : []
+          }
+        />
+      )}
 
       {(subjects ?? []).length === 0 && !isLoading && (
         <Empty
