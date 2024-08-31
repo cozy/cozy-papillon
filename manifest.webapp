@@ -1,6 +1,6 @@
 {
   "name": "Papillon",
-  "slug": "app",
+  "slug": "papillon",
   "icon": "icon.svg",
   "categories": [],
   "version": "0.1.0",
@@ -61,5 +61,13 @@
         "GET"
       ]
     }
-  }
+  },
+  "locales": {
+    "en": {},
+    "fr": {}
+  },
+  "langs": [
+    "en",
+    "fr"
+  ]
 }
