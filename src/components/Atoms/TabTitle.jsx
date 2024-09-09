@@ -1,15 +1,12 @@
 import React from 'react'
 
-import { BarCenter, BarRight } from 'cozy-bar'
-import Divider from 'cozy-ui/transpiled/react/Divider'
+import { BarCenter } from 'cozy-bar'
 import Paper from 'cozy-ui/transpiled/react/Paper'
-import { LinearProgress } from 'cozy-ui/transpiled/react/Progress'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { AccountSwitcher } from './AccountSwitcher'
 
-export const TabTitle = ({ title, children, loading }) => {
+export const TabTitle = ({ children }) => {
   const { isMobile } = useBreakpoints()
 
   return (

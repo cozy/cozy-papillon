@@ -12,8 +12,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { GradeItem } from '../Atoms/Grades/GradeItem'
 import { GradesSubjectSubheader } from '../Atoms/Grades/GradesSubjectSubheader'
 import { PeriodSelector } from '../Atoms/Grades/PeriodSelector'
-import { PeriodSelectorButton } from '../Atoms/Grades/PeriodSelectorButton'
-import { YearSelectorButton } from '../Atoms/Grades/YearSelectorButton'
 import { TabTitle } from '../Atoms/TabTitle'
 import { useAccountContext } from '../Provider/AccountProvider'
 
@@ -92,8 +90,6 @@ export const GradesView = () => {
 
   const periodDropdownRef = React.useRef(null)
   const yearDropdownRef = React.useRef(null)
-  const mobilePeriodDropdownRef = React.useRef(null)
-  const mobileYearDropdownRef = React.useRef(null)
 
   useEffect(() => {
     // if current period does not exist in the list of periods, set it to the first period

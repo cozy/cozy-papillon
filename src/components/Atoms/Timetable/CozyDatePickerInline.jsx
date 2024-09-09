@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import Button from 'cozy-ui/transpiled/react/Buttons'
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
@@ -9,7 +8,6 @@ import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 import Menu from 'cozy-ui/transpiled/react/Menu'
 import MenuItem from 'cozy-ui/transpiled/react/MenuItem'
 import Paper from 'cozy-ui/transpiled/react/Paper'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 

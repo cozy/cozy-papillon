@@ -42,7 +42,7 @@ export const EmptyDataView = () => {
           }}
         >
           <AppLinker app={{ slug: 'pronote' }} href={pronoteKonnectorUrl}>
-            {({ onClick, href, name }) => (
+            {({ href }) => (
               <Button
                 variant="secondary"
                 label={t('Layout.importFromButton') + ' Pronote'}
@@ -54,7 +54,7 @@ export const EmptyDataView = () => {
           </AppLinker>
 
           <AppLinker app={{ slug: 'store' }} href={storeEducationUrl}>
-            {({ onClick, href, name }) => (
+            {({ href }) => (
               <Button
                 variant="ghost"
                 label={t('Layout.exploreServices')}
