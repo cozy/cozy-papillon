@@ -50,9 +50,10 @@ export const TimetableDay = ({ day, timetable, index }) => {
         </ListSubheader>
 
         {courses.map((course, i) => (
-          <div key={course._id}
+          <div
+            key={course._id}
             style={{
-              margin: isMobile ? '-4px 4px' : '0',
+              margin: isMobile ? '-4px 4px' : '0'
             }}
           >
             <TimetableItem course={course} key={course._id} />

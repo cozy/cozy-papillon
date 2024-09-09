@@ -11,6 +11,7 @@ import {
   StylesProvider,
   createGenerateClassName
 } from 'cozy-ui/transpiled/react/styles'
+
 import { AccountProvider } from './Provider/AccountProvider'
 
 /*

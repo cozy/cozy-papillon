@@ -2,13 +2,13 @@ import React from 'react'
 import { Navigate, RouterProvider, createHashRouter } from 'react-router-dom'
 import AppLayout from 'src/components/AppLayout'
 
-import { GradesView } from './Views/GradesView'
-import { PresenceView } from './Views/PresenceView'
-import { HomeworksView } from './Views/HomeworksView'
-import { TimetableView } from './Views/TimetableView'
-import { TimetableModal } from './Dialogs/TimetableModal'
 import { GradeModal } from './Dialogs/GradesModal'
 import { HomeworkModal } from './Dialogs/HomeworkModal'
+import { TimetableModal } from './Dialogs/TimetableModal'
+import { GradesView } from './Views/GradesView'
+import { HomeworksView } from './Views/HomeworksView'
+import { PresenceView } from './Views/PresenceView'
+import { TimetableView } from './Views/TimetableView'
 
 const routes = [
   {

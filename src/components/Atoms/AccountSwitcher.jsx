@@ -83,7 +83,7 @@ export const AccountSwitcher = () => {
                 justifyContent: 'center',
                 border: '0px solid var(--secondaryColorLightest)',
                 backgroundColor: 'var(--secondaryColorLightest)',
-                borderRadius: '5px',
+                borderRadius: '5px'
               }}
             >
               <p
