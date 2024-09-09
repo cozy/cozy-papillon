@@ -1,0 +1,46 @@
+language: node_js
+node_js: 20
+dist: jammy
+cache:
+  npm: false
+branches:
+  only:
+    - master
+     # detect also tag like x.y.z or x.y.z-beta.n as travis consider them to be branches
+    - /^\d+\.\d+\.\d+(\-beta.\d+)?$/
+env:
+  global:
+    - MATTERMOST_CHANNEL='{"dev":"papillon","beta":"papillon,publication","stable":"papillon,publication"}'
+    # REGISTRY TOKEN
+    - secure: "pH/Apvosnp+MNZOzFM0TkVhCbGsCufD6g0voDi31EitacUg7X4wjD0GE0lGs9jmh2mBrYpKssbVEDPoLlOFTslB7wIyc2LqReF873+HdbgYGRdizeoJhCJE42x+8tTLSMXG5ddkQgIAYr1V9TBJYXLSmwwtepAELQtJW0O1fRBXaGfQSyrFt3ZEv+/lwQkvcXvOuyofS3tbFHal1glAtCorEbS/6vQBlMO5xjqtRBlrFSSCCTZrL1TbQ1Bnu+wuh5RUo5C2blsCvVtMRYLCFJICHGU3bsgYdDftYBAXGH21S4TMc3XvoA5YEtkYlv62aQMJH4dDvnJb1qTBO/zpT+3bDI+JMBboKpcLwL/8+QzwMny09ZHkrPb92didfXbkTrr4Y5/Enir+AzLY28MxwGQFSLAyGVKgNao5OttDMBDFdN/B3dkurx3BTs6hliOvnPKxjRoywYA8fc4ujlAwrMVMXvwSp64xPt2B23kgTga63Z69eie3KHGgvTCDRcprtK8WEwTTWHD1nRiRJZtUr+mBtzlHTszC22eL2xGNAUOk7TXkKcMUSzmI2uVs+BtDygjd4M/oD/omrSjsk4nWz6LAEFTawKGQQ6FiH0K/1bQKsbVNSTHl4YtA+ZxFACzMWPnulRkMoaG/SSM23USZhSVSYyfvAAJ3GlGabTPqm5SU="
+    # MATERMOST_HOOK_URL
+    - secure: "cgiii8gxSnWGOvbYm7E7X7zuhX/feJXvA1cClYJadGSolvtkIiuDbKEhs7b2fUsInWFkT2NaHzpr0bO3qEuL2aDvAWwJX8E4s/W0e0gOA0EhqJbKQehLTVcQ4cZejVNO0kEaD+QZUTAf3w6uxN2Gb/nKUezP2Wr+dAKtEt6pnfrDwPRzQFrm92SNdMk1yItkSx/GrA4VXRWwMqEZJvq811n54jdG1zvlaiBZSxCPFqRhrq/RMmUuod2yZkS7PXTFX4MekTt7zZRUOxIIKWtz9xhnnn/wYQcnqejJoXi+nWxaggivFQAHtCi3iYTwRufcl1Yn2nmC+QcgsmCsiCBmaXyFa0n3U4/Dvrvm+N+zH8qjCkCb7n6janxhCfNvLsf6j63weqKkFsB0QLvHLKJABwtFsTqM+V5VxLOY27Q4anW5w+tll60et2cHW3avzY5G0sV2B7hyjJ6ZP+M5Svd7HSy6Ksr6w+6dZ32UlVZRQ606lpybAaEqEbwAF5lZUNnlV3rL1i7++N7utLZ/yD2K+nBXDW/VaxabR1PFu62Mj4OCRxIbBlpb078EMQe+cjnPwgev80GHNIG+SSl9FEVuf42FTWPEaPA4W0kD+l/Zb54tNact5qdydAYfsrcjWdLmduX6D5k+/7WhZxDOyLhkedaoV8VEGbpGl3Iq8/UidD4="
+    # GITHUB_TOKEN
+    - secure: "li7J/cAjdqqBl23+c+2EoPVjCSpq3l+JD4VQE1DYwYmnLwBD014fGYJ66My+4ub6N3yUWg/X9zFgTKtZdGdWRyfLE3oMGrwPeJS/4kR2rIkBXRrcGj4tY0s6bZoS+1aipAaQhujXowd78t1Tnx0Y2EpM+FnS7P8pp6MG3xDSIbNmHZKAptBWllBGUW0mz9VydZ/4YwcRqNSZgZVwIxBx/+PNWLx7cckz3uAKgOWpXTenbMmBvdW1HkR0d+xxAxuy3eVt6IfUsrPVCewiOGZ61BFl94OqaTq43w2HrGzX0wIOk2Np3SnF645+dOxFl7+qUnYZLQ6wKwMxcgIYyM5C50ge+Kfu7/HEvRhcBXofXMWFtrwgWaOihmgU+7cVphEVWQj0ZBT7kisS72BmHuZBZi13J8PPY/WW96Idc6UByiqRNgNMWwnlib8af7oYzD55UwwyQa9Q298b3CAlQD6lS/UsPRhFhBT9Oxb5HtfA2MdyZq9DJ9TxWlAE9SuX5iOAQCseNjo2bn57brytisWXstvP+LbsKb7KPM7claWu/1RlzwdMTp9HNx+q5QnnORM0xeol2ZcY4bC2UpNJyok5z4vkEIU0sd4QhLVaiO4+jRL1QrZGXEvgqElHESXp2MM/+BiQ2TCDeV/Nq6jbElzEMFGKcTJRt0YjUAEmH54rziM="
+
+jobs:
+  include:
+    - name: "Lint"
+      script: yarn lint
+    - name: "Unit tests"
+      script: yarn test
+    - name: "Build app"
+      before_script:
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && openssl aes-256-cbc -K $encrypted_2911d206c096_key -iv $encrypted_2911d206c096_iv -in id_ed25519_downcloud_papillon.enc -out id_ed25519_downcloud_papillon -d'
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && eval "$(ssh-agent -s)"'
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && chmod 600 id_ed25519_downcloud_papillon'
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && ssh-add id_ed25519_downcloud_papillon'
+      script:
+        - yarn build
+      before_deploy:
+        - yarn add cozy-app-publish # to be sure to have the last version before deploy
+      deploy:
+        - provider: script
+          repo: cozy/cozy-drive
+          skip_cleanup: true
+          script: yarn run deploy
+          on:
+            # deploy the build on a build branch and publish to the Cozy registry
+            branch: master
+            # publish stable or beta versions using Github Releases (git tag)
+            tags: true
