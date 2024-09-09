@@ -22,7 +22,6 @@ import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { AccountSwitcher } from './Atoms/AccountSwitcher'
 import { useAccountContext } from './Provider/AccountProvider'
 import { EmptyDataView } from './Views/EmptyDataView'
 
@@ -50,13 +49,7 @@ const AppLayout = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const currentTab = location.pathname.slice(1)
-  const {
-    currentAccount,
-    setCurrentAccount,
-    accountsList,
-    setAccountsList,
-    fetchStatus
-  } = useAccountContext()
+  const { accountsList, fetchStatus } = useAccountContext()
 
   const makeProps = route => {
     const routeIsMatching = currentTab.includes(route[0])
