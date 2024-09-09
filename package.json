@@ -12,7 +12,7 @@
     "build": "cs build --barV7 false",
     "watch": "cs watch --barV7 false",
     "test": "env NODE_ENV=test cs test --verbose --coverage",
-    "deploy": "cozy-app-publish --token $REGISTRY_TOKEN --prepublish downcloud --postpublish mattermost",
+    "deploy": "cozy-app-publish --token $REGISTRY_TOKEN --prepublish downcloud --postpublish mattermost --space beta_tests",
     "version": "yarn version:manifest",
     "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp"
   },
