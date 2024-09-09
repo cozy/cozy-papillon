@@ -1,16 +1,17 @@
 {
   "name": "Papillon",
   "slug": "papillon",
-  "icon": "icon.svg",
-  "categories": [],
   "version": "1.0.0",
-  "licence": "AGPL-3.0",
-  "editor": "",
-  "source": "https://github.com/cozy/cozy-papillon.git@build",
+  "type": "webapp",
+  "icon": "icon.svg",
+  "categories": ["others"],
+  "source": "https://github.com/cozy/cozy-papillon",
+  "editor": "Cozy",
   "developer": {
     "name": "Cozy Cloud",
     "url": "https://cozy.io"
   },
+  "licence": "AGPL-3.0",
   "routes": {
     "/": {
       "folder": "/",
