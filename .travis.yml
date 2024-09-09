@@ -26,7 +26,7 @@ jobs:
       script: yarn test
     - name: "Build app"
       before_script:
-        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && openssl aes-256-cbc -K $encrypted_2911d206c096_key -iv $encrypted_2911d206c096_iv -in id_ed25519_downcloud_papillon.enc -out id_ed25519_downcloud_papillon -d'
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && openssl aes-256-cbc -K $encrypted_802858e06ad3_key -iv $encrypted_802858e06ad3_iv -in id_ed25519_downcloud_papillon.enc -out id_ed25519_downcloud_papillon -d'
         - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && eval "$(ssh-agent -s)"'
         - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && chmod 600 id_ed25519_downcloud_papillon'
         - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && ssh-add id_ed25519_downcloud_papillon'
