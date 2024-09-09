@@ -36,11 +36,16 @@ jobs:
         - yarn add cozy-app-publish # to be sure to have the last version before deploy
       deploy:
         - provider: script
-          repo: cozy/cozy-drive
+          repo: cozy/cozy-papillon
           skip_cleanup: true
           script: yarn run deploy
           on:
             # deploy the build on a build branch and publish to the Cozy registry
             branch: master
+        - provider: script
+          repo: cozy/cozy-papillon
+          skip_cleanup: true
+          script: yarn run deploy
+          on:
             # publish stable or beta versions using Github Releases (git tag)
             tags: true
