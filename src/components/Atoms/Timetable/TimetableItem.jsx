@@ -15,6 +15,10 @@ export const TimetableItem = ({ course }) => {
   const navigate = useNavigate()
   const { t } = useI18n()
 
+  if (!course || !course.subject) {
+    return null
+  }
+
   return (
     <ListItem
       key={course._id}
