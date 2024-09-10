@@ -24,10 +24,10 @@ export const buildTimetableQuery = (sourceAccountIdentifier, start, end) => ({
   definition: () =>
     Q('io.cozy.calendar.events')
       .where({
-        start: end ? { $lte: end, $gte: start } : { $gte: start },
         cozyMetadata: {
           sourceAccountIdentifier
-        }
+        },
+        start: end ? { $lte: end, $gte: start } : { $gte: start }
       })
       .indexFields(['cozyMetadata.sourceAccountIdentifier', 'start']),
   options: {
@@ -60,8 +60,11 @@ export const buildHomeworkQuery = sourceAccountIdentifier => ({
           sourceAccountIdentifier
         }
       })
-      .sortBy([{ dueDate: 'desc' }])
-      .indexFields(['cozyMetadata.sourceAccountIdentifier', 'dueDate']),
+      .indexFields(['cozyMetadata.sourceAccountIdentifier', 'dueDate'])
+      .sortBy([
+        { 'cozyMetadata.sourceAccountIdentifier': 'desc' },
+        { dueDate: 'desc' }
+      ]),
   options: {
     as: 'io.cozy.calendar.todos/account/' + sourceAccountIdentifier,
     fetchPolicy: defaultFetchPolicy
