@@ -33,14 +33,11 @@ export const AccountProvider = ({ children }) => {
       )
 
       setAccountsList(newAccounts)
+      if (newAccounts.length > 0) {
+        setCurrentAccount(newAccounts[0])
+      }
     }
   }, [fetchStatus])
-
-  useEffect(() => {
-    if (accountsList.length > 0 && !currentAccount) {
-      setCurrentAccount(accountsList[0])
-    }
-  }, [accountsList])
 
   return (
     <AccountContext.Provider

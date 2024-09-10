@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { buildTimetableQuery } from 'src/queries'
 
@@ -20,16 +20,6 @@ export const TimetableView = () => {
   const { currentAccount } = useAccountContext()
 
   const [startDate, setStartDate] = useState(new Date())
-
-  useEffect(() => {
-    let nsd = new Date(startDate)
-    nsd.setDate(nsd.getDate() - (nsd.getDay() - 1))
-    nsd.setHours(0, 0, 0, 0)
-
-    if (nsd.getDate() !== startDate.getDate()) {
-      setStartDate(new Date(nsd))
-    }
-  }, [startDate])
 
   const endDate = useMemo(() => {
     const date = new Date(startDate)

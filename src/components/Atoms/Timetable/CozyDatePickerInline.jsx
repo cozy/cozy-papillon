@@ -26,10 +26,6 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
     }
   }, [date])
 
-  const [dayDate, setDayDate] = useState(date.getDate())
-  const [monthDate, setMonthDate] = useState(date.getMonth())
-  const [yearDate, setYearDate] = useState(date.getFullYear())
-
   const daySelectRef = React.useRef(null)
   const monthSelectRef = React.useRef(null)
   const yearSelectRef = React.useRef(null)
@@ -49,7 +45,7 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
     const mondays = []
 
     for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(year, month - 1, day)
+      const date = new Date(year, month, day)
       if (date.getDay() === 1) {
         // 1 represents Monday
         mondays.push(day)
@@ -59,21 +55,40 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
     return mondays
   }
 
-  useEffect(() => {
-    const mondaysInNewMonth = getMondaysInMonth(yearDate, monthDate + 1)
+  const handleDayChange = i => {
+    const newDay = i
+    setDate(new Date(date.getFullYear(), date.getMonth(), newDay))
+  }
 
-    let newDayDate = dayDate
-    if (!mondaysInNewMonth.includes(dayDate)) {
+  const handleMonthChange = i => {
+    const newMonth = i
+    setDate(new Date(date.getFullYear(), newMonth, date.getDate()))
+  }
+
+  const handleYearChange = i => {
+    const newYear = date.getFullYear() + i - 10
+    setDate(new Date(newYear, date.getMonth(), date.getDate()))
+  }
+
+  useEffect(() => {
+    const mondaysInNewMonth = getMondaysInMonth(
+      date.getFullYear(),
+      date.getMonth()
+    )
+
+    let newDayDate = date.getDate()
+    if (!mondaysInNewMonth.includes(date.getDate())) {
       // Find the closest Monday in the new month
       newDayDate = mondaysInNewMonth.reduce((closest, current) =>
-        Math.abs(current - dayDate) < Math.abs(closest - dayDate)
+        Math.abs(current - date.getDate()) < Math.abs(closest - date.getDate())
           ? current
           : closest
       )
+      if (newDayDate != date.getDate()) {
+        setDate(new Date(date.getFullYear(), date.getMonth(), newDayDate))
+      }
     }
-
-    setDate(new Date(yearDate, monthDate, newDayDate))
-  }, [dayDate, monthDate, yearDate])
+  }, [date])
 
   const goToPrevWeek = () => {
     const newDate = new Date(date)
@@ -124,7 +139,7 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
           {date.toLocaleDateString('default', {
             day: '2-digit'
           })}
-          -{(date.getDate() + 6) % getDaysInMonth(monthDate)}
+          -{(date.getDate() + 6) % getDaysInMonth(date.getMonth() + 1)}
         </DropdownButton>
 
         <DropdownButton
@@ -200,16 +215,17 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
         keepMounted
         onClose={() => setDayMenuOpen(false)}
       >
-        {getMondaysInMonth(yearDate, monthDate + 1).map(i => (
+        {getMondaysInMonth(date.getFullYear(), date.getMonth()).map(i => (
           <MenuItem
             key={i}
             selected={i === date.getDate()}
             onClick={() => {
-              setDayDate(i)
+              handleDayChange(i)
               setDayMenuOpen(false)
             }}
           >
-            {i} {t('Timetable.to')} {(i + 6) % getDaysInMonth(monthDate)}
+            {i} {t('Timetable.to')}{' '}
+            {(i + 6) % getDaysInMonth(date.getMonth() + 1)}
           </MenuItem>
         ))}
       </Menu>
@@ -225,7 +241,7 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
             key={i}
             selected={i === date.getMonth()}
             onClick={() => {
-              setMonthDate(i)
+              handleMonthChange(i)
               setMonthMenuOpen(false)
             }}
           >
@@ -247,7 +263,7 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
             key={i}
             selected={date.getFullYear() + i - 10 === date.getFullYear()}
             onClick={() => {
-              setYearDate(date.getFullYear() + i - 10)
+              handleYearChange(i)
               setYearMenuOpen(false)
             }}
           >
