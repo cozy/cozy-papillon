@@ -24,14 +24,14 @@
   "locales": {
     "en": {
       "short_description": "Visualize all your school data",
-      "long_description": "This application allows you to view data from your school life tools (such as Pronote).\n\nThis data is secure and visible only to you, just like all your Cozy data.\n\nThe data is presented in 4 groups:\n\n📆 Schedule\n\n✅ Homework\n\n📉 Grades\n\n🚶‍➡️ School life\n\nIt can be imported automatically every day through the Pronote Connector or Ecole Directe (currently in development).\n\nNote: Files such as your homework, submitted assignments, term reports, etc., are archived and accessible through the Drive application of your Cozy.",
+      "long_description": "This application allows you to view data from your school life tools (such as Pronote).\n\n<br>This data is secure and visible only to you, just like all your Cozy data.\n\n<br>The data is presented in 4 groups:\n\n📆 Schedule\n\n✅ Homework\n\n📉 Grades\n\n🚶‍➡️ School life\n\n<br>It can be imported automatically every day through the Pronote Connector or Ecole Directe (currently in development).\n\n<br>Note: Files such as your homework, submitted assignments, term reports, etc., are archived and accessible through the Drive application of your Cozy.",
       "screenshots": [
         "screenshots/fr/screenshot01.png"
       ]
     },
     "fr": {
       "short_description": "Visualisez l'ensemble de vos données scolaires.",
-      "long_description": "Cette application vous permet de visualiser les données issues de vos outils de vie scolaire (Pronote par exemple).\n\nCes données y sont sécurisées et visibles seulement par vous-même, comme toutes les données de votre Cozy.\n\nLes données sont présentées en 4 groupes :\n\n📆 Emploi du temps\n\n✅ Travail à faire\n\n📉 Notes\n\n🚶‍➡️ Vie scolaire\n\nElles peuvent y être importées chaque jour automatiquement par le Connecteur Pronote ou Ecole directe (en cours de développement).\n\nNote : les fichiers de vos devoirs, travaux rendus, bulletins trimestriels, etc. sont eux archivés et utilisables grâce à l'application Drive de votre Cozy.",
+      "long_description": "Cette application vous permet de visualiser les données issues de vos outils de vie scolaire (Pronote par exemple).\n\n<br>Ces données y sont sécurisées et visibles seulement par vous-même, comme toutes les données de votre Cozy.\n\n<br>Les données sont présentées en 4 groupes :\n\n- 📆 Emploi du temps\n\n- ✅ Travail à faire\n\n- 📉 Notes\n\n- 🚶‍➡️ Vie scolaire\n\n<br>Elles peuvent y être importées chaque jour automatiquement par le Connecteur Pronote ou Ecole directe (en cours de développement).\n\n<br>Note : les fichiers de vos devoirs, travaux rendus, bulletins trimestriels, etc. sont eux archivés et utilisables grâce à l'application Drive de votre Cozy.",
       "screenshots": [
         "screenshots/fr/screenshot01.png"
       ]
