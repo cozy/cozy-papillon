@@ -37,6 +37,13 @@
       ]
     }
   },
+  "screenshots": [
+    "screenshots/fr/screenshot01.png"
+  ],
+  "langs": [
+    "en",
+    "fr"
+  ],
   "permissions": {
     "apps": {
       "description": "Required by the cozy-bar to display the icons of the apps",
