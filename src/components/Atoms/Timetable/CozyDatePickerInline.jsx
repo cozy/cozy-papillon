@@ -1,3 +1,11 @@
+import {
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  addWeeks,
+  format
+} from 'date-fns'
 import React, { useEffect, useState } from 'react'
 
 import DropdownButton from 'cozy-ui/transpiled/react/DropdownButton'
@@ -34,12 +42,6 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
   const [monthMenuOpen, setMonthMenuOpen] = useState(false)
   const [yearMenuOpen, setYearMenuOpen] = useState(false)
 
-  const getDaysInMonth = (month, offset = 0) => {
-    const res = new Date(date.getFullYear(), month, 0)
-    res.setDate(res.getDate() + offset)
-    return res.getDate()
-  }
-
   const getMondaysInMonth = (year, month) => {
     const daysInMonth = new Date(year, month, 0).getDate()
     const mondays = []
@@ -55,6 +57,36 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
     return mondays
   }
 
+  const getDayWithTwoDigits = date => {
+    return format(date, 'dd')
+  }
+  const getStartWeek = date => {
+    return getDayWithTwoDigits(startOfWeek(date, { weekStartsOn: 1 }))
+  }
+
+  const getEndWeek = date => {
+    return getDayWithTwoDigits(endOfWeek(date, { weekStartsOn: 1 }))
+  }
+
+  const getWeeksBoundsInMonth = date => {
+    if (!date) {
+      return []
+    }
+    let start = startOfWeek(startOfMonth(date), { weekStartsOn: 1 })
+    const end = endOfWeek(endOfMonth(date), { weekStartsOn: 1 })
+    const weeks = []
+
+    while (start <= end) {
+      const weekEnd = endOfWeek(start, { weekStartsOn: 1 })
+      if (start > startOfMonth(date)) {
+        // exclude weeks starting before current month
+        weeks.push({ start: start.getDate(), end: weekEnd.getDate() })
+      }
+      start = addWeeks(start, 1)
+    }
+    return weeks
+  }
+
   const handleDayChange = i => {
     const newDay = i
     setDate(new Date(date.getFullYear(), date.getMonth(), newDay))
@@ -62,7 +94,8 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
 
   const handleMonthChange = i => {
     const newMonth = i
-    setDate(new Date(date.getFullYear(), newMonth, date.getDate()))
+    const newDate = new Date(date.getFullYear(), newMonth, date.getDate())
+    setDate(newDate)
   }
 
   const handleYearChange = i => {
@@ -136,10 +169,7 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
             paddingLeft: 16
           }}
         >
-          {date.toLocaleDateString('default', {
-            day: '2-digit'
-          })}
-          -{(date.getDate() + 6) % getDaysInMonth(date.getMonth() + 1)}
+          {getStartWeek(date)} - {getEndWeek(date)}
         </DropdownButton>
 
         <DropdownButton
@@ -215,17 +245,16 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
         keepMounted
         onClose={() => setDayMenuOpen(false)}
       >
-        {getMondaysInMonth(date.getFullYear(), date.getMonth()).map(i => (
+        {getWeeksBoundsInMonth(date).map(week => (
           <MenuItem
-            key={i}
-            selected={i === date.getDate()}
+            key={week.start}
+            selected={week.start === date.getDate()}
             onClick={() => {
-              handleDayChange(i)
+              handleDayChange(week.start)
               setDayMenuOpen(false)
             }}
           >
-            {i} {t('Timetable.to')}{' '}
-            {(i + 6) % getDaysInMonth(date.getMonth() + 1)}
+            {week.start} {t('Timetable.to')} {week.end}
           </MenuItem>
         ))}
       </Menu>
@@ -246,7 +275,9 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
             }}
           >
             {uppercaseFirst(
-              new Date(0, i).toLocaleDateString('default', { month: 'long' })
+              new Date(date.getFullYear(), i).toLocaleDateString('default', {
+                month: 'long'
+              })
             )}
           </MenuItem>
         ))}
