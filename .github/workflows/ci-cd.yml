@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   pull_request:
@@ -11,12 +11,12 @@ on:
 
 env:
   MATTERMOST_CHANNEL: '{"dev":"papillon","beta":"papillon,publication","stable":"papillon,publication"}'
-  REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
   MATTERMOST_HOOK_URL: ${{ secrets.MATTERMOST_HOOK_URL }}
+  REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
 
 jobs:
   build:
-    name: Build
+    name: Build and publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
