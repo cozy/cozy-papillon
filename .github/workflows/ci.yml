@@ -6,6 +6,11 @@ on:
     branches:
       - master
 
+env:
+  MATTERMOST_CHANNEL: '{"dev":"papillon","beta":"papillon,publication","stable":"papillon,publication"}'
+  REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+  MATTERMOST_HOOK_URL: ${{ secrets.MATTERMOST_HOOK_URL }}
+
 jobs:
   build:
     name: Build
@@ -25,3 +30,10 @@ jobs:
         run: yarn test
       - name: Build
         run: yarn build
+      - name: Set SSH for downcloud
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DOWNCLOUD_SSH_KEY }}
+      - name: Deploy
+        if: github.ref == 'refs/heads/master'
+        run: yarn run deploy
