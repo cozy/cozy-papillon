@@ -36,4 +36,4 @@ jobs:
           ssh-private-key: ${{ secrets.DOWNCLOUD_SSH_KEY }}
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-        run: yarn run deploy
+        run: yarn run deploy --yes
