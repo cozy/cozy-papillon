@@ -42,8 +42,9 @@ export const EmptyDataView = () => {
           }}
         >
           <AppLinker app={{ slug: 'pronote' }} href={pronoteKonnectorUrl}>
-            {({ href }) => (
+            {({ onClick, href }) => (
               <Button
+                onClick={onClick}
                 variant="secondary"
                 label={t('Layout.importFromButton') + ' Pronote'}
                 startIcon={<img src={PronoteIcon} alt="Pronote" />}
@@ -54,8 +55,9 @@ export const EmptyDataView = () => {
           </AppLinker>
 
           <AppLinker app={{ slug: 'store' }} href={storeEducationUrl}>
-            {({ href }) => (
+            {({ onClick, href }) => (
               <Button
+                onClick={onClick}
                 variant="ghost"
                 label={t('Layout.exploreServices')}
                 style={{ width: '100%' }}
