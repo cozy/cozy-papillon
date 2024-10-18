@@ -1,0 +1,29 @@
+{
+    "baseDir": "./build",
+    "files": [
+        {
+            "path": "**/papillon.<hash>.js"
+        },
+        {
+            "path": "app-papillon.<hash>.min.css"
+        },
+        {
+            "path": "vendors-papillon.<hash>.<hash>.min.css"
+        },
+        {
+            "path": "img/*.<hash>.svg"
+        }
+    ],
+    "groups": [
+        {
+            "path": "**/*.js"
+        },
+        {
+            "path": "**/*.css"
+        },
+        {
+            "path": "img/*.*"
+        }
+    ],
+    "reportOutput": ["github"]
+}
