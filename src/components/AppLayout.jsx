@@ -4,8 +4,11 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { BarCenter, BarComponent } from 'cozy-bar'
 import { useClient } from 'cozy-client'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
 import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/Checkbox'
+import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
+import OpenappIcon from 'cozy-ui/transpiled/react/Icons/Openapp'
 import PieChartIcon from 'cozy-ui/transpiled/react/Icons/PieChart'
 import WalkIcon from 'cozy-ui/transpiled/react/Icons/Walk'
 import { Content, Layout, Main } from 'cozy-ui/transpiled/react/Layout'
@@ -24,6 +27,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useAccountContext } from './Provider/AccountProvider'
 import { EmptyDataView } from './Views/EmptyDataView'
+import useCurrentAccountFolderLink from '../hooks/useCurrentAccountFolderLink'
 
 const ExampleRouterNavLink = ({
   children,
@@ -50,6 +54,7 @@ const AppLayout = () => {
   const location = useLocation()
   const currentTab = location.pathname.slice(1)
   const { accountsList, fetchStatus } = useAccountContext()
+  const currentAccountFolderLink = useCurrentAccountFolderLink()
 
   const makeProps = route => {
     const routeIsMatching = currentTab.includes(route[0])
@@ -106,6 +111,28 @@ const AppLayout = () => {
               <NavText>{t('Sidebar.presence')}</NavText>
             </NavLink>
           </NavItem>
+          {currentAccountFolderLink && (
+            <a
+              href={currentAccountFolderLink}
+              target="_blank"
+              rel="noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              <NavItem>
+                <NavLink>
+                  <NavIcon icon={FolderIcon} />
+                  <NavText>{t('Sidebar.documents')}</NavText>
+                  <Icon
+                    icon={OpenappIcon}
+                    style={{
+                      marginLeft: 'auto',
+                      marginRight: 8
+                    }}
+                  />
+                </NavLink>
+              </NavItem>
+            </a>
+          )}
         </Nav>
       </Sidebar>
       <BarComponent />

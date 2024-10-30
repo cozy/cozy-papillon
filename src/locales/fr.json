@@ -8,7 +8,8 @@
     "timetable": "Emploi du temps",
     "homeworks": "Travail à faire",
     "grades": "Notes",
-    "presence": "Vie scolaire"
+    "presence": "Vie scolaire",
+    "documents": "Documents"
   },
   "Timetable": {
     "title": "Emploi du temps",

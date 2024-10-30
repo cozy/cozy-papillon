@@ -8,7 +8,8 @@
     "timetable": "Timetable",
     "homeworks": "Homeworks",
     "grades": "Grades",
-    "presence": "Attendance"
+    "presence": "Attendance",
+    "documents": "Documents"
   },
   "Timetable": {
     "title": "Timetable",
