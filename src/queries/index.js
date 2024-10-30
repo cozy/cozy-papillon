@@ -125,3 +125,18 @@ export const buildPresenceQuery = sourceAccountIdentifier => ({
     fetchPolicy: defaultFetchPolicy
   }
 })
+
+export const buildAccountFolderQuery = accountIdentifier => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .partialIndex({ type: 'directory', trashed: false })
+      .referencedBy({
+        _id: accountIdentifier,
+        _type: 'io.cozy.accounts.sourceAccountIdentifier'
+      }),
+  options: {
+    as: 'io.cozy.files/byReferencedAccountIdentifier/' + accountIdentifier,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true
+  }
+})
