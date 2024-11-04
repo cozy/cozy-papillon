@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { buildAccountFolderQuery } from 'src/queries'
+import { buildAccountQuery, buildTriggerQuery } from 'src/queries'
 
 import { useClient, generateWebLink } from 'cozy-client'
 
@@ -13,21 +13,34 @@ const useCurrentAccountFolderLink = () => {
 
   useEffect(() => {
     const fetchCurrentAccountFolderLink = async () => {
-      const accountFolderQuery = buildAccountFolderQuery(
-        currentAccount?.cozyMetadata?.sourceAccountIdentifier
+      const accountQuery = buildAccountQuery()
+
+      const { data: accountResult } = await client.query(
+        accountQuery.definition(),
+        accountQuery.options
       )
 
-      const { data } = await client.query(
-        accountFolderQuery.definition(),
-        accountFolderQuery.options
+      if (!accountResult[0]?._id) {
+        return
+      }
+
+      const triggerQuery = buildTriggerQuery(accountResult[0]._id)
+
+      const { data: triggerResult } = await client.query(
+        triggerQuery.definition(),
+        triggerQuery.options
       )
+
+      if (!triggerResult[0]?.message?.folder_to_save) {
+        return
+      }
 
       const webLink = generateWebLink({
         cozyUrl: client.getStackClient().uri,
         slug: 'drive',
         subDomainType: client.capabilities.flat_subdomains ? 'flat' : 'nested',
         pathname: '',
-        hash: `/folder/${data[0]._id}`,
+        hash: `/folder/${triggerResult[0].message.folder_to_save}`,
         searchParams: []
       })
 

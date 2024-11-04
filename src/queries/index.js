@@ -126,17 +126,38 @@ export const buildPresenceQuery = sourceAccountIdentifier => ({
   }
 })
 
-export const buildAccountFolderQuery = accountIdentifier => ({
+export const buildAccountQuery = () => ({
   definition: () =>
-    Q('io.cozy.files')
-      .partialIndex({ type: 'directory', trashed: false })
-      .referencedBy({
-        _id: accountIdentifier,
-        _type: 'io.cozy.accounts.sourceAccountIdentifier'
+    Q('io.cozy.accounts')
+      .where({
+        account_type: 'pronote'
+      })
+      .partialIndex({
+        account_type: 'pronote'
       }),
   options: {
-    as: 'io.cozy.files/byReferencedAccountIdentifier/' + accountIdentifier,
-    fetchPolicy: defaultFetchPolicy,
-    singleDocData: true
+    as: 'io.cozy.files/account_type/pronote',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+export const buildTriggerQuery = accountId => ({
+  definition: () =>
+    Q('io.cozy.triggers')
+      .where({
+        message: {
+          account: accountId,
+          konnector: 'pronote'
+        }
+      })
+      .partialIndex({
+        message: {
+          account: accountId,
+          konnector: 'pronote'
+        }
+      }),
+  options: {
+    as: 'io.cozy.triggers/konnector/pronote/account/' + accountId,
+    fetchPolicy: defaultFetchPolicy
   }
 })
