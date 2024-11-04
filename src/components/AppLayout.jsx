@@ -122,13 +122,15 @@ const AppLayout = () => {
                 <NavLink>
                   <NavIcon icon={FolderIcon} />
                   <NavText>{t('Sidebar.documents')}</NavText>
-                  <Icon
-                    icon={OpenappIcon}
-                    style={{
-                      marginLeft: 'auto',
-                      marginRight: 8
-                    }}
-                  />
+                  {!isMobile && (
+                    <Icon
+                      icon={OpenappIcon}
+                      style={{
+                        marginLeft: 'auto',
+                        marginRight: 8
+                      }}
+                    />
+                  )}
                 </NavLink>
               </NavItem>
             </a>
