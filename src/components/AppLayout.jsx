@@ -34,12 +34,9 @@ const ExampleRouterNavLink = ({
   className,
   active,
   activeClassName,
-  onClick
+  ...rest
 }) => (
-  <a
-    onClick={onClick}
-    className={cx(className, active ? activeClassName : null)}
-  >
+  <a className={cx(className, active ? activeClassName : null)} {...rest}>
     {children}
   </a>
 )
@@ -112,28 +109,21 @@ const AppLayout = () => {
             </NavLink>
           </NavItem>
           {currentAccountFolderLink && (
-            <a
-              href={currentAccountFolderLink}
-              target="_blank"
-              rel="noreferrer"
-              style={{ textDecoration: 'none' }}
-            >
-              <NavItem>
-                <NavLink>
-                  <NavIcon icon={FolderIcon} />
-                  <NavText>{t('Sidebar.documents')}</NavText>
-                  {!isMobile && (
-                    <Icon
-                      icon={OpenappIcon}
-                      style={{
-                        marginLeft: 'auto',
-                        marginRight: 8
-                      }}
-                    />
-                  )}
-                </NavLink>
-              </NavItem>
-            </a>
+            <NavItem>
+              <NavLink href={currentAccountFolderLink} target="_blank">
+                <NavIcon icon={FolderIcon} />
+                <NavText>{t('Sidebar.documents')}</NavText>
+                {!isMobile && (
+                  <Icon
+                    icon={OpenappIcon}
+                    style={{
+                      marginLeft: 'auto',
+                      marginRight: 8
+                    }}
+                  />
+                )}
+              </NavLink>
+            </NavItem>
           )}
         </Nav>
       </Sidebar>
