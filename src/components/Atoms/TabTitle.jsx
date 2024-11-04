@@ -25,7 +25,7 @@ export const TabTitle = ({ children }) => {
             height: 68,
             minHeight: 68
           }}
-          className="u-p-1 u-w-100 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
+          className="u-p-1 u-flex u-flex-row u-flex-items-center u-flex-justify-between"
         >
           {!isMobile && <AccountSwitcher />}
 

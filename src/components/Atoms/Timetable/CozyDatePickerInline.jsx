@@ -168,6 +168,7 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
             height: '100%',
             paddingLeft: 16
           }}
+          noWrap
         >
           {getStartWeek(date)} - {getEndWeek(date)}
         </DropdownButton>
