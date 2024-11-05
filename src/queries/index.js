@@ -128,13 +128,9 @@ export const buildPresenceQuery = sourceAccountIdentifier => ({
 
 export const buildAccountQuery = () => ({
   definition: () =>
-    Q('io.cozy.accounts')
-      .where({
-        account_type: 'pronote'
-      })
-      .partialIndex({
-        account_type: 'pronote'
-      }),
+    Q('io.cozy.accounts').partialIndex({
+      account_type: 'pronote'
+    }),
   options: {
     as: 'io.cozy.files/account_type/pronote',
     fetchPolicy: defaultFetchPolicy
@@ -146,16 +142,15 @@ export const buildTriggerQuery = accountId => ({
     Q('io.cozy.triggers')
       .where({
         message: {
-          account: accountId,
-          konnector: 'pronote'
+          account: accountId
         }
       })
       .partialIndex({
         message: {
-          account: accountId,
           konnector: 'pronote'
         }
-      }),
+      })
+      .indexFields(['message.account']),
   options: {
     as: 'io.cozy.triggers/konnector/pronote/account/' + accountId,
     fetchPolicy: defaultFetchPolicy
