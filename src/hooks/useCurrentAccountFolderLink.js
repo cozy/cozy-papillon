@@ -20,7 +20,7 @@ const useCurrentAccountFolderLink = () => {
         accountQuery.options
       )
 
-      if (!accountResult[0]?._id) {
+      if (!accountResult?.[0]?._id) {
         return
       }
 
@@ -31,7 +31,7 @@ const useCurrentAccountFolderLink = () => {
         triggerQuery.options
       )
 
-      if (!triggerResult[0]?.message?.folder_to_save) {
+      if (!triggerResult?.[0]?.message?.folder_to_save) {
         return
       }
 
