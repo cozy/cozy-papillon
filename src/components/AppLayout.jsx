@@ -108,23 +108,21 @@ const AppLayout = () => {
               <NavText>{t('Sidebar.presence')}</NavText>
             </NavLink>
           </NavItem>
-          {currentAccountFolderLink && (
-            <NavItem>
-              <NavLink href={currentAccountFolderLink} target="_blank">
-                <NavIcon icon={FolderIcon} />
-                <NavText>{t('Sidebar.documents')}</NavText>
-                {!isMobile && (
-                  <Icon
-                    icon={OpenappIcon}
-                    style={{
-                      marginLeft: 'auto',
-                      marginRight: 8
-                    }}
-                  />
-                )}
-              </NavLink>
-            </NavItem>
-          )}
+          <NavItem>
+            <NavLink href={currentAccountFolderLink} target="_blank">
+              <NavIcon icon={FolderIcon} />
+              <NavText>{t('Sidebar.documents')}</NavText>
+              {!isMobile && (
+                <Icon
+                  icon={OpenappIcon}
+                  style={{
+                    marginLeft: 'auto',
+                    marginRight: 8
+                  }}
+                />
+              )}
+            </NavLink>
+          </NavItem>
         </Nav>
       </Sidebar>
       <BarComponent />
