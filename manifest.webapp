@@ -68,6 +68,11 @@
       "type": "io.cozy.triggers",
       "description": "Required by Papillon",
       "verbs": ["GET"]
+    },
+    "settings": {
+      "description": "Required by Papillon",
+      "type": "io.cozy.settings",
+      "verbs": ["GET"]
     }
   }
 }
