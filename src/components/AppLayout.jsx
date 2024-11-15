@@ -4,6 +4,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { BarCenter, BarComponent } from 'cozy-bar'
 import { useClient } from 'cozy-client'
+import { isFlagshipApp } from 'cozy-device-helper'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CalendarIcon from 'cozy-ui/transpiled/react/Icons/Calendar'
 import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/Checkbox'
@@ -109,7 +110,10 @@ const AppLayout = () => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href={currentAccountFolderLink} target="_blank">
+            <NavLink
+              href={currentAccountFolderLink}
+              target={isFlagshipApp() ? '_self' : '_blank'}
+            >
               <NavIcon icon={FolderIcon} />
               <NavText>{t('Sidebar.documents')}</NavText>
               {!isMobile && (
