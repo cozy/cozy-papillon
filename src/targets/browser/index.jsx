@@ -5,22 +5,15 @@ import 'cozy-bar/dist/stylesheet.css'
 
 import 'src/styles/index.styl'
 import React from 'react'
-// import { render } from 'react-dom'
-import AppProviders from 'src/components/AppProviders'
-import setupApp from 'src/targets/browser/setupApp'
-import AppRouter from 'src/components/AppRouter'
-import CozyDevtools from 'cozy-devtools'
-import flag from 'cozy-flags'
+import { createRoot } from 'react-dom/client'
+
+import { AppWrapper } from 'src/components/AppWrapper'
 
 const init = function () {
-  const { root, client, lang, polyglot } = setupApp()
+  const container = document.querySelector('[role=application]')
+  const root = createRoot(container)
 
-  root.render(
-    <AppProviders client={client} lang={lang} polyglot={polyglot}>
-      <AppRouter />
-      {flag('debug') && <CozyDevtools />}
-    </AppProviders>
-  )
+  root.render(<AppWrapper />)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
