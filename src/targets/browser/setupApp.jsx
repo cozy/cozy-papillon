@@ -25,8 +25,7 @@ const makeClient = container => {
       slug: manifest.name,
       version: manifest.version
     },
-    schema,
-    store: true
+    schema
   })
 
   return client
