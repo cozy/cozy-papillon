@@ -14,7 +14,8 @@
     "test": "env NODE_ENV=test cs test --verbose --coverage",
     "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --prepublish downcloud --postpublish mattermost --space beta_tests",
     "version": "yarn version:manifest",
-    "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp"
+    "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -69,6 +70,7 @@
     "cozy-ui": "^113.0.0",
     "date-fns": "2.29.3",
     "lodash": "4.17.21",
+    "patch-package": "^8.0.0",
     "react": "18.3.1",
     "react-chartjs-2": "4.1.0",
     "react-dom": "18.3.1",
