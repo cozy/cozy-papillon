@@ -26,7 +26,7 @@ export const TimetableDay = ({ day, timetable, index }) => {
       style={{
         overflowX: 'hidden'
       }}
-      className="u-flex u-flex-column u-w-100 u-h-100"
+      className={`u-flex u-flex-column u-w-100 ${isMobile ? '' : 'u-h-100'}`}
     >
       <List>
         <ListSubheader

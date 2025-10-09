@@ -26,6 +26,7 @@ export const GradeModal = () => {
   const { t } = useI18n()
   const { subjectId, gradeId } = useParams()
   const navigate = useNavigate()
+  try {
 
   const gradeItemQuery = buildGradeItemQuery(subjectId)
   const { data: subject } = useQuery(
@@ -222,4 +223,8 @@ export const GradeModal = () => {
       }
     />
   )
+  } catch (e) {
+    console.error('Error rendering GradeModal:', e)
+    return null
+  }
 }

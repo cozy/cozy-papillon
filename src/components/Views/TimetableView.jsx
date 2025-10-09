@@ -81,7 +81,9 @@ export const TimetableView = () => {
       <Outlet />
 
       <div>
-        <TabTitle title={t('Timetable.title')}>
+        <TabTitle
+          title={t('Timetable.title')}
+        >
           <CozyDatePickerInline
             date={startDate}
             onDateChange={date => setStartDate(date)}

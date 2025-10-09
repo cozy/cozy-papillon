@@ -53,7 +53,7 @@ export const GradesSubjectSubheader = ({ subject }) => {
             color="textPrimary"
             style={{ fontWeight: 'bold' }}
           >
-            {parseFloat(subject.aggregation.avgGrades).toFixed(2)}
+            {isNaN(parseFloat(subject.aggregation.avgGrades)) ? 'N/A' : parseFloat(subject.aggregation.avgGrades).toFixed(2)}
           </Typography>
           <Typography
             variant="body2"

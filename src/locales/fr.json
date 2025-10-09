@@ -6,10 +6,15 @@
   },
   "Sidebar": {
     "timetable": "Emploi du temps",
+    "timetable.short": "Cours",
     "homeworks": "Travail à faire",
+    "homeworks.short": "Devoirs",
     "grades": "Notes",
+    "grades.short": "Notes",
     "presence": "Vie scolaire",
-    "documents": "Documents"
+    "presence.short": "Vie sco.",
+    "documents": "Documents",
+    "documents.short": "Fichiers"
   },
   "Timetable": {
     "title": "Emploi du temps",
@@ -39,6 +44,7 @@
     "title": "Notes",
     "dialogContext": "Informations",
     "date": "Date",
+    "gradeAverage": "Moyenne des notes",
     "valuesList": "Résultats et moyennes",
     "emptyList": {
       "title": "Aucune note disponible",

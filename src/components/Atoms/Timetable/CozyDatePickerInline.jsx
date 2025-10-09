@@ -32,7 +32,7 @@ export const CozyDatePickerInline = ({ date: def, onDateChange }) => {
     if (onDateChange) {
       onDateChange(date)
     }
-  }, [date])
+  }, [date, onDateChange])
 
   const daySelectRef = React.useRef(null)
   const monthSelectRef = React.useRef(null)

@@ -39,6 +39,7 @@
     "title": "Grades",
     "dialogContext": "Informations",
     "date": "Date",
+    "gradeAverage": "Overall average",
     "valuesList": "Results and averages",
     "emptyList": {
       "title": "No grades",

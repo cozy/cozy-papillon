@@ -43,10 +43,10 @@ export const GradeItem = ({ grade, j, subject }) => {
         />
         <div className="cozy-grade-chip" style={style.cozyGradeChip}>
           <Typography variant="body2" color="textPrimary">
-            {parseFloat(grade.value.student).toFixed(2)}
+            {isNaN(parseFloat(grade.value.student)) ? 'N/A' : parseFloat(grade.value.student).toFixed(2)}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            /{parseFloat(grade.value.outOf).toFixed(0)}
+            /{isNaN(parseFloat(grade.value.outOf)) ? 'N/A' : parseFloat(grade.value.outOf).toFixed(0)}
           </Typography>
         </div>
       </ListItem>

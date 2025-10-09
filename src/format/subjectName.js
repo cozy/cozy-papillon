@@ -253,6 +253,14 @@ const lessonFormats = [
       default: ['vie de classe', 'vie de classe']
     },
     emoji: '👥'
+  },
+  {
+    label: 'spephysiquechimie',
+    pretty: 'Spé. Physique-Chimie',
+    formats: {
+      default: ['spephysiquechimie', 'spe physique chimie']
+    },
+    emoji: '🧪'
   }
 ]
 

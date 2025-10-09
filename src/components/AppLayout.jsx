@@ -81,6 +81,8 @@ const AppLayout = () => {
     )
   }
 
+  const mt = (isMobile ? '.short' : '');
+
   return (
     <Layout>
       <Sidebar style={isMobile ? { overflow: 'hidden' } : {}}>
@@ -88,25 +90,25 @@ const AppLayout = () => {
           <NavItem>
             <NavLink {...makeProps(['timetable'])}>
               <NavIcon icon={CalendarIcon} />
-              <NavText>{t('Sidebar.timetable')}</NavText>
+              <NavText>{t('Sidebar.timetable'+mt)}</NavText>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink {...makeProps(['homeworks'])}>
               <NavIcon icon={CheckboxIcon} />
-              <NavText>{t('Sidebar.homeworks')}</NavText>
+              <NavText>{t('Sidebar.homeworks'+mt)}</NavText>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink {...makeProps(['grades'])}>
               <NavIcon icon={PieChartIcon} />
-              <NavText>{t('Sidebar.grades')}</NavText>
+              <NavText>{t('Sidebar.grades'+mt)}</NavText>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink {...makeProps(['presence'])}>
               <NavIcon icon={WalkIcon} />
-              <NavText>{t('Sidebar.presence')}</NavText>
+              <NavText>{t('Sidebar.presence'+mt)}</NavText>
             </NavLink>
           </NavItem>
           <NavItem>
@@ -115,7 +117,7 @@ const AppLayout = () => {
               target={isFlagshipApp() ? '_self' : '_blank'}
             >
               <NavIcon icon={FolderIcon} />
-              <NavText>{t('Sidebar.documents')}</NavText>
+              <NavText>{t('Sidebar.documents'+mt)}</NavText>
               {!isMobile && (
                 <Icon
                   icon={OpenappIcon}
@@ -137,7 +139,9 @@ const AppLayout = () => {
               <Typography variant="h5">{client.appMetadata.slug}</Typography>
             </BarCenter>
           )}
-          <Outlet />
+          <div>
+            <Outlet />
+          </div>
         </Content>
       </Main>
       <Alerter t={t} />

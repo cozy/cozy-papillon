@@ -24,11 +24,16 @@ export const AccountSwitcher = () => {
   const btnRef = useRef(null)
 
   if (!accountsList || accountsList.length < 2) {
-    return null
+    return (
+      <Typography noWrap variant="h4" color="textPrimary">
+        {currentAccount?.contact?.name?.givenName}{' '}
+        {currentAccount?.contact?.name?.familyName}
+      </Typography>
+    )
   }
 
   return (
-    <div>
+    <>
       <DropdownButton ref={btnRef} onClick={() => setAccountMenuShown(true)}>
         <Typography noWrap variant="h4" color="textPrimary">
           {currentAccount?.contact?.name?.givenName}{' '}
@@ -103,6 +108,6 @@ export const AccountSwitcher = () => {
           </ActionsMenuItem>
         ))}
       </ActionsMenuWrapper>
-    </div>
+    </>
   )
 }
